@@ -107,3 +107,4 @@ export interface DeliveryZone {
   estimatedMinutes: string;
   isActive: boolean;
 }
+

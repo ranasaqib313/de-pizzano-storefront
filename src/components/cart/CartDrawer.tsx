@@ -177,3 +177,4 @@ export function CartDrawer() {
     </AnimatePresence>
   );
 }
+

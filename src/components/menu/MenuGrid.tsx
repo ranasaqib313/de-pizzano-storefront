@@ -1,27 +1,57 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { MenuItem, MenuCategoryId } from '@/types/menu';
 import { MENU_CATEGORIES } from '@/data/menu';
 import { MenuCard } from './MenuCard';
 import { MenuFilters } from './MenuFilters';
 import { MenuSearch } from './MenuSearch';
 import { ProductDialog } from './ProductDialog';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Database, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { getMenuProducts } from '@/lib/supabase/services/menu-service';
 
 interface MenuGridProps {
   initialItems: MenuItem[];
 }
 
 export function MenuGrid({ initialItems }: MenuGridProps) {
+  const [items, setItems] = useState<MenuItem[]>(initialItems);
+  const [dataSource, setDataSource] = useState<'database' | 'fallback'>('fallback');
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<MenuCategoryId>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
 
+  // Attempt client-side load from Supabase database
+  useEffect(() => {
+    let isMounted = true;
+    async function loadFromDb() {
+      setIsLoading(true);
+      try {
+        const result = await getMenuProducts();
+        if (isMounted) {
+          if (result.items && result.items.length > 0) {
+            setItems(result.items);
+          }
+          setDataSource(result.source);
+        }
+      } catch (err) {
+        console.warn('Supabase menu fetch fell back to Phase 1 data:', err);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    }
+
+    loadFromDb();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // Filter items based on category and search query
   const filteredItems = useMemo(() => {
-    return initialItems.filter((item) => {
+    return items.filter((item) => {
       // Category match
       const categoryMatch =
         selectedCategory === 'all' || item.category === selectedCategory;
@@ -36,7 +66,7 @@ export function MenuGrid({ initialItems }: MenuGridProps) {
 
       return categoryMatch && searchMatch;
     });
-  }, [initialItems, selectedCategory, searchTerm]);
+  }, [items, selectedCategory, searchTerm]);
 
   const handleClearFilters = () => {
     setSelectedCategory('all');
@@ -51,7 +81,7 @@ export function MenuGrid({ initialItems }: MenuGridProps) {
           categories={MENU_CATEGORIES}
           activeCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
-          totalCount={initialItems.length}
+          totalCount={items.length}
         />
         <MenuSearch
           searchTerm={searchTerm}
@@ -60,22 +90,42 @@ export function MenuGrid({ initialItems }: MenuGridProps) {
         />
       </div>
 
-      {/* Results Count & Current Active Filter State */}
-      <div className="flex items-center justify-between text-xs text-muted mb-6 pb-3 border-b border-surface-border">
-        <span>
-          Showing <strong className="text-white">{filteredItems.length}</strong> of{' '}
-          <strong className="text-white">{initialItems.length}</strong> items
-          {selectedCategory !== 'all' && (
-            <span className="text-secondary ml-1">
-              in {MENU_CATEGORIES.find((c) => c.id === selectedCategory)?.label}
+      {/* Results Count & Current Active Filter State & Data Source Badge */}
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted mb-6 pb-3 border-b border-surface-border">
+        <div className="flex items-center gap-3">
+          <span>
+            Showing <strong className="text-white">{filteredItems.length}</strong> of{' '}
+            <strong className="text-white">{items.length}</strong> items
+            {selectedCategory !== 'all' && (
+              <span className="text-secondary ml-1">
+                in {MENU_CATEGORIES.find((c) => c.id === selectedCategory)?.label}
+              </span>
+            )}
+            {searchTerm && (
+              <span className="text-primary-light ml-1 font-medium">
+                matching &quot;{searchTerm}&quot;
+              </span>
+            )}
+          </span>
+
+          {/* Database Connection Indicator */}
+          <div
+            data-testid="menu-data-source-indicator"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-surface-elevated border border-surface-border"
+            title={dataSource === 'database' ? 'Reading real-time data from Supabase PostgreSQL' : 'Operating in fallback mode with verified Phase 1 menu data'}
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${
+                dataSource === 'database'
+                  ? 'bg-emerald-500 animate-pulse'
+                  : 'bg-amber-500'
+              }`}
+            />
+            <span className={dataSource === 'database' ? 'text-emerald-400 font-semibold' : 'text-amber-400'}>
+              {dataSource === 'database' ? 'Live Data (Supabase)' : 'Demo Data'}
             </span>
-          )}
-          {searchTerm && (
-            <span className="text-primary-light ml-1 font-medium">
-              matching &quot;{searchTerm}&quot;
-            </span>
-          )}
-        </span>
+          </div>
+        </div>
 
         {(selectedCategory !== 'all' || searchTerm) && (
           <button

@@ -36,3 +36,4 @@ test.describe('Zero Console Errors Across All Routes', () => {
     });
   }
 });
+

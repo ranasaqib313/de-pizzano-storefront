@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Phone, ExternalLink, Menu, Flame, ShoppingBag, User } from 'lucide-react';
+import { Phone, ExternalLink, Menu, Flame, ShoppingBag, User, LogOut } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
@@ -13,12 +13,14 @@ import { getPhoneLink, getFoodpandaUrl } from '@/lib/links';
 import { MobileMenu } from './MobileMenu';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 
 export function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { itemCount, openCartDrawer } = useCart();
+  const { user, profile, isAuthenticated, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -135,16 +137,40 @@ export function Navbar() {
                 Foodpanda
               </Button>
 
-              {/* Login / Customer Portal link */}
-              <Link
-                href="/login"
-                className="p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-muted-light hover:text-white hover:bg-surface-elevated transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
-                title="Customer Login / Account"
-                aria-label="Customer Login"
-              >
-                <User className="w-4 h-4 text-secondary" />
-                <span className="hidden xl:inline">Account</span>
-              </Link>
+              {/* Login / Customer Portal link or User Status */}
+              {isAuthenticated ? (
+                <div className="flex items-center gap-1.5">
+                  <Link
+                    href="/orders"
+                    className="p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-white hover:bg-surface-elevated transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
+                    title="View My Orders"
+                  >
+                    <User className="w-4 h-4 text-secondary" />
+                    <span className="hidden xl:inline max-w-[120px] truncate">
+                      {profile?.full_name || user?.email?.split('@')[0]}
+                    </span>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => signOut()}
+                    className="p-2 text-muted hover:text-primary rounded-xl bg-surface border border-surface-border transition-colors cursor-pointer"
+                    title="Sign Out"
+                    aria-label="Sign Out"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-muted-light hover:text-white hover:bg-surface-elevated transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
+                  title="Customer Login / Account"
+                  aria-label="Customer Login"
+                >
+                  <User className="w-4 h-4 text-secondary" />
+                  <span className="hidden xl:inline">Account</span>
+                </Link>
+              )}
 
               {/* Shopping Cart Button */}
               <button

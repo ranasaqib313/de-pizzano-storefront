@@ -68,3 +68,4 @@ export const KARACHI_DELIVERY_ZONES: DeliveryZone[] = [
 ];
 
 export const DEFAULT_DELIVERY_FEE = 100;
+

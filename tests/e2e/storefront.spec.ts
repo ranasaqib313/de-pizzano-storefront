@@ -149,3 +149,4 @@ test.describe('De Pizzano Customer Storefront & Ordering Flow', () => {
     await expect(page.getByRole('button', { name: /complete registration/i })).toBeVisible();
   });
 });
+

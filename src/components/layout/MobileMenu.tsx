@@ -2,13 +2,14 @@
 
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { X, Phone, MapPin, ExternalLink, Flame, ShoppingBag, User, Bike } from 'lucide-react';
+import { X, Phone, MapPin, ExternalLink, Flame, ShoppingBag, User, LogOut } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { getPhoneLink, getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
   const { itemCount } = useCart();
+  const { user, profile, isAuthenticated, signOut } = useAuth();
 
   // Close menu on Escape key press
   useEffect(() => {
@@ -77,7 +79,7 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
           </button>
         </div>
 
-        {/* Quick Storefront Actions (Cart, Login) */}
+        {/* Quick Storefront Actions (Cart, Login/Account) */}
         <div className="grid grid-cols-2 gap-2.5 py-4 border-b border-surface-border">
           <Link
             href="/cart"
@@ -95,14 +97,41 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
             )}
           </Link>
 
-          <Link
-            href="/login"
-            onClick={onClose}
-            className="p-3 rounded-xl bg-surface border border-surface-border flex items-center gap-2 hover:bg-surface-elevated transition-colors"
-          >
-            <User className="w-4 h-4 text-secondary" />
-            <span className="text-xs font-bold text-white">Account</span>
-          </Link>
+          {isAuthenticated ? (
+            <div className="flex items-center gap-1">
+              <Link
+                href="/orders"
+                onClick={onClose}
+                className="flex-1 p-3 rounded-xl bg-surface border border-surface-border flex items-center gap-2 hover:bg-surface-elevated transition-colors truncate"
+              >
+                <User className="w-4 h-4 text-secondary shrink-0" />
+                <span className="text-xs font-bold text-white truncate">
+                  {profile?.full_name?.split(' ')[0] || user?.email?.split('@')[0]}
+                </span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  signOut();
+                  onClose();
+                }}
+                className="p-3 rounded-xl bg-surface border border-surface-border text-muted hover:text-primary transition-colors cursor-pointer"
+                aria-label="Sign Out"
+                title="Sign Out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              onClick={onClose}
+              className="p-3 rounded-xl bg-surface border border-surface-border flex items-center gap-2 hover:bg-surface-elevated transition-colors"
+            >
+              <User className="w-4 h-4 text-secondary" />
+              <span className="text-xs font-bold text-white">Account</span>
+            </Link>
+          )}
         </div>
 
         {/* Navigation Links */}

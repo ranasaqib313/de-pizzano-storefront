@@ -94,3 +94,4 @@ test.describe('Phase 1 Visual Verification & Screenshot Capture', () => {
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '14-customer-register-1024px.png') });
   });
 });
+

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import { Container } from '@/components/ui/Container';
 import { FormField } from '@/components/forms/FormField';
 import { Input } from '@/components/forms/Input';
@@ -11,12 +12,13 @@ import { Select } from '@/components/forms/Select';
 import { Textarea } from '@/components/forms/Textarea';
 import { Button } from '@/components/ui/Button';
 import { KARACHI_DELIVERY_ZONES } from '@/data/delivery-zones';
+import { getDeliveryZones } from '@/lib/supabase/services/delivery-service';
 import {
   formatPkr,
   validateCheckoutForm,
   CheckoutFormValues,
 } from '@/lib/cart-calculations';
-import { Order, OrderStatus } from '@/types/storefront';
+import { Order, OrderStatus, DeliveryZone } from '@/types/storefront';
 import {
   Banknote,
   ShieldAlert,
@@ -31,6 +33,7 @@ import {
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const { user, profile } = useAuth();
   const {
     items,
     itemCount,
@@ -40,6 +43,9 @@ export default function CheckoutPage() {
     clearCart,
     isInitialized,
   } = useCart();
+
+  const [zones, setZones] = useState<DeliveryZone[]>(KARACHI_DELIVERY_ZONES);
+  const [zonesSource, setZonesSource] = useState<'database' | 'fallback'>('fallback');
 
   const [formValues, setFormValues] = useState<CheckoutFormValues>({
     fullName: '',
@@ -51,6 +57,43 @@ export default function CheckoutPage() {
 
   const [errors, setErrors] = useState<Partial<Record<keyof CheckoutFormValues, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Fetch delivery zones from Supabase
+  useEffect(() => {
+    let isMounted = true;
+    async function loadZones() {
+      try {
+        const res = await getDeliveryZones();
+        if (isMounted && res.zones.length > 0) {
+          setZones(res.zones);
+          setZonesSource(res.source);
+          if (selectedZone) {
+            const match = res.zones.find(
+              (z) => z.id === selectedZone.id || z.areaName === selectedZone.areaName
+            );
+            if (match) setSelectedZone(match);
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to fetch delivery zones from Supabase:', err);
+      }
+    }
+    loadZones();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Pre-fill user profile info if logged in
+  useEffect(() => {
+    if (user || profile) {
+      setFormValues((prev) => ({
+        ...prev,
+        fullName: prev.fullName || profile?.full_name || (user?.user_metadata?.full_name as string) || '',
+        phone: prev.phone || profile?.phone || '',
+      }));
+    }
+  }, [user, profile]);
 
   // Sync selected delivery zone with area
   useEffect(() => {
@@ -77,7 +120,7 @@ export default function CheckoutPage() {
   };
 
   const handleZoneSelect = (zoneId: string) => {
-    const zone = KARACHI_DELIVERY_ZONES.find((z) => z.id === zoneId);
+    const zone = zones.find((z) => z.id === zoneId);
     if (zone) {
       setSelectedZone(zone);
       handleInputChange('area', zone.areaName);
@@ -266,13 +309,26 @@ export default function CheckoutPage() {
 
               {/* Delivery Address Section */}
               <div className="bg-surface border border-surface-border rounded-2xl p-5 sm:p-7 shadow-xl space-y-5">
-                <div className="flex items-center gap-2.5 pb-3 border-b border-surface-border">
-                  <div className="w-7 h-7 rounded-lg bg-secondary/20 text-secondary flex items-center justify-center">
-                    <MapPin className="w-4 h-4" />
+                <div className="flex items-center justify-between gap-2.5 pb-3 border-b border-surface-border">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-secondary/20 text-secondary flex items-center justify-center">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <h2 className="text-base font-bold text-white uppercase tracking-wider font-display">
+                      2. Karachi Delivery Address
+                    </h2>
                   </div>
-                  <h2 className="text-base font-bold text-white uppercase tracking-wider font-display">
-                    2. Karachi Delivery Address
-                  </h2>
+                  <span
+                    data-testid="zones-data-source-indicator"
+                    className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                      zonesSource === 'database'
+                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                        : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
+                    }`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full ${zonesSource === 'database' ? 'bg-emerald-400' : 'bg-amber-400'}`} />
+                    {zonesSource === 'database' ? 'Live Zones' : 'Demo Zones'}
+                  </span>
                 </div>
 
                 <div className="space-y-4">
@@ -289,7 +345,7 @@ export default function CheckoutPage() {
                       onChange={(e) => handleZoneSelect(e.target.value)}
                       error={!!errors.area}
                     >
-                      {KARACHI_DELIVERY_ZONES.map((zone) => (
+                      {zones.map((zone) => (
                         <option key={zone.id} value={zone.id} className="bg-surface text-white">
                           {zone.name} — {formatPkr(zone.fee)} delivery fee
                         </option>
@@ -455,3 +511,4 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
