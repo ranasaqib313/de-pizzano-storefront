@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, ExternalLink, Menu, X, Flame, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Phone, ExternalLink, Menu, Flame, ShoppingBag, User } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
@@ -12,11 +12,13 @@ import { BUSINESS_CONFIG } from '@/data/business';
 import { getPhoneLink, getFoodpandaUrl } from '@/lib/links';
 import { MobileMenu } from './MobileMenu';
 import { cn } from '@/lib/utils';
+import { useCart } from '@/context/CartContext';
 
 export function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { itemCount, openCartDrawer } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,11 +57,11 @@ export function Navbar() {
         )}
       >
         <Container size="xl">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             {/* Brand Logo */}
             <Link
               href="/"
-              className="group flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg p-1"
+              className="group flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg p-1 shrink-0"
             >
               <motion.div
                 whileHover={{ scale: 1.08, rotate: -5 }}
@@ -87,7 +89,7 @@ export function Navbar() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      'relative px-4 py-2 text-sm font-medium rounded-md transition-colors',
+                      'relative px-3.5 py-2 text-sm font-medium rounded-md transition-colors',
                       isActive
                         ? 'text-white font-semibold'
                         : 'text-muted-light hover:text-white hover:bg-surface/50'
@@ -106,19 +108,21 @@ export function Navbar() {
               })}
             </nav>
 
-            {/* Action Buttons */}
-            <div className="hidden sm:flex items-center gap-2.5">
+            {/* Action Buttons & Cart */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Phone call shortcut (Desktop) */}
               <Button
                 variant="outline"
                 size="sm"
                 href={getPhoneLink()}
                 icon={<Phone className="w-3.5 h-3.5 text-secondary" />}
-                className="hidden xl:inline-flex"
+                className="hidden 2xl:inline-flex"
                 title="Call Restaurant Directly (Provisional Number)"
               >
                 {BUSINESS_CONFIG.contact.formattedPhone}
               </Button>
 
+              {/* Foodpanda (Hidden on small mobile to give cart room) */}
               <Button
                 variant="foodpanda"
                 size="sm"
@@ -126,32 +130,46 @@ export function Navbar() {
                 external
                 icon={<ExternalLink className="w-3.5 h-3.5" />}
                 iconPosition="right"
-              >
-                Order on Foodpanda
-              </Button>
-            </div>
-
-            {/* Mobile Menu Toggle */}
-            <div className="flex items-center gap-2 lg:hidden">
-              <Button
-                variant="foodpanda"
-                size="sm"
-                href={getFoodpandaUrl()}
-                external
-                className="sm:hidden text-xs px-2.5 py-1.5"
+                className="hidden md:inline-flex"
               >
                 Foodpanda
               </Button>
 
-              <motion.button
+              {/* Login / Customer Portal link */}
+              <Link
+                href="/login"
+                className="p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-muted-light hover:text-white hover:bg-surface-elevated transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
+                title="Customer Login / Account"
+                aria-label="Customer Login"
+              >
+                <User className="w-4 h-4 text-secondary" />
+                <span className="hidden xl:inline">Account</span>
+              </Link>
+
+              {/* Shopping Cart Button */}
+              <button
                 type="button"
-                whileTap={{ scale: 0.92 }}
+                onClick={openCartDrawer}
+                aria-label={`View Shopping Cart (${itemCount} items)`}
+                className="relative p-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white transition-all shadow-md hover:shadow-glow-red flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-secondary cursor-pointer"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                {itemCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-secondary text-background font-black text-[11px] flex items-center justify-center border-2 border-background animate-bounce">
+                    {itemCount > 99 ? '99+' : itemCount}
+                  </span>
+                )}
+              </button>
+
+              {/* Mobile Menu Toggle */}
+              <button
+                type="button"
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-2 text-muted-light hover:text-white bg-surface border border-surface-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+                className="p-2 text-muted-light hover:text-white bg-surface border border-surface-border rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-primary transition-colors cursor-pointer"
                 aria-label="Open Navigation Menu"
               >
                 <Menu className="w-6 h-6" />
-              </motion.button>
+              </button>
             </div>
           </div>
         </Container>

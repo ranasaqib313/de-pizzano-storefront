@@ -2,12 +2,13 @@
 
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { X, Phone, MapPin, ExternalLink, Flame } from 'lucide-react';
+import { X, Phone, MapPin, ExternalLink, Flame, ShoppingBag, User, Bike } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { getPhoneLink, getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+import { useCart } from '@/context/CartContext';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -16,6 +17,8 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
+  const { itemCount } = useCart();
+
   // Close menu on Escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -56,7 +59,7 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
       {/* Drawer Panel */}
       <div className="relative w-full max-w-sm h-full bg-background border-l border-surface-border shadow-2xl flex flex-col p-6 z-10 overflow-y-auto">
         {/* Header with Close */}
-        <div className="flex items-center justify-between pb-6 border-b border-surface-border">
+        <div className="flex items-center justify-between pb-5 border-b border-surface-border">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Flame className="w-5 h-5 text-white" />
@@ -67,15 +70,43 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-muted-light hover:text-white rounded-lg bg-surface border border-surface-border focus:outline-none focus:ring-2 focus:ring-primary"
+            className="p-2 text-muted-light hover:text-white rounded-lg bg-surface border border-surface-border focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
             aria-label="Close Navigation Menu"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
+        {/* Quick Storefront Actions (Cart, Login) */}
+        <div className="grid grid-cols-2 gap-2.5 py-4 border-b border-surface-border">
+          <Link
+            href="/cart"
+            onClick={onClose}
+            className="p-3 rounded-xl bg-surface border border-surface-border flex items-center justify-between text-left hover:bg-surface-elevated transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <ShoppingBag className="w-4 h-4 text-primary-light" />
+              <span className="text-xs font-bold text-white">Cart</span>
+            </div>
+            {itemCount > 0 && (
+              <span className="px-2 py-0.5 rounded-full bg-secondary text-background text-[10px] font-black">
+                {itemCount}
+              </span>
+            )}
+          </Link>
+
+          <Link
+            href="/login"
+            onClick={onClose}
+            className="p-3 rounded-xl bg-surface border border-surface-border flex items-center gap-2 hover:bg-surface-elevated transition-colors"
+          >
+            <User className="w-4 h-4 text-secondary" />
+            <span className="text-xs font-bold text-white">Account</span>
+          </Link>
+        </div>
+
         {/* Navigation Links */}
-        <nav className="flex flex-col gap-1 py-6 flex-1">
+        <nav className="flex flex-col gap-1 py-4 flex-1">
           {MAIN_NAV_ITEMS.map((item) => {
             const isActive = currentPath === item.href;
             return (
@@ -84,15 +115,22 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  'flex flex-col px-4 py-3 rounded-lg transition-colors',
+                  'flex flex-col px-3.5 py-2.5 rounded-xl transition-colors',
                   isActive
-                    ? 'bg-primary/15 text-white border-l-4 border-primary font-semibold'
+                    ? 'bg-primary/20 text-white border-l-4 border-primary font-semibold'
                     : 'text-muted-light hover:text-white hover:bg-surface/60'
                 )}
               >
-                <span className="text-base">{item.label}</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold">{item.label}</span>
+                  {item.href === '/track' && (
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-secondary/20 text-secondary font-bold">
+                      COD
+                    </span>
+                  )}
+                </div>
                 {item.description && (
-                  <span className="text-xs text-muted mt-0.5">{item.description}</span>
+                  <span className="text-[11px] text-muted mt-0.5">{item.description}</span>
                 )}
               </Link>
             );
@@ -100,14 +138,25 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
         </nav>
 
         {/* Action Buttons & Info */}
-        <div className="pt-6 border-t border-surface-border space-y-3">
+        <div className="pt-4 border-t border-surface-border space-y-2.5">
+          <Button
+            variant="primary"
+            size="md"
+            href="/menu"
+            onClick={onClose}
+            className="w-full justify-center shadow-glow-red font-bold text-xs"
+            icon={<ShoppingBag className="w-4 h-4" />}
+          >
+            Order Online Now (COD)
+          </Button>
+
           <Button
             variant="foodpanda"
-            size="md"
+            size="sm"
             href={getFoodpandaUrl()}
             external
-            className="w-full justify-center"
-            icon={<ExternalLink className="w-4 h-4" />}
+            className="w-full justify-center text-xs"
+            icon={<ExternalLink className="w-3.5 h-3.5" />}
             iconPosition="right"
           >
             Order on Foodpanda
@@ -115,33 +164,21 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
 
           <Button
             variant="outline"
-            size="md"
+            size="sm"
             href={getPhoneLink()}
-            className="w-full justify-center"
-            icon={<Phone className="w-4 h-4 text-secondary" />}
+            className="w-full justify-center text-xs"
+            icon={<Phone className="w-3.5 h-3.5 text-secondary" />}
           >
             Call {BUSINESS_CONFIG.contact.formattedPhone}
           </Button>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            href={getMapsDirectionsUrl()}
-            external
-            className="w-full justify-center text-xs"
-            icon={<MapPin className="w-3.5 h-3.5 text-secondary" />}
-          >
-            Directions to Soldier Bazar
-          </Button>
-
           {/* Verification Warning Notice */}
-          <div className="bg-surface/80 p-3 rounded-lg border border-surface-border text-[11px] text-muted leading-relaxed text-center mt-3">
-            <span className="text-secondary font-semibold block mb-0.5">Demo Notice</span>
-            Prices and operating hours are indicative and require owner approval prior to launch.
+          <div className="bg-surface/80 p-2.5 rounded-lg border border-surface-border text-[11px] text-muted leading-relaxed text-center">
+            <span className="text-secondary font-semibold block mb-0.5">Demo Prototype</span>
+            Phase 1 customer storefront. All orders operate in simulation mode.
           </div>
         </div>
       </div>
     </div>
   );
 }
-

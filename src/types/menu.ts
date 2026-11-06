@@ -1,3 +1,5 @@
+import type { ProductVariant, ProductOption } from './storefront';
+
 export type MenuCategoryId =
   | 'all'
   | 'starters'
@@ -25,5 +27,8 @@ export interface MenuItem {
   image: string;
   featured?: boolean;
   priceDisclaimer?: string;
+  variants?: ProductVariant[];
+  options?: ProductOption[];
 }
+
 
