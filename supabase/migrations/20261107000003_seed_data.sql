@@ -1,6 +1,7 @@
 -- ==============================================================================
 -- DE PIZZANO RESTAURANT PLATFORM — PHASE 2 SEED DATA
--- 26 Verified Dishes, 6 Categories, Sizing Variants, Crust Options, Delivery Zones
+-- ⚠️ WARNING: PRICES ARE ESTIMATED. CLIENT VERIFICATION REQUIRED BEFORE PRODUCTION.
+-- 26 Researched Dishes, 6 Categories, Sizing Variants, Crust Options, Delivery Zones
 -- ==============================================================================
 
 -- 1. SEED CATEGORIES (6 Categories from Phase 1)

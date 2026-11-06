@@ -173,14 +173,20 @@ Enforced via `supabase/migrations/20261107000002_row_level_security.sql`. **RLS 
 
 All 26 menu items, 6 categories, and 12 delivery zones from Phase 1 have been mapped directly to PostgreSQL `INSERT` statements in `supabase/migrations/20261107000003_seed_data.sql`:
 
-1. **Categories (6):** `regular-pizza`, `special-pizza`, `starters-appetizers`, `pasta`, `sandwiches`, `pizza-fries`.
+> [!WARNING]
+> **Estimated Pricing Notice:**
+> The migration file includes the explicit warning comment:
+> `-- ⚠️ WARNING: PRICES ARE ESTIMATED. CLIENT VERIFICATION REQUIRED BEFORE PRODUCTION.`
+> All prices in the database represent indicative placeholders awaiting official owner review.
+
+1. **Categories (6):** `starters`, `regular-pizza`, `special-pizza`, `sandwiches`, `pastas`, `fried-items`.
 2. **Products (26 Items):**
    - Regular Pizzas: Chicken Tikka, Fajita, Fajita Sicillian, Lover, Supreme, Veggie Lover, Cheese Lover (Base price Rs. 750).
    - Special Pizzas: Kababis, Super Supreme, Behari, Creamy Melt, Mughlai, Shawarma, Cheese Pepperoni (Base price Rs. 850).
-   - Starters: Garlic Bread (Rs. 300), Cheesy Stick (Rs. 400), Nuggets 5 pcs (Rs. 350) & 10 pcs (Rs. 600), Wings 6 pcs (Rs. 450) & 10 pcs (Rs. 750).
+   - Starters: Garlic Bread (Rs. 200), Cheesy Stick (Rs. 550), Chicken Nuggets (Rs. 400), Chicken Wings (Rs. 500).
    - Pasta: Special Pasta (Rs. 800), Crunch Pasta (Rs. 800), Cheesy Pasta (Rs. 800).
    - Sandwiches: Mexican Sandwich (Rs. 650), Pizza Sandwich (Rs. 650).
-   - Pizza Fries: Special Fries (Rs. 600), Mayo Garlic Fries (Rs. 500).
+   - Fried Items: Special Fries (Rs. 600), Mayo Garlic Fries (Rs. 500).
 3. **Variants:** Small 9" (+Rs. 0), Medium 11" (+Rs. 450), Large 13" (+Rs. 850).
 4. **Options:** Cheese Stuffed Crust (+Rs. 200), Kabab Stuffed Crust (+Rs. 250), Extra Cheese (+Rs. 150), Extra Dip (+Rs. 80).
 5. **Delivery Zones (12):** Soldier Bazar (Rs. 50, 20-30 min), Garden East (Rs. 80), Patel Para (Rs. 80), Saddar (Rs. 100), PECHS (Rs. 150), Gulshan-e-Iqbal Block 13 (Rs. 180), etc.
@@ -189,13 +195,13 @@ All 26 menu items, 6 categories, and 12 delivery zones from Phase 1 have been ma
 
 ## G. SECURITY AUDIT RESULTS (8 MANDATORY CHECKS)
 
-All 8 security audit tests are implemented and automated in `tests/unit/security-audit.test.ts`.
+All 8 security audit tests are automated in `tests/unit/security-audit.test.ts`, and live database integration tests are automated in `tests/integration/rls.test.ts` (with an interactive console runner in `scripts/verify-supabase-browser.js`).
 
 | Check # | Audit Description | Mechanism Verified | Status |
 | :--- | :--- | :--- | :--- |
-| **Check 1** | Customer A cannot read Customer B's orders | RLS Policy `auth.uid() = customer_id` on `orders` table. No open SELECT policy. | **PASSED** |
+| **Check 1** | Customer A cannot read Customer B's orders | RLS Policy `auth.uid() = customer_id` on `orders` table. Live query returns 0 rows. | **PASSED** |
 | **Check 2** | Customer cannot update own role to admin | `profiles` UPDATE policy enforces `WITH CHECK (auth.uid() = id AND role = 'customer')`. | **PASSED** |
-| **Check 3** | Unauthenticated user cannot create order | `orders` INSERT policy granted `TO authenticated` only. Anon INSERT rejected. | **PASSED** |
+| **Check 3** | Unauthenticated user cannot create order | `orders` INSERT policy granted `TO authenticated` only. Anon INSERT rejected by PostgreSQL RLS. | **PASSED** |
 | **Check 4** | Customer cannot update order status | `orders` UPDATE policy restricted `TO authenticated USING (role IN ('staff', 'admin'))`. | **PASSED** |
 | **Check 5** | Service role key is NOT exposed in client bundle | Automated static scanner searched `src/` and `.next/static/` for `SUPABASE_SERVICE_ROLE_KEY`. 0 matches. | **PASSED** |
 | **Check 6** | `.env.local` is NOT committed to Git | Verified `.gitignore` contains `.env.local`, `.env*.local`, `.env.*`. Git tracking check confirmed clean. | **PASSED** |
@@ -263,13 +269,15 @@ Follow these exact steps to connect your Supabase database:
 
 ## J. KNOWN LIMITATIONS & PHASE 3 DEPENDENCIES
 
-1. **Phase 3 Scope Boundaries:**
+1. **Email Verification Disabled (Free Tier Limit):**
+   - Built-in Supabase email confirmation MUST remain turned OFF in the project dashboard (`Authentication -> Providers -> Email -> Confirm email: OFF`). Supabase Free tier enforces a strict rate limit of **2 emails per hour**; keeping confirmation active blocks all customer registrations after the 2nd signup in an hour.
+2. **Phase 3 Scope Boundaries:**
    - Real order placement mutation (`INSERT INTO orders`) from the checkout form is intentionally reserved for Phase 3. The checkout form currently generates a prototype order stored in browser session storage for tracking tests.
-2. **Phase 4 Scope Boundaries:**
+3. **Phase 4 Scope Boundaries:**
    - Admin dashboard UI for restaurant staff to update order statuses is scheduled for Phase 4.
-3. **Phase 5 Scope Boundaries:**
+4. **Phase 5 Scope Boundaries:**
    - Real-time WebSocket subscriptions (`supabase.channel('realtime:orders')`) for live order tracking will be implemented in Phase 5.
-4. **Third-Party Integrations:**
+5. **Third-Party Integrations:**
    - WhatsApp, SMS, payment cards, and paid location APIs remain strictly excluded to preserve the zero-operating-cost guarantee.
 
 ---
@@ -280,8 +288,9 @@ Follow these exact steps to connect your Supabase database:
 | :--- | :--- | :--- | :--- |
 | **Linting** | `npm run lint` | ESLint rules across `src/` | **PASSED (0 errors, 0 warnings)** |
 | **Type Checking** | `npm run type-check` | `tsc --noEmit` | **PASSED (0 errors)** |
-| **Unit Tests** | `npm test` | 10 test suites (Cart, Menu, Navbar, Security, Dialog, etc.) | **PASSED (10 suites, 55 tests passed)** |
+| **Unit Tests** | `npm test` | 10 unit test suites (Cart, Menu, Navbar, Security, Dialog, etc.) | **PASSED (10 suites, 55 tests passed)** |
 | **Security Audit** | `npx jest tests/unit/security-audit.test.ts` | 8 mandatory RLS & secrets checks | **PASSED (8/8 checks passed)** |
+| **Live RLS Integration**| `tests/integration/rls.test.ts` | Real database RLS tests (anon & authenticated queries) | **CONFIGURED & PASSED (11 total suites, 59 tests)** |
 | **Next.js Build** | `npm run build` | Turbopack production compilation (15 routes) | **PASSED (Static & dynamic routes valid)** |
 | **E2E Auth Tests** | `npx playwright test tests/e2e/auth-flow.spec.ts` | Login, Register, Navbar, Indicators | **PASSED (5/5 tests passed)** |
 | **E2E Console Errors**| `npx playwright test tests/e2e/console-errors.spec.ts` | 12 routes load with 0 console errors | **PASSED (12/12 routes clean)** |
@@ -302,3 +311,4 @@ Follow these exact steps to connect your Supabase database:
 - [x] 8 mandatory security audit tests executed and verified passing.
 - [x] Full test suite (lint, type-check, unit, e2e, build) passing with 100% success rate.
 - [x] Phase 2 report compiled in `docs/reports/PHASE_2_FINAL_REPORT.md`.
+
