@@ -47,7 +47,7 @@ export const MENU_CATEGORIES: MenuCategory[] = [
 
 const STANDARD_PIZZA_VARIANTS = [
   { id: 'small', name: 'Small (9")', price: 400, description: '4 slices — Personal size', isDefault: false },
-  { id: 'regular', name: 'Regular (11")', price: 750, description: '6 slices — 2 to 3 people', isDefault: true },
+  { id: 'regular', name: 'Regular / Medium (11")', price: 750, description: '6 slices — 2 to 3 people', isDefault: true },
   { id: 'large', name: 'Large (13")', price: 1000, description: '8 slices — Family size', isDefault: false },
 ];
 
@@ -170,7 +170,7 @@ export const MENU_ITEMS: MenuItem[] = [
   // ============================================================================
   {
     id: 'tikka-pizza',
-    name: 'Tikka Pizza',
+    name: 'Chicken Tikka Pizza',
     category: 'pizza-flavours',
     price: 400,
     isStartingPrice: true,

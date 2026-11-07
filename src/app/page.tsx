@@ -1,22 +1,31 @@
 import React from 'react';
-import { HomePromoCarousel } from '@/components/home/HomePromoCarousel';
+import { EditorialHero } from '@/components/home/EditorialHero';
+import { DealsSpotlight } from '@/components/home/DealsSpotlight';
 import { HomeProductFeed } from '@/components/home/HomeProductFeed';
 import { AboutSection } from '@/components/home/AboutSection';
 import { LocationSection } from '@/components/home/LocationSection';
 
+/**
+ * De Pizzano Homepage Route
+ * A completely bespoke, artisanal pizzeria digital experience with
+ * zero visual imitation of market references.
+ */
 export default function HomePage() {
   return (
     <>
-      {/* 1. Wide Promotional Image Carousel (Replacing the typographic split hero) */}
-      <HomePromoCarousel />
+      {/* 1. Asymmetric Editorial Restaurant Hero (Craftsmanship & Signature Dish Spotlight) */}
+      <EditorialHero />
 
-      {/* 2. Horizontal Category Pills & Product Catalog Grid */}
+      {/* 2. Signature Deals & Combos Showcase (Curated bundles with drinks) */}
+      <DealsSpotlight />
+
+      {/* 3. Artisanal Category Board & Kitchen Product Feed */}
       <HomeProductFeed />
 
-      {/* 3. Artisan Kitchen Craftsmanship & Story */}
+      {/* 4. Heritage, Dough Fermentation & 100% Pure Mozzarella Story */}
       <AboutSection />
 
-      {/* 4. Branch Location & Operating Hours */}
+      {/* 5. Soldier Bazar No. 3 Branch Location & Operating Hours */}
       <LocationSection />
     </>
   );

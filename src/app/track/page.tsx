@@ -26,6 +26,8 @@ function OrderTrackingContent() {
 
   const [searchInput, setSearchInput] = useState('');
   const [recentOrders, setRecentOrders] = useState<Order[]>([]);
+  const [simulatedStatus, setSimulatedStatus] = useState<string>('Pending');
+  const statuses = ['Pending', 'Confirmed', 'Preparing', 'Ready', 'Out for Delivery', 'Delivered', 'Cancelled'];
 
   useEffect(() => {
     try {
@@ -117,6 +119,53 @@ function OrderTrackingContent() {
             <Link href="/orders" className="text-secondary hover:underline font-medium">
               View all my orders &rarr;
             </Link>
+          </div>
+        </div>
+
+        {/* Interactive Kitchen Milestone Timeline Simulator */}
+        <div className="bg-surface border border-surface-border rounded-2xl p-6 sm:p-8 shadow-xl mb-10">
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-secondary">
+              Kitchen Milestone Timeline
+            </span>
+            <span className="text-[11px] text-muted">
+              Live status progression across 7 kitchen milestones
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-2 mb-6">
+            {statuses.map((st) => (
+              <button
+                key={st}
+                type="button"
+                onClick={() => setSimulatedStatus(st)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  simulatedStatus === st
+                    ? 'bg-secondary text-neutral-950 shadow-glow-gold'
+                    : 'bg-surface-elevated text-muted hover:text-white border border-surface-border'
+                }`}
+              >
+                {st}
+              </button>
+            ))}
+          </div>
+
+          {/* Status Feedback Display */}
+          <div className="p-4 rounded-xl bg-surface-elevated border border-surface-border flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary/20 text-primary flex items-center justify-center font-bold">
+                <Bike className="w-5 h-5 text-secondary" />
+              </div>
+              <div>
+                <span className="text-xs text-muted block uppercase tracking-wider">Kitchen Status</span>
+                <span className="text-sm font-bold text-white">
+                  {simulatedStatus === 'Out for Delivery' ? 'Rider on the Way' : simulatedStatus === 'Cancelled' ? 'Order Cancelled' : simulatedStatus}
+                </span>
+              </div>
+            </div>
+            <span className="text-xs px-2.5 py-1 rounded-full bg-surface text-secondary border border-secondary/30 font-semibold">
+              {simulatedStatus === 'Out for Delivery' ? 'Estimated 15 mins' : simulatedStatus === 'Cancelled' ? 'Voided' : 'In Progress'}
+            </span>
           </div>
         </div>
 

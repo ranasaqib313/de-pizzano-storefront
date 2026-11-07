@@ -85,7 +85,7 @@ export async function getMenuProducts(): Promise<{
             .sort((a, b) => a.sort_order - b.sort_order)
             .map((v) => ({
               id: v.id,
-              name: v.name,
+              name: v.name === 'Regular (11")' ? 'Regular / Medium (11")' : v.name,
               price: p.base_price + v.price_delta,
               isDefault: v.is_default,
             }))

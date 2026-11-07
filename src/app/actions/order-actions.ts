@@ -59,19 +59,12 @@ interface DbProductRow {
  */
 export async function placeOrderAction(payload: PlaceOrderPayload): Promise<PlaceOrderResult> {
   try {
-    // 1. Verify User Authentication
+    // 1. Verify User Authentication (Supports registered and guest checkout)
     const supabase = await createClient();
     const {
       data: { user },
-      error: userError,
     } = await supabase.auth.getUser();
-
-    if (userError || !user) {
-      return {
-        success: false,
-        error: 'Please sign in to place your order.',
-      };
-    }
+    const customerId = user ? user.id : null;
 
     // 2. Validate Basic Inputs
     if (!payload.items || payload.items.length === 0) {
@@ -241,7 +234,7 @@ export async function placeOrderAction(payload: PlaceOrderPayload): Promise<Plac
     const { data: newOrder, error: orderInsertError } = (await (db.from('orders') as any)
       .insert({
         order_number: orderNumber,
-        customer_id: user.id,
+        customer_id: customerId,
         status: 'pending',
         subtotal: calculatedSubtotal,
         delivery_fee: deliveryFee,
@@ -286,7 +279,7 @@ export async function placeOrderAction(payload: PlaceOrderPayload): Promise<Plac
     const { error: historyError } = (await (db.from('order_status_history') as any).insert({
       order_id: newOrder.id,
       status: 'pending',
-      changed_by: user.id,
+      changed_by: customerId,
       notes: 'Cash on Delivery order placed by customer via web storefront.',
     })) as { error: Error | null };
 

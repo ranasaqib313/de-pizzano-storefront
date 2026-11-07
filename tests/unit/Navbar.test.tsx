@@ -24,7 +24,7 @@ describe('Navbar Component', () => {
 
   test('renders location/delivery selector and search input', () => {
     render(<Navbar />);
-    expect(screen.getByTitle(/click to switch delivery \/ takeaway location/i)).toBeInTheDocument();
+    expect(screen.getAllByTitle(/click to switch delivery \/ takeaway location/i)[0]).toBeInTheDocument();
     expect(screen.getAllByPlaceholderText(/search pizzas, deals, sides/i)[0]).toBeInTheDocument();
   });
 

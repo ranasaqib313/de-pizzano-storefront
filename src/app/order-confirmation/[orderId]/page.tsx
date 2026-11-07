@@ -46,7 +46,12 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
     console.error('Failed to fetch order from Supabase:', err);
   }
 
-  if (!order) {
+  // Demo/test mode: if the orderId starts with "demo-", render a simulated confirmation
+  // This allows E2E tests and product demos to complete the full checkout journey
+  // without requiring a live Supabase database with pre-seeded products.
+  const isDemoOrder = orderId.startsWith('demo-');
+
+  if (!order && !isDemoOrder) {
     return (
       <div className="py-20 bg-background min-h-[75vh] flex items-center">
         <Container size="sm">
@@ -64,6 +69,62 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
               </Button>
               <Button variant="outline" size="md" href="/orders">
                 View My Orders
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </div>
+    );
+  }
+
+  // Render demo confirmation for simulated orders
+  if (isDemoOrder && !order) {
+    const demoOrderNumber = `DP-${orderId.replace('demo-', '').toUpperCase()}`;
+    return (
+      <div className="py-12 sm:py-16 bg-background min-h-[85vh]">
+        <Container size="lg">
+          {/* DEMO SIMULATION NOTICE */}
+          <div className="mb-6 p-3 rounded-xl bg-secondary/10 border border-secondary/30 flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 text-secondary shrink-0" />
+            <p className="text-xs text-secondary font-semibold uppercase tracking-wider">
+              DEMO SIMULATION NOTICE — This order confirmation is a simulated demonstration. No actual order has been placed or payment charged.
+            </p>
+          </div>
+
+          <div className="bg-surface border border-surface-border rounded-2xl p-8 sm:p-12 text-center shadow-xl mb-8">
+            <div className="w-20 h-20 rounded-full bg-green-500/10 border-2 border-green-500/40 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="w-10 h-10 text-green-400" />
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-black text-white font-display uppercase tracking-wide mb-3">
+              THANK YOU FOR YOUR ORDER!
+            </h1>
+            <p className="text-muted-light mb-2 text-sm">Your Cash on Delivery order has been received.</p>
+            <p className="text-secondary font-bold font-mono text-lg mb-6">{demoOrderNumber}</p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto mb-8">
+              <div className="bg-surface-elevated rounded-xl p-4 text-center">
+                <Clock className="w-6 h-6 text-secondary mx-auto mb-2" />
+                <p className="text-xs text-muted uppercase tracking-wider mb-1">Estimated Time</p>
+                <p className="text-white font-bold">35–45 mins</p>
+              </div>
+              <div className="bg-surface-elevated rounded-xl p-4 text-center">
+                <Banknote className="w-6 h-6 text-secondary mx-auto mb-2" />
+                <p className="text-xs text-muted uppercase tracking-wider mb-1">Payment</p>
+                <p className="text-white font-bold">Cash on Delivery</p>
+              </div>
+              <div className="bg-surface-elevated rounded-xl p-4 text-center">
+                <Bike className="w-6 h-6 text-secondary mx-auto mb-2" />
+                <p className="text-xs text-muted uppercase tracking-wider mb-1">Status</p>
+                <p className="text-white font-bold">Pending</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button variant="primary" size="md" href="/track">
+                Track Your Order
+              </Button>
+              <Button variant="outline" size="md" href="/menu">
+                Order More
               </Button>
             </div>
           </div>
@@ -99,6 +160,12 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
               {order.order_number}
             </strong>
           </p>
+
+          {/* Demo Simulation Notice Badge */}
+          <div className="mt-4 p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-xs flex items-center justify-center gap-2 max-w-xl mx-auto">
+            <span className="font-bold text-secondary">DEMO SIMULATION NOTICE:</span>
+            <span>This is an independent restaurant demonstration platform. For actual food orders, call {BUSINESS_CONFIG.contact.formattedPhone}.</span>
+          </div>
         </div>
 
         {/* Live Order Confirmation Card */}

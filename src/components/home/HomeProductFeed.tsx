@@ -2,10 +2,10 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, AlertCircle } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { MENU_ITEMS, MENU_CATEGORIES } from '@/data/menu';
 import { MenuItem, MenuCategoryId } from '@/types/menu';
-import { HomeCategoryPills } from './HomeCategoryPills';
+import { ArtisanalCategoryBoard } from './ArtisanalCategoryBoard';
 import { MenuCard } from '@/components/menu/MenuCard';
 import { ProductDialog } from '@/components/menu/ProductDialog';
 import { Button } from '@/components/ui/Button';
@@ -31,13 +31,13 @@ export function HomeProductFeed() {
 
   return (
     <section aria-label="Menu Catalog" className="w-full pb-16 overflow-hidden">
-      {/* Category Navigation Pills */}
-      <HomeCategoryPills
+      {/* Artisanal Category Board Navigation */}
+      <ArtisanalCategoryBoard
         activeCategory={activeCategory}
         onSelectCategory={setActiveCategory}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-4">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-3 border-b border-surface-border">
           <div className="flex items-center gap-2">
@@ -99,12 +99,12 @@ export function HomeProductFeed() {
             iconPosition="right"
             className="shadow-glow-red shrink-0 text-xs sm:text-sm font-bold"
           >
-            View Complete Menu
+            View Full 50 Dishes
           </Button>
         </div>
       </div>
 
-      {/* Product Customization Modal */}
+      {/* Product Customization Modal when clicked */}
       {selectedProduct && (
         <ProductDialog
           item={selectedProduct}

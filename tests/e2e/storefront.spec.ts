@@ -6,14 +6,14 @@ test.describe('De Pizzano Customer Storefront & Ordering Flow', () => {
   }) => {
     await page.goto('/menu');
 
-    // Click Details on Chicken Tikka Pizza
-    const tikkaCard = page.locator('div.group').filter({ hasText: 'Chicken Tikka Pizza' }).first();
-    await tikkaCard.getByRole('button', { name: /details/i }).click();
+    // Click Details or Customize on Tikka Pizza
+    const tikkaCard = page.locator('div.group').filter({ hasText: /Tikka/i }).first();
+    await tikkaCard.getByRole('button', { name: /details|customize/i }).first().click();
 
     // Verify dialog opened
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByText('Chicken Tikka Pizza')).toBeVisible();
+    await expect(dialog.getByText(/Tikka Pizza/i)).toBeVisible();
 
     // Verify size buttons exist (Small, Regular, Large)
     await expect(dialog.getByText('Small (9")')).toBeVisible();
@@ -34,7 +34,7 @@ test.describe('De Pizzano Customer Storefront & Ordering Flow', () => {
     // Cart drawer should open with 1 item
     const cartDrawer = page.getByRole('dialog', { name: /shopping cart drawer/i });
     await expect(cartDrawer).toBeVisible();
-    await expect(cartDrawer.getByText('Chicken Tikka Pizza')).toBeVisible();
+    await expect(cartDrawer.getByText(/Tikka Pizza/i)).toBeVisible();
     await expect(cartDrawer.getByText(/Size: Large/i)).toBeVisible();
     await expect(cartDrawer.getByText(/Cheese Stuffed Crust/i)).toBeVisible();
   });

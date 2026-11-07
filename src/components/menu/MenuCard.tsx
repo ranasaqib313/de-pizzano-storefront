@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { ExternalLink, Phone, Info, Sparkles } from 'lucide-react';
+import { ExternalLink, ShoppingBag, Info, Sparkles, Phone } from 'lucide-react';
 import { MenuItem } from '@/types/menu';
 import { formatMenuItemPrice } from '@/lib/format-price';
 import { getFoodpandaUrl, getPhoneLink } from '@/lib/links';
@@ -15,15 +15,27 @@ interface MenuCardProps {
   layout?: 'grid' | 'list';
 }
 
+/**
+ * De Pizzano Artisanal Menu Card
+ * Focuses on on-site direct ordering with customizable portions while
+ * maintaining high culinary appeal and zero third-party dependency.
+ */
 export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
   const [imgError, setImgError] = useState(false);
   const formattedPrice = formatMenuItemPrice(item);
   const isList = layout === 'list';
 
+  const isPizza =
+    item.category === 'pizza-flavours' ||
+    item.category === 'special-flavours' ||
+    item.category === 'regular-pizza' ||
+    item.category === 'special-pizza' ||
+    item.category === 'pizza-deals';
+
   return (
     <div
       className={cn(
-        'group relative bg-surface border border-surface-border hover:border-primary/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-0.5 flex',
+        'group relative bg-surface border border-surface-border hover:border-secondary/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 flex',
         isList ? 'flex-col sm:flex-row items-stretch' : 'flex-col h-full'
       )}
     >
@@ -102,7 +114,7 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
                 </p>
               ) : (
                 <p className="mt-2 text-xs text-muted-dark italic">
-                  Freshly prepared to order. Standard recipe ingredients apply.
+                  Handcrafted fresh to order with pure mozzarella and stone-baked crust.
                 </p>
               )}
             </div>
@@ -124,41 +136,61 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
           </div>
         </div>
 
-        {/* Card Actions */}
-        <div className="mt-5 pt-4 border-t border-surface-border/60 flex items-center justify-between gap-2.5">
-          {onSelect ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onSelect(item)}
-              icon={<Info className="w-3.5 h-3.5 text-secondary" />}
-              className="text-xs flex-1 sm:flex-initial sm:min-w-[130px] justify-center"
-            >
-              Details
-            </Button>
-          ) : (
-            <Button
-              variant="outline"
-              size="sm"
-              href={getPhoneLink()}
-              icon={<Phone className="w-3 h-3 text-secondary" />}
-              className="text-xs flex-1 sm:flex-initial sm:min-w-[130px] justify-center"
-            >
-              Order Call
-            </Button>
-          )}
+        {/* Card Actions: Focus on Direct On-Site Order */}
+        <div className="mt-5 pt-4 border-t border-surface-border/60 flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            {onSelect ? (
+              <>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => onSelect(item)}
+                  icon={<ShoppingBag className="w-3.5 h-3.5" />}
+                  className="text-xs flex-1 justify-center shadow-glow-red font-bold"
+                >
+                  {isPizza ? 'Customize & Order' : 'Add to Cart'}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onSelect(item)}
+                  icon={<Info className="w-3.5 h-3.5 text-secondary" />}
+                  className="text-xs px-2.5 shrink-0"
+                  title="View Details & Customization"
+                >
+                  Details
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                href={getPhoneLink()}
+                icon={<Phone className="w-3 h-3 text-secondary" />}
+                className="text-xs flex-1 justify-center"
+              >
+                Order Call
+              </Button>
+            )}
+          </div>
 
-          <Button
-            variant="foodpanda"
-            size="sm"
-            href={getFoodpandaUrl()}
-            external
-            icon={<ExternalLink className="w-3 h-3" />}
-            iconPosition="right"
-            className="text-xs flex-1 sm:flex-initial sm:min-w-[130px] justify-center"
-          >
-            Foodpanda
-          </Button>
+          {/* Secondary External Partner Reference */}
+          <div className="flex items-center justify-between text-[11px] text-muted-dark px-1">
+            <span className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+              Kitchen Live (Soldier Bazar)
+            </span>
+            <a
+              href={getFoodpandaUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Order on Foodpanda (External)"
+              className="text-[#D70F64] hover:underline inline-flex items-center gap-1 font-medium"
+            >
+              Foodpanda
+              <ExternalLink className="w-2.5 h-2.5" />
+            </a>
+          </div>
         </div>
       </div>
     </div>

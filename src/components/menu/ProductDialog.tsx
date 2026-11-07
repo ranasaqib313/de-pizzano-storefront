@@ -266,7 +266,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-sm font-bold text-white font-display">
-                          {variant.name}
+                          {variant.name === 'Regular (11")' ? 'Regular / Medium (11")' : variant.name}
                         </span>
                         {isSelected && <Check className="w-4 h-4 text-secondary shrink-0" />}
                       </div>
