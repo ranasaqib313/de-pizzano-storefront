@@ -22,37 +22,37 @@ export interface OrderStatusTimelineProps {
 const ORDER_STEPS: { status: OrderStatus; label: string; description: string; icon: React.ElementType }[] = [
   {
     status: 'Pending',
-    label: 'Order Placed',
-    description: 'We received your Cash on Delivery order.',
+    label: 'Order Received',
+    description: 'We received your order and are validating details.',
     icon: Clock,
   },
   {
     status: 'Confirmed',
-    label: 'Order Confirmed',
+    label: 'Restaurant Accepted',
     description: 'Restaurant verified details and scheduled kitchen prep.',
     icon: CheckCircle2,
   },
   {
     status: 'Preparing',
-    label: 'Kitchen Baking',
+    label: 'In the Kitchen',
     description: 'Fresh dough rolled, toppings assembled, and stone-baked.',
     icon: ChefHat,
   },
   {
     status: 'Ready',
-    label: 'Order Ready',
-    description: 'Packaged hot with napkins and condiments.',
+    label: 'Waiting for Rider',
+    description: 'Packaged hot with napkins and condiments, ready for pickup.',
     icon: PackageCheck,
   },
   {
     status: 'Out for Delivery',
-    label: 'Rider Dispatched',
-    description: 'Rider is on the way to your Karachi address.',
+    label: 'Rider on the way',
+    description: 'Rider is on the way to your delivery address.',
     icon: Bike,
   },
   {
     status: 'Delivered',
-    label: 'Order Delivered',
+    label: 'Delivered',
     description: 'Delivered to you. Cash collected upon arrival.',
     icon: Home,
   },
@@ -77,7 +77,8 @@ export function OrderStatusTimeline({
     );
   }
 
-  const currentStepIndex = ORDER_STEPS.findIndex((s) => s.status === currentStatus);
+  const normalize = (s: string) => (s || '').toLowerCase().replace(/_/g, ' ').trim();
+  const currentStepIndex = ORDER_STEPS.findIndex((s) => normalize(s.status) === normalize(currentStatus));
   const activeIndex = currentStepIndex >= 0 ? currentStepIndex : 0;
 
   return (
@@ -88,10 +89,12 @@ export function OrderStatusTimeline({
           const isCurrent = idx === activeIndex;
           const isUpcoming = idx > activeIndex;
 
-          const IconComponent = step.icon;
+          const IconComponent = isCompleted ? CheckCircle2 : step.icon;
 
           // Find timestamp from history if available
-          const historyEntry = history.find((h) => h.status === step.status);
+          const historyEntry = history.find(
+            (h) => normalize(h.status) === normalize(step.status)
+          );
 
           return (
             <li key={step.status} className="ml-6 sm:ml-8 relative">

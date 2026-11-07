@@ -253,18 +253,18 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
 
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               <Button
-                variant="outline"
+                variant="primary"
                 size="sm"
-                href={`/track?orderId=${order.order_number}`}
-                className="w-full sm:w-auto text-xs"
+                href={`/track/${encodeURIComponent(order.order_number || order.id)}`}
+                className="w-full sm:w-auto text-xs font-bold"
               >
                 Track Live Order
               </Button>
               <Button
-                variant="primary"
+                variant="outline"
                 size="sm"
                 href="/orders"
-                className="w-full sm:w-auto text-xs font-bold"
+                className="w-full sm:w-auto text-xs"
               >
                 View Order History
               </Button>

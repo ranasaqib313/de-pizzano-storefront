@@ -206,17 +206,16 @@ export default function MyOrdersPage() {
                     </div>
 
                     <div className="flex items-center gap-2 self-end sm:self-auto">
-                      <Link href={`/track?orderId=${order.id}`}>
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          className="text-xs font-bold"
-                          icon={<ArrowRight className="w-3.5 h-3.5" />}
-                          iconPosition="right"
-                        >
-                          Track Status
-                        </Button>
-                      </Link>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        href={`/track/${encodeURIComponent(order.id)}`}
+                        className="text-xs font-bold"
+                        icon={<ArrowRight className="w-3.5 h-3.5" />}
+                        iconPosition="right"
+                      >
+                        Track Order
+                      </Button>
                     </div>
                   </div>
                 </div>

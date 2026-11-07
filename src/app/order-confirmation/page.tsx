@@ -261,7 +261,7 @@ function OrderConfirmationContent() {
 
             {/* Action Buttons */}
             <div className="space-y-3">
-              <Link href={`/track?orderId=${order.id}`} className="block w-full">
+              <Link href={`/track/${encodeURIComponent(order.id)}`} className="block w-full">
                 <Button
                   variant="primary"
                   size="lg"
