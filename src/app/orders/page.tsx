@@ -211,6 +211,7 @@ export default function MyOrdersPage() {
                         size="sm"
                         href={`/track/${encodeURIComponent(order.id)}`}
                         className="text-xs font-bold"
+                        data-testid="order-card-track-btn"
                         icon={<ArrowRight className="w-3.5 h-3.5" />}
                         iconPosition="right"
                       >

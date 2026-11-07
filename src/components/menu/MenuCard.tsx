@@ -2,25 +2,40 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { ExternalLink, Phone, Info } from 'lucide-react';
+import { ExternalLink, Phone, Info, Sparkles } from 'lucide-react';
 import { MenuItem } from '@/types/menu';
 import { formatMenuItemPrice } from '@/lib/format-price';
 import { getFoodpandaUrl, getPhoneLink } from '@/lib/links';
 import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 
 interface MenuCardProps {
   item: MenuItem;
   onSelect?: (item: MenuItem) => void;
+  layout?: 'grid' | 'list';
 }
 
-export function MenuCard({ item, onSelect }: MenuCardProps) {
+export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
   const [imgError, setImgError] = useState(false);
   const formattedPrice = formatMenuItemPrice(item);
+  const isList = layout === 'list';
 
   return (
-    <div className="group relative bg-surface border border-surface-border hover:border-primary/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 flex flex-col h-full">
+    <div
+      className={cn(
+        'group relative bg-surface border border-surface-border hover:border-primary/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-0.5 flex',
+        isList ? 'flex-col sm:flex-row items-stretch' : 'flex-col h-full'
+      )}
+    >
       {/* Product Image Container */}
-      <div className="relative aspect-[4/3] w-full bg-surface-elevated overflow-hidden">
+      <div
+        className={cn(
+          'relative bg-surface-elevated overflow-hidden shrink-0',
+          isList
+            ? 'w-full sm:w-56 aspect-[4/3] sm:aspect-auto min-h-[160px]'
+            : 'aspect-[4/3] w-full'
+        )}
+      >
         {item.image && !imgError ? (
           <Image
             src={item.image}
@@ -50,7 +65,8 @@ export function MenuCard({ item, onSelect }: MenuCardProps) {
         {/* Featured Tag if applicable */}
         {item.featured && (
           <div className="absolute top-3 right-3">
-            <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white rounded-md shadow-sm">
+            <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white rounded-md shadow-sm flex items-center gap-1">
+              <Sparkles className="w-2.5 h-2.5" />
               Popular
             </span>
           </div>
@@ -58,44 +74,65 @@ export function MenuCard({ item, onSelect }: MenuCardProps) {
       </div>
 
       {/* Product Details Content */}
-      <div className="p-5 flex-1 flex flex-col justify-between">
+      <div
+        className={cn(
+          'p-5 flex-1 flex flex-col justify-between',
+          isList && 'sm:pl-6'
+        )}
+      >
         <div>
-          {/* Product Name */}
-          <h3 className="text-lg font-bold text-white group-hover:text-secondary transition-colors font-display tracking-wide">
-            {item.name}
-          </h3>
+          {/* Header Row in List Mode */}
+          <div
+            className={cn(
+              isList
+                ? 'flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2'
+                : 'block'
+            )}
+          >
+            <div>
+              {/* Product Name */}
+              <h3 className="text-lg font-bold text-white group-hover:text-secondary transition-colors font-display tracking-wide">
+                {item.name}
+              </h3>
 
-          {/* Indicative Price */}
-          <div className="mt-2 flex items-baseline gap-1.5">
-            <span className="text-xl font-extrabold text-white">
-              {formattedPrice}
-            </span>
-            <span className="text-[10px] text-muted-dark uppercase tracking-wider">
-              (Public listing rate)
-            </span>
+              {/* Product Description */}
+              {item.description ? (
+                <p className="mt-2 text-xs text-muted-light line-clamp-2 leading-relaxed">
+                  {item.description}
+                </p>
+              ) : (
+                <p className="mt-2 text-xs text-muted-dark italic">
+                  Freshly prepared to order. Standard recipe ingredients apply.
+                </p>
+              )}
+            </div>
+
+            {/* Price Presentation */}
+            <div
+              className={cn(
+                'flex items-baseline gap-1.5 shrink-0',
+                isList ? 'sm:flex-col sm:items-end sm:gap-0' : 'mt-3'
+              )}
+            >
+              <span className="text-xl font-extrabold text-white">
+                {formattedPrice}
+              </span>
+              <span className="text-[10px] text-muted-dark uppercase tracking-wider">
+                (Public listing rate)
+              </span>
+            </div>
           </div>
-
-          {/* Product Description */}
-          {item.description ? (
-            <p className="mt-2.5 text-xs text-muted-light line-clamp-2 leading-relaxed">
-              {item.description}
-            </p>
-          ) : (
-            <p className="mt-2.5 text-xs text-muted-dark italic">
-              Freshly prepared to order. Standard recipe ingredients apply.
-            </p>
-          )}
         </div>
 
         {/* Card Actions */}
-        <div className="mt-5 pt-4 border-t border-surface-border/60 flex items-center justify-between gap-2">
+        <div className="mt-5 pt-4 border-t border-surface-border/60 flex items-center justify-between gap-2.5">
           {onSelect ? (
             <Button
               variant="outline"
               size="sm"
               onClick={() => onSelect(item)}
               icon={<Info className="w-3.5 h-3.5 text-secondary" />}
-              className="text-xs flex-1 justify-center"
+              className="text-xs flex-1 sm:flex-initial sm:min-w-[130px] justify-center"
             >
               Details
             </Button>
@@ -105,7 +142,7 @@ export function MenuCard({ item, onSelect }: MenuCardProps) {
               size="sm"
               href={getPhoneLink()}
               icon={<Phone className="w-3 h-3 text-secondary" />}
-              className="text-xs flex-1 justify-center"
+              className="text-xs flex-1 sm:flex-initial sm:min-w-[130px] justify-center"
             >
               Order Call
             </Button>
@@ -118,7 +155,7 @@ export function MenuCard({ item, onSelect }: MenuCardProps) {
             external
             icon={<ExternalLink className="w-3 h-3" />}
             iconPosition="right"
-            className="text-xs flex-1 justify-center"
+            className="text-xs flex-1 sm:flex-initial sm:min-w-[130px] justify-center"
           >
             Foodpanda
           </Button>
@@ -127,4 +164,3 @@ export function MenuCard({ item, onSelect }: MenuCardProps) {
     </div>
   );
 }
-

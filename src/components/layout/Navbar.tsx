@@ -4,13 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Phone, ExternalLink, Menu, Flame, ShoppingBag, User, LogOut } from 'lucide-react';
+import { Phone, ExternalLink, Menu, Flame, ShoppingBag, User, LogOut, Bike, Store, ChevronDown } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { getPhoneLink, getFoodpandaUrl } from '@/lib/links';
 import { MobileMenu } from './MobileMenu';
+import { OrderTypeModal } from './OrderTypeModal';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -19,7 +20,8 @@ export function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { itemCount, openCartDrawer } = useCart();
+  const [orderModalOpen, setOrderModalOpen] = useState(false);
+  const { itemCount, openCartDrawer, orderType, selectedZone } = useCart();
   const { user, profile, isAuthenticated, signOut } = useAuth();
 
   useEffect(() => {
@@ -63,24 +65,49 @@ export function Navbar() {
             {/* Brand Logo */}
             <Link
               href="/"
-              className="group flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg p-1 shrink-0"
+              className="group flex items-center gap-2 sm:gap-2.5 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg p-1 shrink min-w-0"
             >
               <motion.div
                 whileHover={{ scale: 1.08, rotate: -5 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-md group-hover:shadow-glow-red transition-shadow"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-md group-hover:shadow-glow-red transition-shadow shrink-0"
               >
-                <Flame className="w-6 h-6 text-white" />
+                <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </motion.div>
-              <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black tracking-wider text-white font-display uppercase group-hover:text-secondary transition-colors">
+              <div className="flex flex-col min-w-0">
+                <span className="text-base sm:text-2xl font-black tracking-wider text-white font-display uppercase group-hover:text-secondary transition-colors truncate">
                   DE PIZZANO
                 </span>
-                <span className="text-[10px] tracking-widest uppercase text-muted-light -mt-1 font-semibold">
+                <span className="hidden sm:block text-[10px] tracking-widest uppercase text-muted-light -mt-1 font-semibold truncate">
                   {BUSINESS_CONFIG.tagline} • Soldier Bazar
                 </span>
               </div>
             </Link>
+
+            {/* Order Mode Selector Pill */}
+            <button
+              type="button"
+              onClick={() => setOrderModalOpen(true)}
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-surface-border hover:border-secondary/50 text-xs text-white transition-all shadow-sm hover:bg-surface-elevated cursor-pointer select-none"
+              title="Click to switch Delivery / Takeaway location"
+            >
+              {orderType === 'delivery' ? (
+                <>
+                  <Bike className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span className="font-semibold text-secondary">Delivery:</span>
+                  <span className="text-muted-light truncate max-w-[130px] font-medium">
+                    {selectedZone?.name?.replace(' (Primary)', '') || 'Karachi'}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <Store className="w-3.5 h-3.5 text-secondary shrink-0" />
+                  <span className="font-semibold text-secondary">Takeaway:</span>
+                  <span className="text-muted-light font-medium">Soldier Bazar</span>
+                </>
+              )}
+              <ChevronDown className="w-3 h-3 text-muted" />
+            </button>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
@@ -139,7 +166,7 @@ export function Navbar() {
 
               {/* Login / Customer Portal link or User Status */}
               {isAuthenticated ? (
-                <div className="flex items-center gap-1.5">
+                <div className="hidden sm:flex items-center gap-1.5">
                   <Link
                     href="/orders"
                     className="p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-white hover:bg-surface-elevated transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -163,7 +190,7 @@ export function Navbar() {
               ) : (
                 <Link
                   href="/login"
-                  className="p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-muted-light hover:text-white hover:bg-surface-elevated transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="hidden sm:flex p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-muted-light hover:text-white hover:bg-surface-elevated transition-colors items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
                   title="Customer Login / Account"
                   aria-label="Customer Login"
                 >
@@ -206,6 +233,12 @@ export function Navbar() {
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         currentPath={pathname}
+      />
+
+      {/* Order Mode Modal */}
+      <OrderTypeModal
+        isOpen={orderModalOpen}
+        onClose={() => setOrderModalOpen(false)}
       />
     </>
   );

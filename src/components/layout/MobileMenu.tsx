@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { X, Phone, MapPin, ExternalLink, Flame, ShoppingBag, User, LogOut } from 'lucide-react';
+import { X, Phone, MapPin, ExternalLink, Flame, ShoppingBag, User, LogOut, Bike, Store, ChevronRight } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { getPhoneLink, getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import { OrderTypeModal } from './OrderTypeModal';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -18,8 +19,9 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
-  const { itemCount } = useCart();
+  const { itemCount, orderType, selectedZone } = useCart();
   const { user, profile, isAuthenticated, signOut } = useAuth();
+  const [orderModalOpen, setOrderModalOpen] = useState(false);
 
   // Close menu on Escape key press
   useEffect(() => {
@@ -76,6 +78,38 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
             aria-label="Close Navigation Menu"
           >
             <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Order Mode Mobile Selector */}
+        <div className="pt-4 pb-1">
+          <button
+            type="button"
+            onClick={() => setOrderModalOpen(true)}
+            className="w-full p-3 rounded-xl bg-surface border border-secondary/40 flex items-center justify-between text-left hover:bg-surface-elevated transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              {orderType === 'delivery' ? (
+                <div className="w-8 h-8 rounded-lg bg-primary/20 text-primary flex items-center justify-center">
+                  <Bike className="w-4 h-4" />
+                </div>
+              ) : (
+                <div className="w-8 h-8 rounded-lg bg-secondary/20 text-secondary flex items-center justify-center">
+                  <Store className="w-4 h-4" />
+                </div>
+              )}
+              <div>
+                <span className="text-[11px] font-semibold text-secondary block uppercase tracking-wider">
+                  {orderType === 'delivery' ? 'Home Delivery' : 'Takeaway Pickup'}
+                </span>
+                <span className="text-xs font-bold text-white block truncate max-w-[180px]">
+                  {orderType === 'delivery' ? (selectedZone?.name || 'Karachi') : 'Soldier Bazar No. 3'}
+                </span>
+              </div>
+            </div>
+            <span className="text-xs text-muted flex items-center gap-1 font-semibold">
+              Change <ChevronRight className="w-3.5 h-3.5" />
+            </span>
           </button>
         </div>
 
@@ -203,11 +237,16 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
 
           {/* Verification Warning Notice */}
           <div className="bg-surface/80 p-2.5 rounded-lg border border-surface-border text-[11px] text-muted leading-relaxed text-center">
-            <span className="text-secondary font-semibold block mb-0.5">Demo Prototype</span>
-            Phase 1 customer storefront. All orders operate in simulation mode.
+            <span className="text-secondary font-semibold block mb-0.5">Authentic De Pizzano Storefront</span>
+            Handcrafted oven-baked pizza delivery & takeaway in Karachi.
           </div>
         </div>
       </div>
+
+      <OrderTypeModal
+        isOpen={orderModalOpen}
+        onClose={() => setOrderModalOpen(false)}
+      />
     </div>
   );
 }

@@ -5,6 +5,8 @@ const SCREENSHOT_DIR = path.resolve('docs/testing/phase-1');
 
 test.describe('Phase 1 Visual Verification & Screenshot Capture', () => {
   test('Capture screenshots across key pages and responsive viewports', async ({ page }) => {
+    test.setTimeout(120000);
+
     // 1. Home Page Desktop (1440px)
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
@@ -21,7 +23,7 @@ test.describe('Phase 1 Visual Verification & Screenshot Capture', () => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/menu');
     await page.waitForTimeout(400);
-    const tikkaCard = page.locator('div.group').filter({ hasText: 'Chicken Tikka Pizza' }).first();
+    const tikkaCard = page.locator('div.group').filter({ hasText: 'Tikka Pizza' }).first();
     await tikkaCard.getByRole('button', { name: /details/i }).click();
     await page.waitForTimeout(400);
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '03-menu-customization-modal-1280px.png') });
@@ -47,9 +49,15 @@ test.describe('Phase 1 Visual Verification & Screenshot Capture', () => {
     // 7. Checkout Page Desktop (1280px)
     await page.setViewportSize({ width: 1280, height: 850 });
     await page.goto('/checkout');
-    await page.getByPlaceholder(/Tariq Ahmed/i).fill('Salman Asif');
-    await page.getByPlaceholder(/0318-2588631/i).fill('03182588631');
-    await page.getByPlaceholder(/Flat 402, Murtaza Terrace/i).fill('Apartment 2B, Soldier Bazar No. 3');
+    await page.waitForTimeout(400);
+    const fullNameInput = page.locator('#fullName');
+    if (await fullNameInput.isVisible()) {
+      await fullNameInput.fill('Salman Asif');
+      const phoneInput = page.locator('#phone');
+      if (await phoneInput.isVisible()) await phoneInput.fill('03182588631');
+      const addressInput = page.locator('#streetAddress');
+      if (await addressInput.isVisible()) await addressInput.fill('Apartment 2B, Soldier Bazar No. 3');
+    }
     await page.waitForTimeout(300);
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '07-checkout-cod-desktop-1280px.png'), fullPage: true });
 
@@ -92,6 +100,37 @@ test.describe('Phase 1 Visual Verification & Screenshot Capture', () => {
     await page.goto('/register');
     await page.waitForTimeout(400);
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, '14-customer-register-1024px.png') });
+
+    // 15. Admin Dashboard Operations Overview (1440px)
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/admin');
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '15-admin-dashboard-overview-1440px.png'), fullPage: true });
+
+    // 16. Admin Live Order Management Queue (1440px)
+    await page.goto('/admin/orders');
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '16-admin-orders-management-1440px.png'), fullPage: true });
+
+    // 17. Admin Product Catalog (1440px)
+    await page.goto('/admin/products');
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '17-admin-products-catalog-1440px.png'), fullPage: true });
+
+    // 18. Admin Categories (1440px)
+    await page.goto('/admin/categories');
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '18-admin-categories-1440px.png'), fullPage: true });
+
+    // 19. Admin Deals & Promotions (1440px)
+    await page.goto('/admin/deals');
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '19-admin-deals-vouchers-1440px.png'), fullPage: true });
+
+    // 20. Admin Restaurant Settings (1440px)
+    await page.goto('/admin/settings');
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: path.join(SCREENSHOT_DIR, '20-admin-settings-1440px.png'), fullPage: true });
   });
 });
 

@@ -50,7 +50,7 @@ export function FeaturedMenu() {
             icon={<ArrowRight className="w-4 h-4" />}
             iconPosition="right"
           >
-            Explore All 26 Menu Items
+            Explore Complete Menu (50 Dishes)
           </Button>
           <p className="mt-3 text-xs text-muted">
             All prices shown are indicative public listing rates awaiting official owner confirmation.

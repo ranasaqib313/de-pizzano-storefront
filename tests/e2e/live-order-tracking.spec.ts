@@ -38,7 +38,7 @@ test.describe('Phase 5 — Customer Live Order Tracking & Status Sync', () => {
 
     // Verify Delivery Information
     await expect(page.getByText(/Delivery Information/i)).toBeVisible();
-    await expect(page.getByText(/Soldier Bazar/i).first()).toBeVisible();
+    await expect(page.getByTestId('tracker-delivery-address')).toContainText(/Soldier Bazar/i);
 
     // Verify "Need Help?" Card and Phone Button
     await expect(page.getByText(/Need Help With Your Order\?/i)).toBeVisible();
@@ -50,22 +50,43 @@ test.describe('Phase 5 — Customer Live Order Tracking & Status Sync', () => {
   test('2. /orders page contains "Track Order" button linking directly to /track/[orderId]', async ({
     page,
   }) => {
+    // Seed an order in local session so /orders renders an active order card
+    await page.addInitScript(() => {
+      window.localStorage.setItem(
+        'depizzano_recent_orders',
+        JSON.stringify([
+          {
+            id: 'DPZ-2026-8921',
+            createdAt: new Date().toISOString(),
+            customer: { fullName: 'Salman Asif', phone: '03182588631', email: 'test@depizzano.demo' },
+            deliveryAddress: { streetAddress: 'Apartment 2B, Murtaza Terrace', area: 'Soldier Bazar No. 3', city: 'Karachi' },
+            items: [{ id: 'item-1', name: 'Tikka Pizza', unitPrice: 750, quantity: 1, totalPrice: 750 }],
+            pricing: { subtotal: 750, deliveryFee: 100, platformFee: 0, discount: 0, total: 850 },
+            paymentMethod: 'Cash on Delivery',
+            status: 'Confirmed',
+          },
+        ])
+      );
+    });
+
     await page.goto('/orders');
 
     // Wait for orders page
     await expect(page.getByRole('heading', { name: /MY ORDERS/i })).toBeVisible();
 
-    // Find Track Order button specifically inside the order card list (not the navbar)
-    const orderCard = page.locator('div.bg-surface.border.border-surface-border.rounded-2xl').first();
-    const trackButton = orderCard.getByRole('link', { name: /Track Order/i });
-    await expect(trackButton).toBeVisible();
+    // Find Track Order button specifically inside the order card list
+    const trackButton = page.getByTestId('order-card-track-btn').first();
+    await expect(trackButton).toBeVisible({ timeout: 15000 });
 
     // Get href attribute and verify it matches /track/[orderId]
     const href = await trackButton.getAttribute('href');
     expect(href).toMatch(/\/track\/[a-zA-Z0-9_-]+/);
 
-    // Click track button
-    await trackButton.click();
+    // Click track button and wait for navigation
+    await Promise.all([
+      page.waitForURL(/\/track\/.+/, { timeout: 15000 }),
+      trackButton.click(),
+    ]);
 
     // Verify navigated to tracking page
     await expect(page).toHaveURL(/\/track\/.+/);
@@ -85,13 +106,17 @@ test.describe('Phase 5 — Customer Live Order Tracking & Status Sync', () => {
     await expect(searchInput).toBeVisible();
     await searchInput.fill('DP-20261107-9999');
 
-    // Click Track Live Order button
+    // Click Track Live Order button and wait for navigation
     const submitBtn = page.getByRole('button', { name: /Track Live Order/i });
     await expect(submitBtn).toBeEnabled();
-    await submitBtn.click();
+
+    await Promise.all([
+      page.waitForURL('**/track/DP-20261107-9999', { timeout: 15000 }),
+      submitBtn.click(),
+    ]);
 
     // Verify URL navigated to /track/DP-20261107-9999
-    await expect(page).toHaveURL('/track/DP-20261107-9999');
+    await expect(page).toHaveURL(/\/track\/DP-20261107-9999/);
   });
 
   test('4. Live tracker dynamically updates UI when order status changes', async ({

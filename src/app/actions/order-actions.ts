@@ -310,3 +310,122 @@ export async function placeOrderAction(payload: PlaceOrderPayload): Promise<Plac
     };
   }
 }
+
+/**
+ * Server Action: Update Order Status (Admin / Kitchen Operations)
+ */
+export async function updateOrderStatusAction({
+  orderId,
+  status,
+  note,
+}: {
+  orderId: string;
+  status: string;
+  note?: string;
+}): Promise<{ success: boolean; error?: string }> {
+  try {
+    const adminClient = createAdminClient();
+    const userClient = await createClient();
+    const db = adminClient || userClient;
+
+    // Normalize status to lowercase underscore format
+    const dbStatus = status.toLowerCase().replace(/\s+/g, '_');
+
+    // 1. Update status on order
+    const { error: updateError } = await (db.from('orders') as any)
+      .update({
+        status: dbStatus,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', orderId);
+
+    if (updateError) {
+      return { success: false, error: updateError.message };
+    }
+
+    // 2. Insert into status history
+    await (db.from('order_status_history') as any).insert({
+      order_id: orderId,
+      status: dbStatus,
+      notes: note || `Order marked as ${status} by restaurant operations.`,
+    });
+
+    return { success: true };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Failed to update order status',
+    };
+  }
+}
+
+/**
+ * Server Action: Toggle Product Availability (In Stock / Sold Out)
+ */
+export async function toggleProductAvailabilityAction(
+  productId: string,
+  isAvailable: boolean
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const adminClient = createAdminClient();
+    const userClient = await createClient();
+    const db = adminClient || userClient;
+
+    const { error } = await (db.from('products') as any)
+      .update({ is_available: isAvailable })
+      .eq('id', productId);
+
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Failed to update product availability' };
+  }
+}
+
+/**
+ * Server Action: Toggle Product Featured Status
+ */
+export async function toggleProductFeaturedAction(
+  productId: string,
+  isFeatured: boolean
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const adminClient = createAdminClient();
+    const userClient = await createClient();
+    const db = adminClient || userClient;
+
+    const { error } = await (db.from('products') as any)
+      .update({ is_featured: isFeatured })
+      .eq('id', productId);
+
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Failed to update featured status' };
+  }
+}
+
+/**
+ * Server Action: Update Product Base Price
+ */
+export async function updateProductPriceAction(
+  productId: string,
+  basePrice: number
+): Promise<{ success: boolean; error?: string }> {
+  if (basePrice < 0) return { success: false, error: 'Price must be non-negative integer PKR' };
+
+  try {
+    const adminClient = createAdminClient();
+    const userClient = await createClient();
+    const db = adminClient || userClient;
+
+    const { error } = await (db.from('products') as any)
+      .update({ base_price: Math.round(basePrice) })
+      .eq('id', productId);
+
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Failed to update product price' };
+  }
+}

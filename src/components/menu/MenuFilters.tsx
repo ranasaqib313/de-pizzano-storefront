@@ -18,7 +18,10 @@ export function MenuFilters({
   totalCount,
 }: MenuFiltersProps) {
   return (
-    <div className="flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none no-scrollbar">
+    <nav
+      aria-label="Menu Categories"
+      className="flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none no-scrollbar"
+    >
       {/* "All" Filter Button */}
       <button
         type="button"
@@ -72,7 +75,6 @@ export function MenuFilters({
           </button>
         );
       })}
-    </div>
+    </nav>
   );
 }
-

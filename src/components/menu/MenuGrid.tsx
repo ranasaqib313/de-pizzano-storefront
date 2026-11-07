@@ -5,11 +5,13 @@ import { MenuItem, MenuCategoryId, MenuCategory } from '@/types/menu';
 import { MENU_CATEGORIES } from '@/data/menu';
 import { MenuCard } from './MenuCard';
 import { MenuFilters } from './MenuFilters';
+import { RightCategoryRail } from './RightCategoryRail';
 import { MenuSearch } from './MenuSearch';
 import { ProductDialog } from './ProductDialog';
-import { AlertCircle, Database, Sparkles } from 'lucide-react';
+import { AlertCircle, Database, Sparkles, LayoutGrid, List } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { getMenuProducts, getMenuCategories } from '@/lib/supabase/services/menu-service';
+import { cn } from '@/lib/utils';
 
 interface MenuGridProps {
   initialItems: MenuItem[];
@@ -25,6 +27,7 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
   const [selectedCategory, setSelectedCategory] = useState<MenuCategoryId>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   // Attempt client-side load from Supabase database
   useEffect(() => {
@@ -91,30 +94,26 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
   };
 
   return (
-    <div>
-      {/* Search and Filter Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+    <div className="space-y-6">
+      {/* Mobile/Tablet Horizontal Category Filters (Visible below lg) */}
+      <div className="lg:hidden">
         <MenuFilters
           categories={categoriesWithCounts}
           activeCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
           totalCount={items.length}
         />
-        <MenuSearch
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          onClear={() => setSearchTerm('')}
-        />
       </div>
 
-      {/* Results Count & Current Active Filter State & Data Source Badge */}
-      <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted mb-6 pb-3 border-b border-surface-border">
-        <div className="flex items-center gap-3">
+      {/* Search, Layout Switcher & Status Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-surface/60 border border-surface-border">
+        {/* Results Count & Filter Indicator */}
+        <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
           <span>
-            Showing <strong className="text-white">{filteredItems.length}</strong> of{' '}
-            <strong className="text-white">{items.length}</strong> items
+            Showing <strong className="text-white font-bold">{filteredItems.length}</strong> of{' '}
+            <strong className="text-white font-bold">{items.length}</strong> items
             {selectedCategory !== 'all' && (
-              <span className="text-secondary ml-1">
+              <span className="text-secondary ml-1 font-semibold">
                 in {categories.find((c) => c.id === selectedCategory)?.label || selectedCategory}
               </span>
             )}
@@ -142,46 +141,123 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
               {dataSource === 'database' ? 'Live Data (Supabase)' : 'Demo Data'}
             </span>
           </div>
+
+          {(selectedCategory !== 'all' || searchTerm) && (
+            <button
+              type="button"
+              onClick={handleClearFilters}
+              className="text-secondary hover:underline font-semibold cursor-pointer ml-1"
+            >
+              Reset Filters
+            </button>
+          )}
         </div>
 
-        {(selectedCategory !== 'all' || searchTerm) && (
-          <button
-            type="button"
-            onClick={handleClearFilters}
-            className="text-secondary hover:underline font-semibold cursor-pointer"
+        {/* Search Bar & View Mode Toggle Controls */}
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="w-full sm:w-64">
+            <MenuSearch
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              onClear={() => setSearchTerm('')}
+            />
+          </div>
+
+          {/* Grid / List View Toggle */}
+          <div
+            className="flex items-center bg-surface-elevated border border-surface-border rounded-xl p-1 shrink-0"
+            role="group"
+            aria-label="Product layout view"
           >
-            Reset Filters
-          </button>
-        )}
+            <button
+              type="button"
+              onClick={() => setViewMode('grid')}
+              className={cn(
+                'p-1.5 rounded-lg transition-colors cursor-pointer',
+                viewMode === 'grid'
+                  ? 'bg-primary text-white shadow-sm'
+                  : 'text-muted hover:text-white'
+              )}
+              title="Grid View"
+              aria-pressed={viewMode === 'grid'}
+              aria-label="Switch to grid view"
+            >
+              <LayoutGrid className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode('list')}
+              className={cn(
+                'p-1.5 rounded-lg transition-colors cursor-pointer',
+                viewMode === 'list'
+                  ? 'bg-primary text-white shadow-sm'
+                  : 'text-muted hover:text-white'
+              )}
+              title="List View"
+              aria-pressed={viewMode === 'list'}
+              aria-label="Switch to list view"
+            >
+              <List className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Menu Items Grid */}
-      {filteredItems.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredItems.map((item) => (
-            <MenuCard
-              key={item.id}
-              item={item}
-              onSelect={(selected) => setActiveItem(selected)}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="bg-surface border border-surface-border rounded-2xl p-12 text-center max-w-md mx-auto my-12">
-          <AlertCircle className="w-12 h-12 text-secondary mx-auto mb-4" />
-          <h3 className="text-lg font-bold text-white mb-2">No menu items found</h3>
-          <p className="text-sm text-muted mb-6 leading-relaxed">
-            No dishes match &quot;{searchTerm}&quot; in the selected filter. Try clearing the search or exploring all categories.
-          </p>
-          <Button variant="primary" size="sm" onClick={handleClearFilters}>
-            Clear All Filters
-          </Button>
-        </div>
-      )}
+      {/* Main Two-Zone Desktop Layout: Central Products on LEFT/CENTER + Right-Side Category Rail on FAR RIGHT */}
+      <div className="flex flex-col lg:flex-row items-start gap-8">
+        {/* Central Product Browsing Area */}
+        <main className="flex-1 min-w-0 w-full" aria-label="Product Catalog">
+          {filteredItems.length > 0 ? (
+            viewMode === 'grid' ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                {filteredItems.map((item) => (
+                  <MenuCard
+                    key={item.id}
+                    item={item}
+                    layout="grid"
+                    onSelect={(selected) => setActiveItem(selected)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {filteredItems.map((item) => (
+                  <MenuCard
+                    key={item.id}
+                    item={item}
+                    layout="list"
+                    onSelect={(selected) => setActiveItem(selected)}
+                  />
+                ))}
+              </div>
+            )
+          ) : (
+            <div className="bg-surface border border-surface-border rounded-3xl p-12 text-center max-w-md mx-auto my-12">
+              <AlertCircle className="w-12 h-12 text-secondary mx-auto mb-4" />
+              <h3 className="text-lg font-bold text-white mb-2">No dishes found</h3>
+              <p className="text-sm text-muted mb-6 leading-relaxed">
+                No menu items match &quot;{searchTerm}&quot; in the selected category. Try searching for a different dish or reset your filters.
+              </p>
+              <Button variant="primary" size="sm" onClick={handleClearFilters}>
+                Clear All Filters
+              </Button>
+            </div>
+          )}
+        </main>
 
-      {/* Modal Dialog for Product Details */}
+        {/* Desktop Right-Side Vertical Category Rail */}
+        <div className="hidden lg:block w-72 xl:w-80 shrink-0 sticky top-28">
+          <RightCategoryRail
+            categories={categoriesWithCounts}
+            activeCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            totalCount={items.length}
+          />
+        </div>
+      </div>
+
+      {/* Modal Dialog for Product Customization & Details */}
       <ProductDialog item={activeItem} onClose={() => setActiveItem(null)} />
     </div>
   );
 }
-

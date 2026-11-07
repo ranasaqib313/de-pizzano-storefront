@@ -1,5 +1,7 @@
 import { MenuItem } from './menu';
 
+export type OrderType = 'delivery' | 'pickup';
+
 export type OrderStatus =
   | 'Pending'
   | 'Confirmed'

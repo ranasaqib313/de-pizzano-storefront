@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { CartItem, PriceBreakdown, DeliveryZone } from '@/types/storefront';
+import { CartItem, PriceBreakdown, DeliveryZone, OrderType } from '@/types/storefront';
 import {
   calculateCartTotals,
   clampQuantity,
@@ -37,6 +37,8 @@ interface CartContextType {
   pricing: PriceBreakdown;
   selectedZone: DeliveryZone;
   setSelectedZone: (zone: DeliveryZone) => void;
+  orderType: OrderType;
+  setOrderType: (type: OrderType) => void;
   isCartDrawerOpen: boolean;
   openCartDrawer: () => void;
   closeCartDrawer: () => void;
@@ -51,10 +53,12 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CART_STORAGE_KEY = 'depizzano_customer_cart_v1';
 const ZONE_STORAGE_KEY = 'depizzano_delivery_zone_v1';
+const ORDER_TYPE_STORAGE_KEY = 'depizzano_order_type_v1';
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [selectedZone, setSelectedZoneState] = useState<DeliveryZone>(KARACHI_DELIVERY_ZONES[0]);
+  const [orderType, setOrderTypeState] = useState<OrderType>('delivery');
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -75,6 +79,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         if (matched) {
           setSelectedZoneState(matched);
         }
+      }
+
+      const savedOrderType = localStorage.getItem(ORDER_TYPE_STORAGE_KEY);
+      if (savedOrderType === 'delivery' || savedOrderType === 'pickup') {
+        setOrderTypeState(savedOrderType);
       }
     } catch {
       // Local storage unreadable or disabled; fallback to default in-memory state
@@ -97,6 +106,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setSelectedZoneState(zone);
     try {
       localStorage.setItem(ZONE_STORAGE_KEY, zone.id);
+    } catch {
+      // Ignore storage write error
+    }
+  }, []);
+
+  const setOrderType = useCallback((type: OrderType) => {
+    setOrderTypeState(type);
+    try {
+      localStorage.setItem(ORDER_TYPE_STORAGE_KEY, type);
     } catch {
       // Ignore storage write error
     }
@@ -183,13 +201,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items]);
 
   const pricing = useMemo(() => {
+    const fee = orderType === 'pickup' ? 0 : (selectedZone ? selectedZone.fee : DEFAULT_DELIVERY_FEE);
     return calculateCartTotals(
       items,
-      selectedZone ? selectedZone.fee : DEFAULT_DELIVERY_FEE,
+      fee,
       0,
       0
     );
-  }, [items, selectedZone]);
+  }, [items, selectedZone, orderType]);
 
   const value = useMemo(
     () => ({
@@ -198,6 +217,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       pricing,
       selectedZone,
       setSelectedZone,
+      orderType,
+      setOrderType,
       isCartDrawerOpen,
       openCartDrawer,
       closeCartDrawer,
@@ -213,6 +234,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       pricing,
       selectedZone,
       setSelectedZone,
+      orderType,
+      setOrderType,
       isCartDrawerOpen,
       openCartDrawer,
       closeCartDrawer,
@@ -239,6 +262,8 @@ const defaultCartContext: CartContextType = {
   },
   selectedZone: KARACHI_DELIVERY_ZONES[0],
   setSelectedZone: () => {},
+  orderType: 'delivery',
+  setOrderType: () => {},
   isCartDrawerOpen: false,
   openCartDrawer: () => {},
   closeCartDrawer: () => {},

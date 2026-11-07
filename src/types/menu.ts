@@ -32,6 +32,7 @@ export interface MenuItem {
   description?: string;
   image: string;
   featured?: boolean;
+  isAvailable?: boolean;
   priceDisclaimer?: string;
   variants?: ProductVariant[];
   options?: ProductOption[];

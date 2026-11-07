@@ -1,13 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, type Variants } from 'framer-motion';
-import { Flame, Utensils, ExternalLink, Phone, MapPin, Sparkles } from 'lucide-react';
+import { Flame, Utensils, ExternalLink, Phone, MapPin, Sparkles, Bike, Store, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { getPhoneLink, getFoodpandaUrl, getMapsDirectionsUrl } from '@/lib/links';
+import { useCart } from '@/context/CartContext';
+import { OrderTypeModal } from '@/components/layout/OrderTypeModal';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -28,6 +31,9 @@ const scaleIn: Variants = {
 };
 
 export function Hero() {
+  const [orderModalOpen, setOrderModalOpen] = useState(false);
+  const { orderType, selectedZone } = useCart();
+
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden py-16 sm:py-24 bg-hero-glow">
       {/* Ambient glows */}
@@ -73,8 +79,7 @@ export function Hero() {
               animate="visible"
               className="text-base sm:text-lg md:text-xl text-muted-light max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed"
             >
-              Explore De Pizzano&apos;s pizza, pasta, sandwiches and favourite bites in Soldier
-              Bazar, Karachi. Handcrafted recipes baked fresh for delivery and takeaway.
+              Authentic artisanal pizzas, value bundle deals, toasted sandwiches, rich baked pastas and crispy sides. Handcrafted with fresh fermented dough and 100% mozzarella in Soldier Bazar, Karachi.
             </motion.p>
 
             {/* Metrics Bar */}
@@ -87,15 +92,15 @@ export function Hero() {
             >
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-secondary" />
-                <span className="text-white font-semibold">26 Researched</span> Menu Items
+                <span className="text-white font-semibold">50 Authentic</span> Dishes
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-primary" />
-                <span className="text-white font-semibold">6 Distinct</span> Categories
+                <span className="text-white font-semibold">6 Verified</span> Categories
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="text-white font-semibold">Foodpanda</span> Delivery Listed
+                <span className="text-white font-semibold">Home Delivery</span> & Takeaway
               </div>
             </motion.div>
 
@@ -112,31 +117,37 @@ export function Hero() {
                 size="lg"
                 href="/menu"
                 icon={<Utensils className="w-4 h-4" />}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto shadow-glow-red"
               >
-                Explore Full Menu
+                Order Online Now
               </Button>
 
-              <Button
-                variant="foodpanda"
-                size="lg"
-                href={getFoodpandaUrl()}
-                external
-                icon={<ExternalLink className="w-4 h-4" />}
-                iconPosition="right"
-                className="w-full sm:w-auto"
+              <button
+                type="button"
+                onClick={() => setOrderModalOpen(true)}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-surface border border-secondary/40 text-white hover:bg-surface-elevated hover:border-secondary transition-all flex items-center justify-center gap-2 text-sm font-bold cursor-pointer"
               >
-                Order on Foodpanda
-              </Button>
+                {orderType === 'delivery' ? (
+                  <>
+                    <Bike className="w-4 h-4 text-primary" />
+                    <span>Mode: Delivery ({selectedZone?.name || 'Karachi'})</span>
+                  </>
+                ) : (
+                  <>
+                    <Store className="w-4 h-4 text-secondary" />
+                    <span>Mode: Takeaway (Soldier Bazar)</span>
+                  </>
+                )}
+              </button>
 
               <Button
                 variant="outline"
                 size="lg"
-                href={getPhoneLink()}
-                icon={<Phone className="w-4 h-4 text-secondary" />}
+                href="/menu#pizza-deals"
+                icon={<Sparkles className="w-4 h-4 text-secondary" />}
                 className="w-full sm:w-auto"
               >
-                Call: {BUSINESS_CONFIG.contact.formattedPhone}
+                Explore Deals
               </Button>
             </motion.div>
 
@@ -169,50 +180,58 @@ export function Hero() {
             className="lg:col-span-5 relative flex items-center justify-center"
           >
             {/* Outer ring */}
-            <div className="relative w-72 sm:w-88 md:w-96 aspect-square rounded-full border-2 border-secondary/30 bg-surface/40 p-4 shadow-2xl flex items-center justify-center">
-              <div className="w-full h-full rounded-full bg-gradient-to-br from-primary/20 via-surface to-secondary/10 border border-surface-border flex flex-col items-center justify-center p-6 text-center relative overflow-hidden group">
-                {/* Spinning subtle glow ring */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 animate-spin" style={{ animationDuration: '8s' }} />
+            <div className="relative w-80 sm:w-96 aspect-square rounded-full border-2 border-secondary/30 bg-surface/40 p-3 shadow-2xl flex items-center justify-center">
+              <div className="w-full h-full rounded-full bg-surface border border-surface-border flex flex-col items-center justify-center relative overflow-hidden group">
+                {/* Food Image */}
+                <div className="relative w-full h-full rounded-full overflow-hidden">
+                  <Image
+                    src="/images/gallery/chicken-tikka-pizza.jpg"
+                    alt="Authentic De Pizzano Handcrafted Chicken Tikka Pizza"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    priority
+                  />
+                  {/* Subtle vignette overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/20" />
+                </div>
 
-                <motion.div
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-                  className="text-7xl sm:text-8xl mb-3 drop-shadow-xl relative z-10"
-                >
-                  🍕
-                </motion.div>
-
-                <h3 className="text-xl sm:text-2xl font-black text-white font-display uppercase tracking-wider relative z-10">
-                  DE PIZZANO
-                </h3>
-                <p className="text-xs text-secondary font-bold tracking-widest uppercase mt-1 relative z-10">
-                  TASTY DELICIOUS
-                </p>
-                <div className="mt-4 px-3 py-1 bg-surface-elevated/90 rounded-full border border-surface-border text-[11px] text-muted-light relative z-10">
-                  Starting at Rs. 750 (Regular Pizza)
+                {/* Badge Overlay */}
+                <div className="absolute bottom-6 inset-x-6 text-center bg-surface/90 backdrop-blur-md p-3 rounded-2xl border border-surface-border shadow-xl">
+                  <h3 className="text-base sm:text-lg font-black text-white font-display uppercase tracking-wider">
+                    DE PIZZANO ARTISANAL PIZZA
+                  </h3>
+                  <p className="text-[11px] text-secondary font-bold tracking-widest uppercase mt-0.5">
+                    Starting from Rs. 400 (Small 9&quot;) • Rs. 750 (Regular 11&quot;)
+                  </p>
                 </div>
 
                 {/* Floating Tags */}
                 <motion.div
                   animate={{ y: [0, -5, 0] }}
                   transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut', delay: 0.5 }}
-                  className="absolute top-4 right-4 bg-background/95 border border-primary/40 px-3 py-1 rounded-lg text-[10px] font-bold text-white shadow-lg z-10"
+                  className="absolute top-4 right-4 bg-background/95 border border-primary/40 px-3 py-1 rounded-xl text-[11px] font-bold text-white shadow-lg z-10 flex items-center gap-1.5"
                 >
-                  🔥 Tikka & Fajita
+                  <Flame className="w-3.5 h-3.5 text-primary" /> Stone-Baked
                 </motion.div>
 
                 <motion.div
                   animate={{ y: [0, -5, 0] }}
                   transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut', delay: 1 }}
-                  className="absolute bottom-6 left-4 bg-background/95 border border-secondary/40 px-3 py-1 rounded-lg text-[10px] font-bold text-secondary shadow-lg z-10"
+                  className="absolute top-12 left-2 bg-background/95 border border-secondary/40 px-3 py-1 rounded-xl text-[11px] font-bold text-secondary shadow-lg z-10 flex items-center gap-1.5"
                 >
-                  🧀 Cheesy Sticks
+                  <Sparkles className="w-3.5 h-3.5 text-secondary" /> 100% Mozzarella
                 </motion.div>
               </div>
             </div>
           </motion.div>
         </div>
       </Container>
+
+      {/* Order Mode Modal */}
+      <OrderTypeModal
+        isOpen={orderModalOpen}
+        onClose={() => setOrderModalOpen(false)}
+      />
     </section>
   );
 }

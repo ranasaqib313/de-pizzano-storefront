@@ -517,7 +517,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                   <span className="text-muted block text-[10px] uppercase tracking-wider font-semibold">
                     Delivery Address
                   </span>
-                  <p className="text-muted-light leading-relaxed mt-0.5">
+                  <p data-testid="tracker-delivery-address" className="text-muted-light leading-relaxed mt-0.5">
                     {order.deliveryAddress.streetAddress}
                     {order.deliveryAddress.area && `, ${order.deliveryAddress.area}`}
                     {order.deliveryAddress.city && `, ${order.deliveryAddress.city}`}

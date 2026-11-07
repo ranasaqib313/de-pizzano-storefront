@@ -7,7 +7,8 @@ export interface NavItem {
 
 export const MAIN_NAV_ITEMS: NavItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'Menu', href: '/menu', description: 'Explore all 26 pizzas, pastas, sandwiches & sides' },
+  { label: 'Menu', href: '/menu', description: 'Explore all 50 pizzas, pastas, sandwiches & sides' },
+  { label: 'Deals', href: '/menu#pizza-deals', description: 'Value bundle deals with soft drinks included' },
   { label: 'Track Order', href: '/track', description: 'Live status timeline for Cash on Delivery orders' },
   { label: 'My Orders', href: '/orders', description: 'Order history and receipts' },
   { label: 'About', href: '/about', description: 'Our concept and culinary focus' },
