@@ -123,9 +123,9 @@ describe('Live Supabase Integration & Real RLS Policy Verification', () => {
       },
     });
 
-    if (signUpError || !authData.user) {
-      // If email signup requires confirmation on project, note it
-      console.warn('SignUp returned error (check if email confirmation is enabled):', signUpError?.message);
+    if (signUpError || !authData.user || !authData.session) {
+      // If email signup requires confirmation on project or rate limits, note it
+      console.warn('SignUp returned error or requires email confirmation:', signUpError?.message || 'No active session');
       return;
     }
 
