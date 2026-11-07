@@ -17,6 +17,7 @@
     scroll-behavior: smooth;
     color-scheme: dark;
     background-color: #171311;
+    overflow-x: hidden;
   }
 
   body {

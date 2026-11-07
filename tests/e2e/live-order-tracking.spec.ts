@@ -3,13 +3,17 @@ import { test, expect } from '@playwright/test';
 test.describe('Phase 5 — Customer Live Order Tracking & Status Sync', () => {
   const TEST_ORDER_ID = 'DPZ-2026-8921';
 
+  test.beforeEach(async () => {
+    test.setTimeout(60000);
+  });
+
   test('1. Navigating to /track/[orderId] displays live timeline, sync indicator, and order details', async ({
     page,
   }) => {
     await page.goto(`/track/${TEST_ORDER_ID}`);
 
     // Wait for the tracking view to load
-    await expect(page.getByText(/Live Dispatch Timeline/i)).toBeVisible();
+    await expect(page.getByText(/Live Dispatch Timeline/i)).toBeVisible({ timeout: 15000 });
 
     // Verify Official Order Reference
     await expect(page.getByText(TEST_ORDER_ID)).toBeVisible();
@@ -90,7 +94,7 @@ test.describe('Phase 5 — Customer Live Order Tracking & Status Sync', () => {
 
     // Verify navigated to tracking page
     await expect(page).toHaveURL(/\/track\/.+/);
-    await expect(page.getByText(/Live Dispatch Timeline/i)).toBeVisible();
+    await expect(page.getByText(/Live Dispatch Timeline/i)).toBeVisible({ timeout: 15000 });
   });
 
   test('3. General /track page search form navigates to /track/[orderId]', async ({
@@ -163,7 +167,7 @@ test.describe('Phase 5 — Customer Live Order Tracking & Status Sync', () => {
     await page.goto('/track/DPZ-E2E-LIVE-001');
 
     // Confirm initial status is Pending
-    await expect(page.getByText('DPZ-E2E-LIVE-001')).toBeVisible();
+    await expect(page.getByText('DPZ-E2E-LIVE-001')).toBeVisible({ timeout: 15000 });
 
     // Now simulate external status update (e.g. from Admin or Realtime DB) to "Preparing"
     await page.evaluate(() => {

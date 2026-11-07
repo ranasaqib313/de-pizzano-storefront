@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { RightNavRail } from '@/components/layout/RightNavRail';
+import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { CartProvider } from '@/context/CartContext';
 import { AuthProvider } from '@/context/AuthContext';
@@ -93,13 +95,15 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground antialiased selection:bg-primary selection:text-white`}>
+      <body className={`${inter.className} min-h-screen flex flex-col lg:pr-[72px] xl:pr-[76px] bg-background text-foreground antialiased selection:bg-primary selection:text-white`}>
         <AuthProvider>
           <CartProvider>
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-16 lg:pb-0">{children}</main>
             <Footer />
             <CartDrawer />
+            <RightNavRail />
+            <MobileBottomNav />
           </CartProvider>
         </AuthProvider>
       </body>

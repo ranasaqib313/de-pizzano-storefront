@@ -4,14 +4,21 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Phone, ExternalLink, Menu, Flame, ShoppingBag, User, LogOut, Bike, Store, ChevronDown } from 'lucide-react';
+import {
+  Flame,
+  ShoppingBag,
+  User,
+  LogOut,
+  Bike,
+  Store,
+  ChevronDown,
+  Menu,
+} from 'lucide-react';
 import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
-import { MAIN_NAV_ITEMS } from '@/data/navigation';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink, getFoodpandaUrl } from '@/lib/links';
 import { MobileMenu } from './MobileMenu';
 import { OrderTypeModal } from './OrderTypeModal';
+import { HeaderSearch } from './HeaderSearch';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -26,7 +33,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -34,10 +41,10 @@ export function Navbar() {
 
   return (
     <>
-      {/* Demo Concept Announcement Header */}
-      <div className="bg-gradient-to-r from-neutral-900 via-primary/30 to-neutral-900 border-b border-primary/20 text-xs py-1.5 px-4 text-center">
-        <Container size="xl" className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3 text-muted-light">
-          <span className="font-semibold text-secondary tracking-wide flex items-center gap-1">
+      {/* Concept Disclaimer Announcement Bar */}
+      <div className="bg-gradient-to-r from-neutral-950 via-primary/25 to-neutral-950 border-b border-primary/20 text-xs py-1.5 px-4 text-center">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3 text-muted-light">
+          <span className="font-semibold text-secondary tracking-wide flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
             {BUSINESS_CONFIG.demoNotice.badge}
           </span>
@@ -45,188 +52,166 @@ export function Navbar() {
           <span className="text-[11px] text-muted">
             {BUSINESS_CONFIG.demoNotice.disclaimer}
           </span>
-        </Container>
+        </div>
       </div>
 
-      {/* Main Navigation Bar */}
-      <motion.header
-        initial={{ y: -10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      {/* Main Top Header */}
+      <header
         className={cn(
-          'sticky top-0 z-40 w-full transition-all duration-300 backdrop-blur-md',
+          'sticky top-0 z-30 w-full transition-all duration-300 backdrop-blur-xl',
           isScrolled
-            ? 'bg-background/95 border-b border-surface-border shadow-lg py-3'
-            : 'bg-background/70 border-b border-surface-border/50 py-4'
+            ? 'bg-background/95 border-b border-surface-border shadow-xl py-2.5 sm:py-3'
+            : 'bg-background/85 border-b border-surface-border/60 py-3 sm:py-4'
         )}
       >
-        <Container size="xl">
-          <div className="flex items-center justify-between gap-4">
-            {/* Brand Logo */}
-            <Link
-              href="/"
-              className="group flex items-center gap-2 sm:gap-2.5 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg p-1 shrink min-w-0"
-            >
-              <motion.div
-                whileHover={{ scale: 1.08, rotate: -5 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-md group-hover:shadow-glow-red transition-shadow shrink-0"
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between gap-3 sm:gap-4 lg:gap-6">
+            {/* LEFT: De Pizzano Brand Logo */}
+            <div className="flex items-center gap-1.5 sm:gap-3 shrink min-w-0">
+              <Link
+                href="/"
+                className="group flex items-center gap-1.5 sm:gap-2.5 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl p-0.5 sm:p-1 shrink min-w-0"
+                aria-label="De Pizzano Home"
               >
-                <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </motion.div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-base sm:text-2xl font-black tracking-wider text-white font-display uppercase group-hover:text-secondary transition-colors truncate">
-                  DE PIZZANO
-                </span>
-                <span className="hidden sm:block text-[10px] tracking-widest uppercase text-muted-light -mt-1 font-semibold truncate">
-                  {BUSINESS_CONFIG.tagline} • Soldier Bazar
-                </span>
-              </div>
-            </Link>
-
-            {/* Order Mode Selector Pill */}
-            <button
-              type="button"
-              onClick={() => setOrderModalOpen(true)}
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-surface-border hover:border-secondary/50 text-xs text-white transition-all shadow-sm hover:bg-surface-elevated cursor-pointer select-none"
-              title="Click to switch Delivery / Takeaway location"
-            >
-              {orderType === 'delivery' ? (
-                <>
-                  <Bike className="w-3.5 h-3.5 text-primary shrink-0" />
-                  <span className="font-semibold text-secondary">Delivery:</span>
-                  <span className="text-muted-light truncate max-w-[130px] font-medium">
-                    {selectedZone?.name?.replace(' (Primary)', '') || 'Karachi'}
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-md group-hover:shadow-glow-red transition-all group-hover:scale-105 shrink-0">
+                  <Flame className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-sm sm:text-xl font-black tracking-wider text-white font-display uppercase group-hover:text-secondary transition-colors leading-tight truncate">
+                    DE PIZZANO
                   </span>
-                </>
-              ) : (
-                <>
-                  <Store className="w-3.5 h-3.5 text-secondary shrink-0" />
-                  <span className="font-semibold text-secondary">Takeaway:</span>
-                  <span className="text-muted-light font-medium">Soldier Bazar</span>
-                </>
-              )}
-              <ChevronDown className="w-3 h-3 text-muted" />
-            </button>
+                  <span className="hidden md:block text-[10px] tracking-widest uppercase text-muted -mt-0.5 font-semibold">
+                    {BUSINESS_CONFIG.tagline} • Soldier Bazar
+                  </span>
+                </div>
+              </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {MAIN_NAV_ITEMS.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      'relative px-3.5 py-2 text-sm font-medium rounded-md transition-colors',
-                      isActive
-                        ? 'text-white font-semibold'
-                        : 'text-muted-light hover:text-white hover:bg-surface/50'
-                    )}
-                  >
-                    {item.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-indicator"
-                        className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
-                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
-
-            {/* Action Buttons & Cart */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Phone call shortcut (Desktop) */}
-              <Button
-                variant="outline"
-                size="sm"
-                href={getPhoneLink()}
-                icon={<Phone className="w-3.5 h-3.5 text-secondary" />}
-                className="hidden 2xl:inline-flex"
-                title="Call Restaurant Directly (Provisional Number)"
+              {/* NEXT: Delivery / Location Selector Pill (Full on sm, compact on mobile) */}
+              <button
+                type="button"
+                onClick={() => setOrderModalOpen(true)}
+                className="hidden sm:flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full bg-surface border border-surface-border hover:border-secondary/60 text-xs text-white transition-all shadow-sm hover:bg-surface-elevated cursor-pointer select-none shrink-0"
+                title="Click to switch Delivery / Takeaway location"
               >
-                {BUSINESS_CONFIG.contact.formattedPhone}
-              </Button>
+                {orderType === 'delivery' ? (
+                  <>
+                    <Bike className="w-3.5 h-3.5 text-secondary shrink-0" />
+                    <div className="flex flex-col text-left">
+                      <span className="text-[10px] text-muted-light font-medium leading-none">
+                        Delivery • 30-40 min
+                      </span>
+                      <span className="font-bold text-white text-xs truncate max-w-[100px] sm:max-w-[130px] leading-tight">
+                        {selectedZone?.name?.replace(' (Primary)', '') || 'Soldier Bazar'}
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Store className="w-3.5 h-3.5 text-secondary shrink-0" />
+                    <div className="flex flex-col text-left">
+                      <span className="text-[10px] text-muted-light font-medium leading-none">
+                        Takeaway Pickup
+                      </span>
+                      <span className="font-bold text-white text-xs leading-tight">
+                        Soldier Bazar No. 3
+                      </span>
+                    </div>
+                  </>
+                )}
+                <ChevronDown className="w-3 h-3 text-muted ml-0.5" />
+              </button>
 
-              {/* Foodpanda (Hidden on small mobile to give cart room) */}
-              <Button
-                variant="foodpanda"
-                size="sm"
-                href={getFoodpandaUrl()}
-                external
-                icon={<ExternalLink className="w-3.5 h-3.5" />}
-                iconPosition="right"
-                className="hidden md:inline-flex"
+              {/* Mobile Compact Location Button */}
+              <button
+                type="button"
+                onClick={() => setOrderModalOpen(true)}
+                className="flex sm:hidden items-center gap-1 px-2 py-1 rounded-full bg-surface border border-surface-border hover:border-secondary/60 text-[11px] text-white transition-all shadow-sm shrink-0"
+                title="Click to switch Delivery / Takeaway location"
               >
-                Foodpanda
-              </Button>
+                <Bike className="w-3 h-3 text-secondary shrink-0" />
+                <span className="font-bold text-[10px] text-muted-light truncate max-w-[70px]">
+                  {selectedZone?.name?.replace(' (Primary)', '') || 'Bazar'}
+                </span>
+                <ChevronDown className="w-2.5 h-2.5 text-muted" />
+              </button>
+            </div>
 
-              {/* Login / Customer Portal link or User Status */}
+            {/* CENTER: Large Expandable Search Bar */}
+            <div className="hidden md:flex flex-1 max-w-md lg:max-w-xl mx-2">
+              <HeaderSearch />
+            </div>
+
+            {/* RIGHT: Sign In / Account & Cart Button */}
+            <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+              {/* Account / User Button */}
               {isAuthenticated ? (
-                <div className="hidden sm:flex items-center gap-1.5">
+                <div className="flex items-center gap-1 sm:gap-1.5">
                   <Link
                     href="/orders"
-                    className="p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-white hover:bg-surface-elevated transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold rounded-xl bg-surface border border-surface-border text-white hover:bg-surface-elevated hover:border-secondary transition-all flex items-center gap-1.5 shadow-sm"
                     title="View My Orders"
                   >
-                    <User className="w-4 h-4 text-secondary" />
-                    <span className="hidden xl:inline max-w-[120px] truncate">
+                    <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-secondary" />
+                    <span className="hidden sm:inline max-w-[100px] truncate">
                       {profile?.full_name || user?.email?.split('@')[0]}
                     </span>
                   </Link>
                   <button
                     type="button"
                     onClick={() => signOut()}
-                    className="p-2 text-muted hover:text-primary rounded-xl bg-surface border border-surface-border transition-colors cursor-pointer"
+                    className="p-1.5 sm:p-2 text-muted hover:text-primary rounded-xl bg-surface border border-surface-border transition-colors cursor-pointer"
                     title="Sign Out"
                     aria-label="Sign Out"
                   >
-                    <LogOut className="w-4 h-4" />
+                    <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
                 </div>
               ) : (
                 <Link
                   href="/login"
-                  className="hidden sm:flex p-2 sm:px-3 sm:py-2 text-xs font-semibold rounded-xl bg-surface border border-surface-border text-muted-light hover:text-white hover:bg-surface-elevated transition-colors items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
-                  title="Customer Login / Account"
+                  className="hidden xs:flex px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold rounded-xl bg-surface border border-surface-border text-muted-light hover:text-white hover:border-secondary transition-all items-center gap-1.5 shadow-sm"
+                  title="Sign In / Customer Account"
                   aria-label="Customer Login"
                 >
-                  <User className="w-4 h-4 text-secondary" />
-                  <span className="hidden xl:inline">Account</span>
+                  <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-secondary" />
+                  <span className="hidden sm:inline">Sign In</span>
                 </Link>
               )}
 
-              {/* Shopping Cart Button */}
+              {/* Cart Button: High-visibility pill button matching Broadway's yellow cart */}
               <button
                 type="button"
                 onClick={openCartDrawer}
                 aria-label={`View Shopping Cart (${itemCount} items)`}
-                className="relative p-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white transition-all shadow-md hover:shadow-glow-red flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-secondary cursor-pointer"
+                className="relative px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-xl bg-secondary hover:bg-secondary-hover text-background font-black text-xs sm:text-sm transition-all shadow-md hover:shadow-glow-gold flex items-center gap-1.5 sm:gap-2 cursor-pointer select-none active:scale-95 shrink-0"
               >
-                <ShoppingBag className="w-5 h-5" />
-                {itemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-secondary text-background font-black text-[11px] flex items-center justify-center border-2 border-background animate-bounce">
-                    {itemCount > 99 ? '99+' : itemCount}
-                  </span>
-                )}
+                <ShoppingBag className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-background" />
+                <span className="hidden sm:inline font-extrabold uppercase tracking-wide">
+                  Cart
+                </span>
+                <span className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-background text-secondary text-[10px] sm:text-[11px] font-black flex items-center justify-center">
+                  {itemCount > 99 ? '99+' : itemCount}
+                </span>
               </button>
 
-              {/* Mobile Menu Toggle */}
+              {/* Mobile Menu Hamburger (Visible on mobile/tablet) */}
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-2 text-muted-light hover:text-white bg-surface border border-surface-border rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-primary transition-colors cursor-pointer"
+                className="p-1.5 sm:p-2 text-muted-light hover:text-white bg-surface border border-surface-border rounded-xl lg:hidden focus:outline-none transition-colors cursor-pointer shrink-0"
                 aria-label="Open Navigation Menu"
               >
-                <Menu className="w-6 h-6" />
+                <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>
-        </Container>
-      </motion.header>
+
+          {/* Mobile Search Input Row */}
+          <div className="mt-2.5 md:hidden">
+            <HeaderSearch />
+          </div>
+        </div>
+      </header>
 
       {/* Mobile Drawer */}
       <MobileMenu
@@ -235,7 +220,7 @@ export function Navbar() {
         currentPath={pathname}
       />
 
-      {/* Order Mode Modal */}
+      {/* Order Type & Location Modal */}
       <OrderTypeModal
         isOpen={orderModalOpen}
         onClose={() => setOrderModalOpen(false)}

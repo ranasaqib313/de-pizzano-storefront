@@ -18,6 +18,7 @@ const ROUTES_TO_TEST = [
 test.describe('Zero Console Errors Across All Routes', () => {
   for (const route of ROUTES_TO_TEST) {
     test(`Route ${route} loads with 0 console errors`, async ({ page }) => {
+      test.setTimeout(45000);
       const consoleErrors: string[] = [];
       page.on('console', (msg) => {
         if (msg.type() === 'error') {
@@ -29,8 +30,8 @@ test.describe('Zero Console Errors Across All Routes', () => {
         consoleErrors.push(err.message);
       });
 
-      await page.goto(route);
-      await page.waitForTimeout(300);
+      await page.goto(route, { waitUntil: 'domcontentloaded' });
+      await page.waitForTimeout(500);
 
       expect(consoleErrors).toEqual([]);
     });

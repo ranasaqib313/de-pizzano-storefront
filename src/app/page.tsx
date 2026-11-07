@@ -1,21 +1,23 @@
 import React from 'react';
-import { Hero } from '@/components/home/Hero';
-import { DealsSection } from '@/components/home/DealsSection';
-import { FeaturedMenu } from '@/components/home/FeaturedMenu';
+import { HomePromoCarousel } from '@/components/home/HomePromoCarousel';
+import { HomeProductFeed } from '@/components/home/HomeProductFeed';
 import { AboutSection } from '@/components/home/AboutSection';
-import { Gallery } from '@/components/home/Gallery';
 import { LocationSection } from '@/components/home/LocationSection';
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <DealsSection />
-      <FeaturedMenu />
+      {/* 1. Wide Promotional Image Carousel (Replacing the typographic split hero) */}
+      <HomePromoCarousel />
+
+      {/* 2. Horizontal Category Pills & Product Catalog Grid */}
+      <HomeProductFeed />
+
+      {/* 3. Artisan Kitchen Craftsmanship & Story */}
       <AboutSection />
-      <Gallery />
+
+      {/* 4. Branch Location & Operating Hours */}
       <LocationSection />
     </>
   );
 }
-

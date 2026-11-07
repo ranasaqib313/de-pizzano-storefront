@@ -5,7 +5,6 @@ import { MenuItem, MenuCategoryId, MenuCategory } from '@/types/menu';
 import { MENU_CATEGORIES } from '@/data/menu';
 import { MenuCard } from './MenuCard';
 import { MenuFilters } from './MenuFilters';
-import { RightCategoryRail } from './RightCategoryRail';
 import { MenuSearch } from './MenuSearch';
 import { ProductDialog } from './ProductDialog';
 import { AlertCircle, Database, Sparkles, LayoutGrid, List } from 'lucide-react';
@@ -95,23 +94,23 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
 
   return (
     <div className="space-y-6">
-      {/* Mobile/Tablet Horizontal Category Filters (Visible below lg) */}
-      <div className="lg:hidden">
+      {/* Horizontal Category Pill Filters (Across all screen sizes) */}
+      <div className="w-full">
         <MenuFilters
           categories={categoriesWithCounts}
           activeCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
+          onSelectCategory={(catId) => setSelectedCategory(catId)}
           totalCount={items.length}
         />
       </div>
 
-      {/* Search, Layout Switcher & Status Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-surface/60 border border-surface-border">
-        {/* Results Count & Filter Indicator */}
-        <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
+      {/* Toolbar: Results Count, Connection Indicator, Search & View Mode Toggle */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-surface border border-surface-border">
+        {/* Results Counter & Active Category */}
+        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-light">
           <span>
-            Showing <strong className="text-white font-bold">{filteredItems.length}</strong> of{' '}
-            <strong className="text-white font-bold">{items.length}</strong> items
+            Showing <strong className="text-white font-mono">{filteredItems.length}</strong> of{' '}
+            <strong className="text-white font-mono">{items.length}</strong> dishes
             {selectedCategory !== 'all' && (
               <span className="text-secondary ml-1 font-semibold">
                 in {categories.find((c) => c.id === selectedCategory)?.label || selectedCategory}
@@ -203,61 +202,52 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
         </div>
       </div>
 
-      {/* Main Two-Zone Desktop Layout: Central Products on LEFT/CENTER + Right-Side Category Rail on FAR RIGHT */}
-      <div className="flex flex-col lg:flex-row items-start gap-8">
-        {/* Central Product Browsing Area */}
-        <main className="flex-1 min-w-0 w-full" aria-label="Product Catalog">
-          {filteredItems.length > 0 ? (
-            viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredItems.map((item) => (
-                  <MenuCard
-                    key={item.id}
-                    item={item}
-                    layout="grid"
-                    onSelect={(selected) => setActiveItem(selected)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-col gap-4">
-                {filteredItems.map((item) => (
-                  <MenuCard
-                    key={item.id}
-                    item={item}
-                    layout="list"
-                    onSelect={(selected) => setActiveItem(selected)}
-                  />
-                ))}
-              </div>
-            )
-          ) : (
-            <div className="bg-surface border border-surface-border rounded-3xl p-12 text-center max-w-md mx-auto my-12">
-              <AlertCircle className="w-12 h-12 text-secondary mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-white mb-2">No dishes found</h3>
-              <p className="text-sm text-muted mb-6 leading-relaxed">
-                No menu items match &quot;{searchTerm}&quot; in the selected category. Try searching for a different dish or reset your filters.
-              </p>
-              <Button variant="primary" size="sm" onClick={handleClearFilters}>
-                Clear All Filters
-              </Button>
+      {/* Main Full-Width Product Catalog Browsing Area */}
+      <main className="w-full" aria-label="Product Catalog">
+        {filteredItems.length > 0 ? (
+          viewMode === 'grid' ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredItems.map((item) => (
+                <MenuCard
+                  key={item.id}
+                  item={item}
+                  layout="grid"
+                  onSelect={(selected) => setActiveItem(selected)}
+                />
+              ))}
             </div>
-          )}
-        </main>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {filteredItems.map((item) => (
+                <MenuCard
+                  key={item.id}
+                  item={item}
+                  layout="list"
+                  onSelect={(selected) => setActiveItem(selected)}
+                />
+              ))}
+            </div>
+          )
+        ) : (
+          <div className="p-12 text-center rounded-2xl bg-surface border border-surface-border">
+            <AlertCircle className="w-10 h-10 text-muted mx-auto mb-3" />
+            <h4 className="text-base font-bold text-white mb-1">No Dishes Found</h4>
+            <p className="text-xs text-muted mb-4">
+              No menu items match your search &quot;{searchTerm}&quot; in{' '}
+              {selectedCategory === 'all' ? 'the entire menu' : selectedCategory}.
+            </p>
+            <Button variant="outline" size="sm" onClick={handleClearFilters}>
+              Reset Filters
+            </Button>
+          </div>
+        )}
+      </main>
 
-        {/* Desktop Right-Side Vertical Category Rail */}
-        <div className="hidden lg:block w-72 xl:w-80 shrink-0 sticky top-28">
-          <RightCategoryRail
-            categories={categoriesWithCounts}
-            activeCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-            totalCount={items.length}
-          />
-        </div>
-      </div>
-
-      {/* Modal Dialog for Product Customization & Details */}
-      <ProductDialog item={activeItem} onClose={() => setActiveItem(null)} />
+      {/* Interactive Customization & Variant Dialog */}
+      <ProductDialog
+        item={activeItem}
+        onClose={() => setActiveItem(null)}
+      />
     </div>
   );
 }

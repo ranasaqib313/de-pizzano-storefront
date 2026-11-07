@@ -5,6 +5,9 @@ import { Navbar } from '@/components/layout/Navbar';
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
   usePathname: () => '/',
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 describe('Navbar Component', () => {
@@ -19,13 +22,15 @@ describe('Navbar Component', () => {
     expect(screen.getByText(/INDEPENDENT WEBSITE CONCEPT/i)).toBeInTheDocument();
   });
 
-  test('renders navigation links', () => {
+  test('renders location/delivery selector and search input', () => {
     render(<Navbar />);
-    expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Menu' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Locations' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Contact' })).toBeInTheDocument();
+    expect(screen.getByTitle(/click to switch delivery \/ takeaway location/i)).toBeInTheDocument();
+    expect(screen.getAllByPlaceholderText(/search pizzas, deals, sides/i)[0]).toBeInTheDocument();
+  });
+
+  test('renders cart button with item count', () => {
+    render(<Navbar />);
+    expect(screen.getByRole('button', { name: /view shopping cart/i })).toBeInTheDocument();
   });
 
   test('opens mobile drawer when menu toggle button is clicked', () => {
@@ -35,4 +40,3 @@ describe('Navbar Component', () => {
     expect(screen.getByRole('dialog', { name: /navigation menu/i })).toBeInTheDocument();
   });
 });
-
