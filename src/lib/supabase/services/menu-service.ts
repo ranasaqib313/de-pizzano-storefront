@@ -78,36 +78,38 @@ export async function getMenuProducts(): Promise<{
 
     // Map database records to frontend MenuItem structure
     const mappedItems: MenuItem[] = (data as unknown as DbProductWithRelations[]).map((p) => {
-      const categorySlug = (p.categories?.slug || 'regular-pizza') as MenuItem['category'];
+      const categorySlug = (p.categories?.slug || 'pizza-flavours') as MenuItem['category'];
 
       const variants = p.product_variants && p.product_variants.length > 0
-        ? p.product_variants.map((v) => ({
-            id: v.id,
-            name: v.name,
-            price: p.base_price + v.price_delta,
-            isDefault: v.is_default,
-          }))
-        : (categorySlug === 'regular-pizza' || categorySlug === 'special-pizza'
-            ? getPizzaVariants(p.base_price)
-            : undefined);
+        ? [...p.product_variants]
+            .sort((a, b) => a.sort_order - b.sort_order)
+            .map((v) => ({
+              id: v.id,
+              name: v.name,
+              price: p.base_price + v.price_delta,
+              isDefault: v.is_default,
+            }))
+        : (categorySlug === 'pizza-flavours' || categorySlug === 'special-flavours' || categorySlug === 'regular-pizza' || categorySlug === 'special-pizza'
+          ? getPizzaVariants(p.base_price)
+          : undefined);
 
       const options = p.product_options && p.product_options.length > 0
         ? p.product_options.map((o) => ({
-            id: o.id,
-            name: o.name,
-            price: o.price_delta,
-            category: o.option_group as 'crust' | 'topping' | 'dip' | 'addon',
-          }))
-        : (categorySlug === 'regular-pizza' || categorySlug === 'special-pizza'
-            ? [...PIZZA_CRUST_OPTIONS, ...PIZZA_ADDON_OPTIONS]
-            : undefined);
+          id: o.id,
+          name: o.name,
+          price: o.price_delta,
+          category: o.option_group as 'crust' | 'topping' | 'dip' | 'addon',
+        }))
+        : (categorySlug === 'pizza-flavours' || categorySlug === 'special-flavours' || categorySlug === 'regular-pizza' || categorySlug === 'special-pizza'
+          ? [...PIZZA_CRUST_OPTIONS, ...PIZZA_ADDON_OPTIONS]
+          : undefined);
 
       return {
         id: p.slug,
         name: p.name,
         category: categorySlug,
         price: p.base_price,
-        isStartingPrice: categorySlug === 'regular-pizza' || categorySlug === 'special-pizza' || p.slug === 'garlic-bread',
+        isStartingPrice: Boolean(variants && variants.length > 1),
         currency: 'Rs.',
         description: p.description || undefined,
         image: p.image_url || '/images/menu/chicken-tikka-pizza.jpg',

@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 import { Database } from './types';
 
@@ -26,6 +27,25 @@ export async function createClient() {
           // This can be ignored if you have middleware refreshing user sessions.
         }
       },
+    },
+  });
+}
+
+export function createAdminClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const serviceRoleKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_SECRET_KEY ||
+    '';
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error('Supabase service role credentials not configured in environment.');
+  }
+
+  return createSupabaseClient<Database>(supabaseUrl, serviceRoleKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
     },
   });
 }

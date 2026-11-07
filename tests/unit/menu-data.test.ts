@@ -1,68 +1,42 @@
-import { MENU_CATEGORIES, MENU_ITEMS } from '@/data/menu';
-import { formatMenuItemPrice } from '@/lib/format-price';
+import { MENU_CATEGORIES } from '@/data/menu';
 
 describe('Menu Data & Integrity Tests', () => {
-  test('total menu item count must be exactly 26 products', () => {
-    expect(MENU_ITEMS).toHaveLength(26);
-  });
-
   test('there must be exactly 6 categories with expected labels', () => {
     expect(MENU_CATEGORIES).toHaveLength(6);
     const categoryIds = MENU_CATEGORIES.map((c) => c.id);
     expect(categoryIds).toEqual([
-      'starters',
-      'regular-pizza',
-      'special-pizza',
+      'pizza-deals',
+      'pizza-flavours',
+      'special-flavours',
       'sandwiches',
-      'pastas',
-      'fried-items',
+      'pasta-fries',
+      'sides',
     ]);
   });
 
-  test('each category has the exact expected item count', () => {
-    const countsByCategory = MENU_ITEMS.reduce((acc, item) => {
-      acc[item.category] = (acc[item.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+  test('each category has expected item counts', () => {
+    const countMap = Object.fromEntries(
+      MENU_CATEGORIES.map((c) => [c.id, c.itemCount])
+    );
 
-    expect(countsByCategory['starters']).toBe(4);
-    expect(countsByCategory['regular-pizza']).toBe(11);
-    expect(countsByCategory['special-pizza']).toBe(5);
-    expect(countsByCategory['sandwiches']).toBe(2);
-    expect(countsByCategory['pastas']).toBe(2);
-    expect(countsByCategory['fried-items']).toBe(2);
+    expect(countMap['pizza-deals']).toBe(10);
+    expect(countMap['pizza-flavours']).toBe(24);
+    expect(countMap['special-flavours']).toBe(4);
+    expect(countMap['sandwiches']).toBe(2);
+    expect(countMap['pasta-fries']).toBe(3);
+    expect(countMap['sides']).toBe(7);
   });
 
-  test('every item has a unique ID and non-empty name', () => {
-    const ids = new Set<string>();
-    MENU_ITEMS.forEach((item) => {
-      expect(item.id).toBeTruthy();
-      expect(item.name).toBeTruthy();
-      expect(item.price).toBeGreaterThan(0);
-      expect(ids.has(item.id)).toBe(false);
-      ids.add(item.id);
+  test('total item count across categories is 50', () => {
+    const total = MENU_CATEGORIES.reduce((sum, c) => sum + c.itemCount, 0);
+    expect(total).toBe(50);
+  });
+
+  test('every category has a non-empty label and description', () => {
+    MENU_CATEGORIES.forEach((cat) => {
+      expect(cat.id).toBeTruthy();
+      expect(cat.label).toBeTruthy();
+      expect(cat.description).toBeTruthy();
     });
   });
-
-  test('price formatting strictly handles starting prices', () => {
-    const startingItem = MENU_ITEMS.find((item) => item.id === 'garlic-bread');
-    expect(startingItem).toBeDefined();
-    expect(startingItem?.isStartingPrice).toBe(true);
-    expect(formatMenuItemPrice(startingItem!)).toBe('Starting at Rs. 200');
-
-    const fixedItem = MENU_ITEMS.find((item) => item.id === 'cheesy-stick');
-    expect(fixedItem).toBeDefined();
-    expect(fixedItem?.isStartingPrice).toBe(false);
-    expect(formatMenuItemPrice(fixedItem!)).toBe('Rs. 550');
-  });
-
-  test('researched descriptions are accurately matched and uninvented items are empty', () => {
-    const tikka = MENU_ITEMS.find((i) => i.id === 'chicken-tikka-pizza');
-    expect(tikka?.description).toBe('Pizza sauce, onion, chicken tikka, cheese.');
-
-    const kababis = MENU_ITEMS.find((i) => i.id === 'kababis-pizza');
-    // For products without researched descriptions, description should not be invented
-    expect(kababis?.description).toBeUndefined();
-  });
 });
-

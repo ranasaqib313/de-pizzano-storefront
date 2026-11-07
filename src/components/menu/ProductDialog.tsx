@@ -30,11 +30,18 @@ interface ProductDialogProps {
 export function ProductDialog({ item, onClose }: ProductDialogProps) {
   const { addItem } = useCart();
 
-  const isPizza = item?.category === 'regular-pizza' || item?.category === 'special-pizza';
+  const isPizza =
+    item?.category === 'pizza-flavours' ||
+    item?.category === 'special-flavours' ||
+    item?.category === 'regular-pizza' ||
+    item?.category === 'special-pizza';
 
   // Available variants
   const variants = useMemo<ProductVariant[]>(() => {
     if (!item) return [];
+    if (item.variants && item.variants.length > 0) {
+      return item.variants;
+    }
     if (isPizza) {
       return getPizzaVariants(item.price);
     }
@@ -59,14 +66,18 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
   // Reset states when item opens
   useEffect(() => {
     if (item) {
-      const defaultVar = isPizza ? getPizzaVariants(item.price)[0] : {
-        id: 'standard',
-        name: 'Standard Portion',
-        price: item.price,
-        isDefault: true,
-      };
+      const defaultVar = (item.variants && item.variants.length > 0)
+        ? (item.variants.find((v) => v.isDefault) || item.variants[0])
+        : isPizza
+        ? getPizzaVariants(item.price)[0]
+        : {
+            id: 'standard',
+            name: 'Standard Portion',
+            price: item.price,
+            isDefault: true,
+          };
       setSelectedVariant(defaultVar);
-      setSelectedCrust(isPizza ? PIZZA_CRUST_OPTIONS[0] : undefined);
+      setSelectedCrust(isPizza && item.category !== 'special-flavours' ? PIZZA_CRUST_OPTIONS[0] : undefined);
       setSelectedAddons([]);
       setQuantity(1);
       setIsAdded(false);
@@ -233,11 +244,11 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
             )}
           </div>
 
-          {/* Size Selection (For Pizzas) */}
-          {isPizza && variants.length > 0 && (
+          {/* Size / Portion Selection */}
+          {variants.length > 1 && (
             <div className="space-y-2.5">
               <label className="text-xs font-bold text-white uppercase tracking-wider block">
-                1. Select Pizza Size <span className="text-primary">*</span>
+                1. Select {isPizza ? 'Pizza Size' : 'Portion / Size'} <span className="text-primary">*</span>
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {variants.map((variant) => {
@@ -274,8 +285,8 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
             </div>
           )}
 
-          {/* Crust Selection (For Pizzas) */}
-          {isPizza && (
+          {/* Crust Selection (For Pizzas with crust options, not for deals or special pre-stuffed crusts) */}
+          {isPizza && item?.category !== 'special-flavours' && (
             <div className="space-y-2.5">
               <label className="text-xs font-bold text-white uppercase tracking-wider block">
                 2. Select Crust Style

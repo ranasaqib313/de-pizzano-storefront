@@ -2,12 +2,18 @@ import type { ProductVariant, ProductOption } from './storefront';
 
 export type MenuCategoryId =
   | 'all'
+  | 'pizza-deals'
+  | 'pizza-flavours'
+  | 'special-flavours'
+  | 'sandwiches'
+  | 'pasta-fries'
+  | 'sides'
   | 'starters'
   | 'regular-pizza'
   | 'special-pizza'
-  | 'sandwiches'
   | 'pastas'
-  | 'fried-items';
+  | 'fried-items'
+  | (string & {});
 
 export interface MenuCategory {
   id: Exclude<MenuCategoryId, 'all'>;

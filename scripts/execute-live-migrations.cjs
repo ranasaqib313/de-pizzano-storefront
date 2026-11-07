@@ -12,6 +12,7 @@ const MIGRATIONS = [
   '20261107000001_initial_schema.sql',
   '20261107000002_row_level_security.sql',
   '20261107000003_seed_data.sql',
+  '20261108000001_real_menu.sql',
 ];
 
 async function run() {
@@ -88,3 +89,4 @@ run().catch((err) => {
   console.error('Fatal execution error:', err);
   process.exit(1);
 });
+

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { MenuItem, MenuCategoryId } from '@/types/menu';
+import { MenuItem, MenuCategoryId, MenuCategory } from '@/types/menu';
 import { MENU_CATEGORIES } from '@/data/menu';
 import { MenuCard } from './MenuCard';
 import { MenuFilters } from './MenuFilters';
@@ -9,15 +9,17 @@ import { MenuSearch } from './MenuSearch';
 import { ProductDialog } from './ProductDialog';
 import { AlertCircle, Database, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { getMenuProducts } from '@/lib/supabase/services/menu-service';
+import { getMenuProducts, getMenuCategories } from '@/lib/supabase/services/menu-service';
 
 interface MenuGridProps {
   initialItems: MenuItem[];
+  initialCategories?: MenuCategory[];
   initialSource?: 'database' | 'fallback';
 }
 
-export function MenuGrid({ initialItems, initialSource = 'fallback' }: MenuGridProps) {
+export function MenuGrid({ initialItems, initialCategories, initialSource = 'fallback' }: MenuGridProps) {
   const [items, setItems] = useState<MenuItem[]>(initialItems);
+  const [categories, setCategories] = useState<MenuCategory[]>(initialCategories && initialCategories.length > 0 ? initialCategories : MENU_CATEGORIES);
   const [dataSource, setDataSource] = useState<'database' | 'fallback'>(initialSource);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<MenuCategoryId>('all');
@@ -30,12 +32,18 @@ export function MenuGrid({ initialItems, initialSource = 'fallback' }: MenuGridP
     async function loadFromDb() {
       setIsLoading(true);
       try {
-        const result = await getMenuProducts();
+        const [prodResult, catResult] = await Promise.all([
+          getMenuProducts(),
+          getMenuCategories(),
+        ]);
         if (isMounted) {
-          if (result.items && result.items.length > 0) {
-            setItems(result.items);
+          if (prodResult.items && prodResult.items.length > 0) {
+            setItems(prodResult.items);
           }
-          setDataSource(result.source);
+          if (catResult.categories && catResult.categories.length > 0) {
+            setCategories(catResult.categories);
+          }
+          setDataSource(prodResult.source);
         }
       } catch (err) {
         console.warn('Supabase menu fetch fell back to Phase 1 data:', err);
@@ -49,6 +57,14 @@ export function MenuGrid({ initialItems, initialSource = 'fallback' }: MenuGridP
       isMounted = false;
     };
   }, []);
+
+  // Compute live item counts per category
+  const categoriesWithCounts = useMemo(() => {
+    return categories.map((cat) => ({
+      ...cat,
+      itemCount: items.filter((item) => item.category === cat.id).length,
+    }));
+  }, [categories, items]);
 
   // Filter items based on category and search query
   const filteredItems = useMemo(() => {
@@ -79,7 +95,7 @@ export function MenuGrid({ initialItems, initialSource = 'fallback' }: MenuGridP
       {/* Search and Filter Controls */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <MenuFilters
-          categories={MENU_CATEGORIES}
+          categories={categoriesWithCounts}
           activeCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
           totalCount={items.length}
@@ -99,7 +115,7 @@ export function MenuGrid({ initialItems, initialSource = 'fallback' }: MenuGridP
             <strong className="text-white">{items.length}</strong> items
             {selectedCategory !== 'all' && (
               <span className="text-secondary ml-1">
-                in {MENU_CATEGORIES.find((c) => c.id === selectedCategory)?.label}
+                in {categories.find((c) => c.id === selectedCategory)?.label || selectedCategory}
               </span>
             )}
             {searchTerm && (

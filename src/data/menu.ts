@@ -2,40 +2,40 @@ import { MenuCategory, MenuItem } from '@/types/menu';
 
 export const MENU_CATEGORIES: MenuCategory[] = [
   {
-    id: 'starters',
-    label: 'Starters',
-    description: 'Crispy, oven-baked appetizers to begin your feast.',
+    id: 'pizza-deals',
+    label: 'Pizza Deals',
+    description: 'Exclusive value meal deals with soft drinks included. Perfect for individuals, families, and parties.',
+    itemCount: 10,
+  },
+  {
+    id: 'pizza-flavours',
+    label: 'Pizza Flavours',
+    description: 'Signature oven-baked stone pizzas available in Small, Regular, and Large sizes.',
+    itemCount: 24,
+  },
+  {
+    id: 'special-flavours',
+    label: 'Special Flavours',
+    description: 'Signature stuffed crust pizzas loaded with premium fillings in Medium and Large sizes.',
     itemCount: 4,
-  },
-  {
-    id: 'regular-pizza',
-    label: 'Regular Pizza',
-    description: 'Classic stone-baked crusts loaded with traditional favourite toppings.',
-    itemCount: 11,
-  },
-  {
-    id: 'special-pizza',
-    label: 'Special Pizza',
-    description: 'Signature gourmet recipes, creamy sauces, and premium specialty meats.',
-    itemCount: 5,
   },
   {
     id: 'sandwiches',
     label: 'Sandwiches',
-    description: 'Toasted savoury subs packed with flavourful meats and sauces.',
+    description: 'Freshly toasted savoury subs and calzone sandwiches packed with flavourful meats.',
     itemCount: 2,
   },
   {
-    id: 'pastas',
-    label: 'Pastas',
-    description: 'Rich, oven-baked pasta dishes prepared with indulgent creamy cheeses.',
-    itemCount: 2,
+    id: 'pasta-fries',
+    label: 'Pasta & Fries',
+    description: 'Rich baked pasta, hearty lasagna, and cheese-loaded pizza fries in Small and Large sizes.',
+    itemCount: 3,
   },
   {
-    id: 'fried-items',
-    label: 'Fried Items',
-    description: 'Crispy fries tossed with signature pizza toppings and melted cheese.',
-    itemCount: 2,
+    id: 'sides',
+    label: 'Sides',
+    description: 'Crispy appetizers, chicken wings, nuggets, and garlic breads.',
+    itemCount: 7,
   },
 ];
 

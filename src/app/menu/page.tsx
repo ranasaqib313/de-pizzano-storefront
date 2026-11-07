@@ -4,29 +4,32 @@ import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { MenuGrid } from '@/components/menu/MenuGrid';
 import { MENU_ITEMS } from '@/data/menu';
-import { getMenuProducts } from '@/lib/supabase/services/menu-service';
+import { getMenuProducts, getMenuCategories } from '@/lib/supabase/services/menu-service';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { AlertCircle, ExternalLink, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { getFoodpandaUrl, getPhoneLink } from '@/lib/links';
 
 export const metadata: Metadata = {
-  title: 'Full Menu (26 Items) — Pizzas, Pastas & Fast Food',
+  title: 'Full Menu (50 Items) — Pizza Deals, Flavours, Pastas & Sides',
   description:
-    'Explore all 26 researched menu items of De Pizzano, Soldier Bazar No. 3, Karachi: Regular & Special Pizzas, Starters, Pastas, Sandwiches, and Loaded Pizza Fries.',
+    'Explore all 50 authentic menu items of De Pizzano, Soldier Bazar No. 3, Karachi: Value Deals, 24 Pizza Flavours, Stuffed Crust Specials, Sandwiches, Pastas, and Sides.',
 };
 
 export default async function MenuPage() {
-  const { items, source } = await getMenuProducts();
+  const [{ items, source }, { categories }] = await Promise.all([
+    getMenuProducts(),
+    getMenuCategories(),
+  ]);
 
   return (
     <div className="py-12 sm:py-16 bg-background">
       <Container size="xl">
         {/* Header Section */}
         <SectionHeading
-          badge="Complete Researched Menu"
+          badge="Complete Verified Menu"
           title="DE PIZZANO MENU"
-          subtitle="Explore all 26 dishes spanning our signature regular and special pizzas, toasted sandwiches, rich pastas, and savoury starters."
+          subtitle="Explore all 50 dishes spanning our value pizza deals, signature flavours, stuffed crust specials, toasted sandwiches, rich pastas, and savoury sides."
         />
 
         {/* Pricing Notice & External Ordering Banner */}
@@ -36,10 +39,10 @@ export default async function MenuPage() {
               <AlertCircle className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-                  Indicative Pricing Notice
+                  Real Restaurant Menu & Direct Ordering
                 </h4>
                 <p className="text-xs text-muted mt-1 leading-relaxed max-w-3xl">
-                  Prices listed below reflect public directory rates (Foodpanda) and are labelled as starting prices where applicable. Direct restaurant takeaway prices may differ and will be updated upon official owner confirmation.
+                  Order online with fast home delivery across Karachi or visit our takeaway counter at Soldier Bazar No. 3. All orders include server-verified pricing and fresh preparation.
                 </p>
               </div>
             </div>
@@ -70,7 +73,7 @@ export default async function MenuPage() {
         </div>
 
         {/* Interactive Menu Grid with Filters and Search */}
-        <MenuGrid initialItems={items} initialSource={source} />
+        <MenuGrid initialItems={items} initialCategories={categories} initialSource={source} />
       </Container>
     </div>
   );

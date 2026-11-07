@@ -11,17 +11,17 @@ describe('MenuFilters Component', () => {
         categories={MENU_CATEGORIES}
         activeCategory="all"
         onSelectCategory={handleSelect}
-        totalCount={26}
+        totalCount={50}
       />
     );
 
     expect(screen.getByRole('button', { name: /all items/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /starters/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /regular pizza/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /special pizza/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /pizza deals/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /pizza flavours/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /special flavours/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /sandwiches/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /pastas/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /fried items/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /pasta & fries/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /sides/i })).toBeInTheDocument();
   });
 
   test('clicking a category triggers onSelectCategory with appropriate ID', () => {
@@ -31,13 +31,12 @@ describe('MenuFilters Component', () => {
         categories={MENU_CATEGORIES}
         activeCategory="all"
         onSelectCategory={handleSelect}
-        totalCount={26}
+        totalCount={50}
       />
     );
 
-    const pizzaBtn = screen.getByRole('button', { name: /regular pizza/i });
+    const pizzaBtn = screen.getByRole('button', { name: /pizza deals/i });
     fireEvent.click(pizzaBtn);
-    expect(handleSelect).toHaveBeenCalledWith('regular-pizza');
+    expect(handleSelect).toHaveBeenCalledWith('pizza-deals');
   });
 });
-

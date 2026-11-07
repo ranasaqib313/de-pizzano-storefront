@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Order } from '@/types/storefront';
@@ -23,29 +23,32 @@ import {
 } from 'lucide-react';
 
 function OrderConfirmationContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const orderIdParam = searchParams.get('orderId');
 
   const [order, setOrder] = useState<Order | null>(null);
 
   useEffect(() => {
+    if (orderIdParam) {
+      router.replace(`/order-confirmation/${orderIdParam}`);
+      return;
+    }
+
     // 1. Try to read matching order from local storage
     try {
       const storedLatest = localStorage.getItem('depizzano_latest_order');
       if (storedLatest) {
         const parsed: Order = JSON.parse(storedLatest);
-        if (!orderIdParam || parsed.id === orderIdParam) {
-          setOrder(parsed);
-          return;
-        }
+        setOrder(parsed);
+        return;
       }
 
       const recentOrdersRaw = localStorage.getItem('depizzano_recent_orders');
       if (recentOrdersRaw) {
         const parsedList: Order[] = JSON.parse(recentOrdersRaw);
-        const found = parsedList.find((o) => o.id === orderIdParam);
-        if (found) {
-          setOrder(found);
+        if (parsedList.length > 0) {
+          setOrder(parsedList[0]);
           return;
         }
       }
@@ -54,10 +57,8 @@ function OrderConfirmationContent() {
     }
 
     // 2. Fallback to mock order
-    const fallback =
-      MOCK_ORDERS.find((o) => o.id === orderIdParam) || MOCK_ORDERS[0];
-    setOrder(fallback);
-  }, [orderIdParam]);
+    setOrder(MOCK_ORDERS[0]);
+  }, [orderIdParam, router]);
 
   if (!order) {
     return (
