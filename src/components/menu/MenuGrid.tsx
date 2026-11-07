@@ -13,11 +13,12 @@ import { getMenuProducts } from '@/lib/supabase/services/menu-service';
 
 interface MenuGridProps {
   initialItems: MenuItem[];
+  initialSource?: 'database' | 'fallback';
 }
 
-export function MenuGrid({ initialItems }: MenuGridProps) {
+export function MenuGrid({ initialItems, initialSource = 'fallback' }: MenuGridProps) {
   const [items, setItems] = useState<MenuItem[]>(initialItems);
-  const [dataSource, setDataSource] = useState<'database' | 'fallback'>('fallback');
+  const [dataSource, setDataSource] = useState<'database' | 'fallback'>(initialSource);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<MenuCategoryId>('all');
   const [searchTerm, setSearchTerm] = useState('');

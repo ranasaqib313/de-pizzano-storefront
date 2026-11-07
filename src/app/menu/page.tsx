@@ -4,6 +4,7 @@ import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { MenuGrid } from '@/components/menu/MenuGrid';
 import { MENU_ITEMS } from '@/data/menu';
+import { getMenuProducts } from '@/lib/supabase/services/menu-service';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { AlertCircle, ExternalLink, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
     'Explore all 26 researched menu items of De Pizzano, Soldier Bazar No. 3, Karachi: Regular & Special Pizzas, Starters, Pastas, Sandwiches, and Loaded Pizza Fries.',
 };
 
-export default function MenuPage() {
+export default async function MenuPage() {
+  const { items, source } = await getMenuProducts();
+
   return (
     <div className="py-12 sm:py-16 bg-background">
       <Container size="xl">
@@ -67,7 +70,7 @@ export default function MenuPage() {
         </div>
 
         {/* Interactive Menu Grid with Filters and Search */}
-        <MenuGrid initialItems={MENU_ITEMS} />
+        <MenuGrid initialItems={items} initialSource={source} />
       </Container>
     </div>
   );

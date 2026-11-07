@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import fs from 'fs';
 import path from 'path';
 import { createClient } from '@supabase/supabase-js';
@@ -37,9 +40,13 @@ const isConfigured = Boolean(
 );
 
 describe('Live Supabase Integration & Real RLS Policy Verification', () => {
+  jest.setTimeout(30000);
+
   // Test with Anon client
   const anonClient = isConfigured
-    ? createClient(supabaseUrl!, supabaseAnonKey!)
+    ? createClient(supabaseUrl!, supabaseAnonKey!, {
+        auth: { persistSession: false, autoRefreshToken: false },
+      })
     : null;
 
   test('Check 1 (Live DB): Anon client querying orders returns 0 rows', async () => {
@@ -105,7 +112,7 @@ describe('Live Supabase Integration & Real RLS Policy Verification', () => {
     }
 
     // 1. Create a transient test customer account
-    const testEmail = `qa-audit-${Date.now()}@depizzano-test.local`;
+    const testEmail = `depizzano.audit.${Date.now()}@gmail.com`;
     const testPassword = `AuditPass!98765`;
 
     const { data: authData, error: signUpError } = await anonClient.auth.signUp({

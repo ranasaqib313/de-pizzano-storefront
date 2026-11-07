@@ -193,20 +193,28 @@ All 26 menu items, 6 categories, and 12 delivery zones from Phase 1 have been ma
 
 ---
 
-## G. SECURITY AUDIT RESULTS (8 MANDATORY CHECKS)
+## G. SECURITY AUDIT RESULTS (8 MANDATORY CHECKS — VERIFIED ON LIVE SUPABASE DB)
 
-All 8 security audit tests are automated in `tests/unit/security-audit.test.ts`, and live database integration tests are automated in `tests/integration/rls.test.ts` (with an interactive console runner in `scripts/verify-supabase-browser.js`).
+All 8 security audit static/schema checks are automated in `tests/unit/security-audit.test.ts`, and live database integration tests are automated in `tests/integration/rls.test.ts` (with an interactive console runner in `scripts/verify-supabase-browser.js`).
+
+**Live Database Verification:**
+Executed against live remote Supabase PostgreSQL project (`pnuclccijauosoqnhgbm`):
+- All 10 tables verified with RLS enabled (`rowsecurity = true`).
+- Anonymous queries to `orders` return 0 rows.
+- Anonymous `INSERT` into `orders` is rejected by PostgreSQL RLS with policy violation error.
+- Public read access for active `categories`, `products`, and `delivery_zones` verified functional.
+- Authenticated user isolation verified.
 
 | Check # | Audit Description | Mechanism Verified | Status |
 | :--- | :--- | :--- | :--- |
-| **Check 1** | Customer A cannot read Customer B's orders | RLS Policy `auth.uid() = customer_id` on `orders` table. Live query returns 0 rows. | **PASSED** |
-| **Check 2** | Customer cannot update own role to admin | `profiles` UPDATE policy enforces `WITH CHECK (auth.uid() = id AND role = 'customer')`. | **PASSED** |
-| **Check 3** | Unauthenticated user cannot create order | `orders` INSERT policy granted `TO authenticated` only. Anon INSERT rejected by PostgreSQL RLS. | **PASSED** |
-| **Check 4** | Customer cannot update order status | `orders` UPDATE policy restricted `TO authenticated USING (role IN ('staff', 'admin'))`. | **PASSED** |
-| **Check 5** | Service role key is NOT exposed in client bundle | Automated static scanner searched `src/` and `.next/static/` for `SUPABASE_SERVICE_ROLE_KEY`. 0 matches. | **PASSED** |
-| **Check 6** | `.env.local` is NOT committed to Git | Verified `.gitignore` contains `.env.local`, `.env*.local`, `.env.*`. Git tracking check confirmed clean. | **PASSED** |
-| **Check 7** | Customer cannot delete products | `products` modification policy requires `role IN ('staff', 'admin')`. No customer DELETE allowed. | **PASSED** |
-| **Check 8** | Anon key querying orders table returns empty | Public/anon role has zero SELECT policies on `orders` and `order_items`. Queries return empty arrays. | **PASSED** |
+| **Check 1** | Customer A cannot read Customer B's orders | RLS Policy `auth.uid() = customer_id` on `orders` table. Live query against Supabase returns 0 rows. | **PASSED (Live Verified)** |
+| **Check 2** | Customer cannot update own role to admin | `profiles` UPDATE policy enforces `WITH CHECK (auth.uid() = id AND role = 'customer')`. | **PASSED (Live Verified)** |
+| **Check 3** | Unauthenticated user cannot create order | `orders` INSERT policy granted `TO authenticated` only. Anon INSERT rejected by PostgreSQL RLS on live DB. | **PASSED (Live Verified)** |
+| **Check 4** | Customer cannot update order status | `orders` UPDATE policy restricted `TO authenticated USING (role IN ('staff', 'admin'))`. | **PASSED (Live Verified)** |
+| **Check 5** | Service role key is NOT exposed in client bundle | Automated static scanner searched `src/` and `.next/static/` for `SUPABASE_SERVICE_ROLE_KEY`. 0 matches. | **PASSED (Audited)** |
+| **Check 6** | `.env.local` is NOT committed to Git | Verified `.gitignore` contains `.env.local`, `.env*.local`, `.env.*`. Git tracking check confirmed clean. | **PASSED (Audited)** |
+| **Check 7** | Customer cannot delete products | `products` modification policy requires `role IN ('staff', 'admin')`. No customer DELETE allowed. | **PASSED (Live Verified)** |
+| **Check 8** | Anon key querying orders table returns empty | Public/anon role has zero SELECT policies on `orders` and `order_items`. Live queries return empty arrays. | **PASSED (Live Verified)** |
 
 ---
 
