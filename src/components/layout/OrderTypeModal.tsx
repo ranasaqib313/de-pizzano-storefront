@@ -64,7 +64,7 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 12 }}
             transition={{ type: 'spring', damping: 26, stiffness: 360 }}
-            className="relative w-[95%] sm:w-full max-w-lg bg-card text-card-foreground border border-border rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[88vh]"
+            className="relative w-[95%] max-w-md mx-auto bg-card text-card-foreground border border-border rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[90vh]"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 sm:p-5 border-b border-border bg-surface-elevated/40 shrink-0">
@@ -91,23 +91,23 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
 
             {/* Scrollable Body */}
             <div className="p-4 sm:p-5 space-y-3.5 overflow-y-auto flex-1">
-              {/* Mode Selectors (Equal Height Cards) */}
-              <div className="grid grid-cols-2 gap-2.5">
+              {/* Mode Selectors */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {/* Delivery Option */}
                 <button
                   type="button"
                   onClick={() => setActiveType('delivery')}
                   className={cn(
-                    'p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between select-none relative h-full min-h-[115px]',
+                    'p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-row sm:flex-col items-center sm:items-stretch justify-between select-none relative gap-3 sm:gap-2 sm:min-h-[115px]',
                     activeType === 'delivery'
                       ? 'bg-primary/10 border-primary ring-2 ring-primary/40 shadow-sm'
                       : 'bg-surface border-border hover:border-border/80 hover:bg-surface-elevated'
                   )}
                 >
-                  <div className="flex items-center justify-between w-full mb-1.5">
+                  <div className="flex items-center gap-3 sm:justify-between sm:w-full">
                     <div
                       className={cn(
-                        'w-8 h-8 rounded-xl flex items-center justify-center transition-colors',
+                        'w-9 h-9 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-colors shrink-0',
                         activeType === 'delivery'
                           ? 'bg-primary text-white shadow-md'
                           : 'bg-surface-elevated text-foreground'
@@ -115,13 +115,17 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
                     >
                       <Bike className="w-4 h-4" />
                     </div>
-                    {activeType === 'delivery' && (
-                      <span className="w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center text-[9px]">
-                        <Check className="w-2.5 h-2.5 stroke-[3]" />
-                      </span>
-                    )}
+                    <div className="sm:hidden">
+                      <h4 className="font-bold text-sm text-foreground">
+                        Home Delivery
+                      </h4>
+                      <p className="text-[11px] text-muted-foreground">
+                        Hot &amp; fresh to your door • <span className="text-secondary font-bold">25–45 mins</span>
+                      </p>
+                    </div>
                   </div>
-                  <div>
+
+                  <div className="hidden sm:block">
                     <h4 className="font-bold text-xs sm:text-sm text-foreground">
                       Home Delivery
                     </h4>
@@ -132,6 +136,12 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
                       <Clock className="w-2.5 h-2.5" /> 25–45 mins
                     </span>
                   </div>
+
+                  {activeType === 'delivery' && (
+                    <span className="w-5 h-5 sm:w-4 sm:h-4 rounded-full bg-primary text-white flex items-center justify-center text-[10px] sm:text-[9px] shrink-0 sm:absolute sm:top-3 sm:right-3">
+                      <Check className="w-3 h-3 sm:w-2.5 sm:h-2.5 stroke-[3]" />
+                    </span>
+                  )}
                 </button>
 
                 {/* Pickup Option */}
@@ -139,16 +149,16 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
                   type="button"
                   onClick={() => setActiveType('pickup')}
                   className={cn(
-                    'p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between select-none relative h-full min-h-[115px]',
+                    'p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-row sm:flex-col items-center sm:items-stretch justify-between select-none relative gap-3 sm:gap-2 sm:min-h-[115px]',
                     activeType === 'pickup'
                       ? 'bg-secondary/10 border-secondary ring-2 ring-secondary/40 shadow-sm'
                       : 'bg-surface border-border hover:border-border/80 hover:bg-surface-elevated'
                   )}
                 >
-                  <div className="flex items-center justify-between w-full mb-1.5">
+                  <div className="flex items-center gap-3 sm:justify-between sm:w-full">
                     <div
                       className={cn(
-                        'w-8 h-8 rounded-xl flex items-center justify-center transition-colors',
+                        'w-9 h-9 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-colors shrink-0',
                         activeType === 'pickup'
                           ? 'bg-secondary text-black shadow-md font-bold'
                           : 'bg-surface-elevated text-foreground'
@@ -156,13 +166,17 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
                     >
                       <Store className="w-4 h-4" />
                     </div>
-                    {activeType === 'pickup' && (
-                      <span className="w-4 h-4 rounded-full bg-secondary text-black flex items-center justify-center text-[9px] font-bold">
-                        <Check className="w-2.5 h-2.5 stroke-[3]" />
-                      </span>
-                    )}
+                    <div className="sm:hidden">
+                      <h4 className="font-bold text-sm text-foreground">
+                        Takeaway Pickup
+                      </h4>
+                      <p className="text-[11px] text-muted-foreground">
+                        Soldier Bazar counter • <span className="text-emerald-600 dark:text-emerald-400 font-bold">Free (Rs. 0)</span>
+                      </p>
+                    </div>
                   </div>
-                  <div>
+
+                  <div className="hidden sm:block">
                     <h4 className="font-bold text-xs sm:text-sm text-foreground">
                       Takeaway Pickup
                     </h4>
@@ -173,6 +187,12 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
                       Free (Rs. 0) • 15–20 mins
                     </span>
                   </div>
+
+                  {activeType === 'pickup' && (
+                    <span className="w-5 h-5 sm:w-4 sm:h-4 rounded-full bg-secondary text-black flex items-center justify-center text-[10px] sm:text-[9px] font-bold shrink-0 sm:absolute sm:top-3 sm:right-3">
+                      <Check className="w-3 h-3 sm:w-2.5 sm:h-2.5 stroke-[3]" />
+                    </span>
+                  )}
                 </button>
               </div>
 

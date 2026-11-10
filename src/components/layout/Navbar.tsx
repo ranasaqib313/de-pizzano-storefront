@@ -36,19 +36,19 @@ export function Navbar() {
       {/* Main Top Header - Sticky, Glassmorphic, and Perfectly Spaced */}
       <header className="sticky top-0 z-[100] w-full bg-background/80 backdrop-blur-md border-b border-border/40 shadow-sm transition-all duration-200 py-3 sm:py-3.5">
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-3 sm:gap-4 lg:gap-6">
+          <div className="flex items-center justify-between gap-2 sm:gap-4 lg:gap-6">
             
             {/* LEFT: De Pizzano Brand Logo & Delivery Selector */}
-            <div className="flex items-center gap-3 sm:gap-6 shrink min-w-0">
+            <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 shrink min-w-0">
               <Link
                 href="/"
-                className="group flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl p-0.5 sm:p-1 shrink-0"
+                className="group flex items-center gap-1.5 sm:gap-2 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl p-0.5 sm:p-1 shrink-0"
                 aria-label="De Pizzano Home"
               >
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-md group-hover:shadow-glow-red transition-all group-hover:scale-105 shrink-0">
                   <Flame className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <span className="hidden min-[400px]:inline text-sm sm:text-xl font-black tracking-wider text-foreground font-display uppercase group-hover:text-secondary transition-colors leading-tight">
+                <span className="text-base sm:text-xl font-black tracking-wider text-foreground font-display uppercase group-hover:text-secondary transition-colors leading-tight truncate">
                   DE PIZZANO
                 </span>
               </Link>
@@ -72,7 +72,7 @@ export function Navbar() {
                   <span className="text-[10px] sm:text-[11px] font-bold text-muted-foreground tracking-wide hidden sm:block">
                     {orderType === 'delivery' ? 'Delivery • 30-40 min' : 'Pickup • 15-25 min'}
                   </span>
-                  <span className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-foreground group-hover:text-secondary transition-colors max-w-[90px] sm:max-w-none truncate">
+                  <span className="flex items-center gap-0.5 sm:gap-1 text-[11px] sm:text-xs font-bold text-foreground group-hover:text-secondary transition-colors max-w-[75px] min-[400px]:max-w-[110px] sm:max-w-none truncate">
                     {orderType === 'delivery'
                       ? (selectedZone ? selectedZone.areaName : 'Select Location')
                       : 'Takeaway'}
@@ -88,14 +88,14 @@ export function Navbar() {
             </div>
 
             {/* RIGHT: User Profile/Sign-In -> ThemeToggle -> Cart Button */}
-            <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
               
               {/* User / Profile Button */}
               {isAuthenticated ? (
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1 sm:gap-1.5">
                   <Link
                     href="/orders"
-                    className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold rounded-xl bg-surface border border-surface-border text-foreground hover:bg-surface-elevated hover:border-secondary/70 transition-all flex items-center gap-2 shadow-sm cursor-pointer select-none active:scale-95"
+                    className="p-1.5 sm:px-3 sm:py-2 text-xs font-bold rounded-xl bg-surface border border-surface-border text-foreground hover:bg-surface-elevated hover:border-secondary/70 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer select-none active:scale-95"
                     title="View My Profile & Orders"
                     aria-label="Customer Profile & Orders"
                   >
@@ -117,7 +117,7 @@ export function Navbar() {
               ) : (
                 <Link
                   href="/login"
-                  className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold rounded-xl bg-surface border border-surface-border text-foreground hover:bg-surface-elevated hover:border-secondary/70 transition-all flex items-center gap-2 shadow-sm cursor-pointer select-none active:scale-95"
+                  className="p-1.5 sm:px-3 sm:py-2 text-xs font-bold rounded-xl bg-surface border border-surface-border text-foreground hover:bg-surface-elevated hover:border-secondary/70 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer select-none active:scale-95"
                   title="Sign In / Customer Profile"
                   aria-label="Sign In / Customer Profile"
                 >
@@ -134,13 +134,13 @@ export function Navbar() {
                 type="button"
                 onClick={openCartDrawer}
                 aria-label={`View Shopping Cart (${itemCount} items)`}
-                className="relative px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-xl bg-secondary hover:bg-secondary-hover text-white dark:text-neutral-950 font-black text-xs sm:text-sm transition-all shadow-md hover:shadow-glow-gold flex items-center gap-1.5 sm:gap-2 cursor-pointer select-none active:scale-95 shrink-0"
+                className="relative px-2 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-secondary hover:bg-secondary-hover text-white dark:text-neutral-950 font-black text-xs sm:text-sm transition-all shadow-md hover:shadow-glow-gold flex items-center gap-1.5 sm:gap-2 cursor-pointer select-none active:scale-95 shrink-0"
               >
-                <ShoppingBag className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
+                <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline font-extrabold uppercase tracking-wide">
                   Cart
                 </span>
-                <span className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-white/20 dark:bg-black/20 text-current text-[10px] sm:text-[11px] font-black flex items-center justify-center">
+                <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white/20 dark:bg-black/20 text-current text-[10px] sm:text-[11px] font-black flex items-center justify-center">
                   {itemCount > 99 ? '99+' : itemCount}
                 </span>
               </button>

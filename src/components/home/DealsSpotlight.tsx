@@ -48,11 +48,11 @@ export function DealsSpotlight() {
         </div>
 
         {/* Deals Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {deals.map((deal) => (
             <div
               key={deal.id}
-              className="group relative rounded-2xl bg-card border border-border hover:border-secondary/60 p-5 flex flex-col justify-between transition-all duration-300 hover:shadow-card hover:-translate-y-1"
+              className="group relative rounded-2xl bg-card border border-border hover:border-secondary/60 p-4 sm:p-5 flex flex-col justify-between transition-all duration-300 hover:shadow-card hover:-translate-y-1 w-full"
             >
               <div>
                 {/* Header Badge */}

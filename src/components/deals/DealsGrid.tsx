@@ -55,7 +55,7 @@ export function DealsGrid({ deals }: DealsGridProps) {
       </div>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {filteredDeals.map((deal) => {
           const isLargeFeast = deal.price >= 2000;
           return (
@@ -64,7 +64,7 @@ export function DealsGrid({ deals }: DealsGridProps) {
               whileHover={{ y: -6 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               className={cn(
-                'group relative rounded-3xl bg-card border border-border hover:border-secondary/60 p-6 flex flex-col justify-between transition-all duration-300 shadow-md hover:shadow-2xl overflow-hidden',
+                'group relative rounded-3xl bg-card border border-border hover:border-secondary/60 p-4 sm:p-6 flex flex-col justify-between transition-all duration-300 shadow-md hover:shadow-2xl overflow-hidden w-full',
                 isLargeFeast && 'ring-1 ring-secondary/30'
               )}
             >

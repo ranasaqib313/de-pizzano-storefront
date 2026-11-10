@@ -31,13 +31,13 @@ export function EditorialHero() {
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Brand Story & Call to Actions */}
-          <div className="lg:col-span-7 flex flex-col items-start justify-center">
+          <div className="w-full lg:w-7/12 flex flex-col items-start justify-center">
             
             {/* Display Headline - Simplified plain English */}
-            <h1 className="text-3xl sm:text-5xl xl:text-6xl font-black text-foreground font-display uppercase tracking-tight leading-[1.1] pt-1 sm:pt-2">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground font-display uppercase tracking-tight leading-[1.1] pt-1 sm:pt-2">
               100% Real Cheese. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary via-[#F7CB77] to-secondary">
                 Soft &amp; Crispy Dough.
@@ -51,14 +51,14 @@ export function EditorialHero() {
             </p>
 
             {/* Direct Primary Action CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 mt-8 sm:mt-9 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-3.5 mt-8 sm:mt-9 w-full sm:w-auto">
               <Button
                 variant="primary"
                 size="lg"
                 href="/menu"
                 icon={<ArrowRight className="w-4 h-4" />}
                 iconPosition="right"
-                className="shadow-glow-red text-xs sm:text-sm font-bold flex-1 sm:flex-initial"
+                className="w-full sm:w-auto py-3 px-6 shadow-glow-red text-sm font-bold justify-center"
               >
                 Explore Full Menu
               </Button>
@@ -68,7 +68,7 @@ export function EditorialHero() {
                 size="lg"
                 href="/deals"
                 icon={<Sparkles className="w-4 h-4 text-secondary" />}
-                className="text-xs sm:text-sm font-bold flex-1 sm:flex-initial"
+                className="w-full sm:w-auto py-3 px-6 text-sm font-bold justify-center"
               >
                 Explore Exclusive Deals
               </Button>
@@ -94,11 +94,11 @@ export function EditorialHero() {
           </div>
 
           {/* Right Column: Interactive Animated Signature Deal Card */}
-          <div className="lg:col-span-5 relative">
+          <div className="w-full lg:w-5/12 relative">
             <motion.div
               whileHover={{ y: -8, scale: 1.02, boxShadow: '0px 20px 40px rgba(0,0,0,0.3)' }}
               transition={{ type: 'spring', stiffness: 300 }}
-              className="relative rounded-3xl bg-card text-card-foreground border border-border p-5 sm:p-6 shadow-2xl overflow-hidden group"
+              className="relative rounded-3xl bg-card text-card-foreground border border-border p-5 sm:p-6 shadow-2xl overflow-hidden group w-full"
             >
               
               {/* Highlight Ribbon with Glassmorphic Badges */}
@@ -110,7 +110,7 @@ export function EditorialHero() {
               </div>
 
               {/* Large Food Photography with Zoom on Hover */}
-              <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-surface-elevated mb-4 shadow-inner">
+              <div className="relative w-full h-[250px] md:h-[350px] rounded-2xl overflow-hidden bg-surface-elevated mb-4 shadow-inner">
                 <Image
                   src={spotlightPizza.image || '/images/gallery/chicken-tikka-pizza.jpg'}
                   alt={spotlightPizza.name}
@@ -131,10 +131,10 @@ export function EditorialHero() {
               </div>
 
               {/* Dish Name & Description */}
-              <h2 className="text-xl font-black text-card-foreground font-display uppercase tracking-wide group-hover:text-secondary transition-colors">
+              <h2 className="text-lg sm:text-xl font-black text-card-foreground font-display uppercase tracking-wide group-hover:text-secondary transition-colors truncate">
                 {spotlightPizza.name}
               </h2>
-              <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed line-clamp-2">
+              <p className="mt-1.5 text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
                 {spotlightPizza.description ||
                   '1 Small Pizza (9") with 1 chilled 345ml Soft Drink.'}
               </p>

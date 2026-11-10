@@ -91,9 +91,9 @@ export function HeaderSearch() {
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
-          placeholder="Search pizzas, deals, sides..."
-          aria-label="Search pizzas, deals, sides"
-          className="w-full pl-10 pr-20 py-2 sm:py-2.5 rounded-full bg-surface border border-surface-border hover:border-surface-highlight focus:border-secondary focus:bg-surface-elevated text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none transition-all shadow-inner"
+          placeholder="Search menu..."
+          aria-label="Search menu"
+          className="w-full pl-9 pr-12 md:pr-20 py-2 sm:py-2.5 rounded-full bg-surface border border-surface-border hover:border-surface-highlight focus:border-secondary focus:bg-surface-elevated text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none transition-all shadow-inner"
         />
 
         <div className="absolute right-3 flex items-center gap-1.5">
@@ -109,7 +109,7 @@ export function HeaderSearch() {
               <X className="w-3.5 h-3.5" />
             </button>
           ) : (
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md bg-surface-elevated border border-surface-border text-[10px] font-mono text-muted-foreground select-none">
+            <kbd className="hidden md:flex items-center gap-0.5 px-2 py-0.5 rounded-md bg-surface-elevated border border-surface-border text-[10px] font-mono text-muted-foreground select-none">
               Ctrl K
             </kbd>
           )}

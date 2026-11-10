@@ -38,10 +38,10 @@ export function DockAwareLayout({ children }: DockAwareLayoutProps) {
           'flex flex-col flex-1 transition-[padding-left] duration-300 ease-out will-change-[padding-left]',
           isExpanded
             ? 'pl-0 md:pl-64 lg:pl-[270px] xl:pl-[280px]'
-            : 'pl-0 md:pl-28 lg:pl-32 xl:pl-36'
+            : 'pl-0 md:pl-32 lg:pl-36'
         )}
       >
-        <main className="flex-1 pb-16 md:pb-0">{children}</main>
+        <main className="flex-1 pb-20 md:pb-0">{children}</main>
         <Footer />
       </div>
     </>
