@@ -57,11 +57,11 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
         <Container size="sm">
           <div className="bg-surface border border-surface-border rounded-2xl p-8 text-center shadow-xl">
             <AlertCircle className="w-16 h-16 text-secondary mx-auto mb-4" />
-            <h1 className="text-2xl font-black text-white font-display uppercase tracking-wide mb-2">
+            <h1 className="text-2xl font-black text-foreground font-display uppercase tracking-wide mb-2">
               Order Not Found
             </h1>
-            <p className="text-sm text-muted-light mb-6 leading-relaxed max-w-sm mx-auto">
-              We couldn&apos;t locate an order with ID &quot;<strong className="text-white">{orderId}</strong>&quot;. Please verify the order reference or check your order history.
+            <p className="text-sm text-muted-foreground mb-6 leading-relaxed max-w-sm mx-auto">
+              We couldn&apos;t locate an order with ID &quot;<strong className="text-foreground">{orderId}</strong>&quot;. Please verify the order reference or check your order history.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button variant="primary" size="md" href="/menu">
@@ -95,27 +95,27 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
             <div className="w-20 h-20 rounded-full bg-green-500/10 border-2 border-green-500/40 flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="w-10 h-10 text-green-400" />
             </div>
-            <h1 className="text-3xl sm:text-4xl font-black text-white font-display uppercase tracking-wide mb-3">
+            <h1 className="text-3xl sm:text-4xl font-black text-foreground font-display uppercase tracking-wide mb-3">
               THANK YOU FOR YOUR ORDER!
             </h1>
-            <p className="text-muted-light mb-2 text-sm">Your Cash on Delivery order has been received.</p>
+            <p className="text-muted-foreground mb-2 text-sm">Your Cash on Delivery order has been received.</p>
             <p className="text-secondary font-bold font-mono text-lg mb-6">{demoOrderNumber}</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto mb-8">
               <div className="bg-surface-elevated rounded-xl p-4 text-center">
                 <Clock className="w-6 h-6 text-secondary mx-auto mb-2" />
-                <p className="text-xs text-muted uppercase tracking-wider mb-1">Estimated Time</p>
-                <p className="text-white font-bold">35–45 mins</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Estimated Time</p>
+                <p className="text-foreground font-bold">35–45 mins</p>
               </div>
               <div className="bg-surface-elevated rounded-xl p-4 text-center">
                 <Banknote className="w-6 h-6 text-secondary mx-auto mb-2" />
-                <p className="text-xs text-muted uppercase tracking-wider mb-1">Payment</p>
-                <p className="text-white font-bold">Cash on Delivery</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Payment</p>
+                <p className="text-foreground font-bold">Cash on Delivery</p>
               </div>
               <div className="bg-surface-elevated rounded-xl p-4 text-center">
                 <Bike className="w-6 h-6 text-secondary mx-auto mb-2" />
-                <p className="text-xs text-muted uppercase tracking-wider mb-1">Status</p>
-                <p className="text-white font-bold">Pending</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Status</p>
+                <p className="text-foreground font-bold">Pending</p>
               </div>
             </div>
 
@@ -150,11 +150,11 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
             Real Order Placed &amp; Recorded
           </span>
 
-          <h1 className="text-3xl sm:text-4xl font-black text-white font-display uppercase tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-foreground font-display uppercase tracking-tight">
             THANK YOU FOR YOUR ORDER!
           </h1>
 
-          <p className="text-sm text-muted-light mt-2 leading-relaxed">
+          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
             Official Reference:{' '}
             <strong className="text-secondary font-mono tracking-wider text-base">
               {order.order_number}
@@ -169,7 +169,7 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
             <div className="flex items-center gap-3">
               <span className="w-3 h-3 rounded-full bg-amber-500 animate-pulse" />
               <div>
-                <span className="text-xs text-muted block uppercase tracking-wider font-semibold">
+                <span className="text-xs text-muted-foreground block uppercase tracking-wider font-semibold">
                   Current Status
                 </span>
                 <span className="text-sm font-extrabold text-amber-400 uppercase tracking-wider">
@@ -178,7 +178,7 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-semibold text-muted-light bg-surface px-3 py-1.5 rounded-lg border border-surface-border">
+            <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground bg-surface px-3 py-1.5 rounded-lg border border-surface-border">
               <Clock className="w-4 h-4 text-secondary" />
               <span>Est. Delivery: ~{deliveryMinutes} minutes</span>
             </div>
@@ -188,7 +188,7 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
           <div className="p-5 sm:p-8 space-y-8">
             {/* Items Ordered Table */}
             <div>
-              <h2 className="text-base font-bold text-white uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center justify-between">
+              <h2 className="text-base font-bold text-foreground uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center justify-between">
                 <span>Items Ordered</span>
                 <span className="text-xs text-secondary font-sans font-semibold">
                   {items.length} {items.length === 1 ? 'line item' : 'line items'}
@@ -203,13 +203,13 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
                         <span className="font-extrabold text-secondary font-mono text-sm">
                           {it.quantity}x
                         </span>
-                        <span className="font-bold text-white">
+                        <span className="font-bold text-foreground">
                           {it.product_name}
                         </span>
                       </div>
 
                       {it.variant_name && (
-                        <span className="text-xs text-muted-light block ml-6 mt-0.5">
+                        <span className="text-xs text-muted-foreground block ml-6 mt-0.5">
                           Size/Portion: <strong className="text-secondary">{it.variant_name}</strong>
                         </span>
                       )}
@@ -219,7 +219,7 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
                           {it.options.map((opt: any, idx: number) => (
                             <span
                               key={idx}
-                              className="text-[11px] px-2 py-0.5 rounded bg-surface-elevated border border-surface-border text-muted"
+                              className="text-[11px] px-2 py-0.5 rounded bg-surface-elevated border border-surface-border text-muted-foreground"
                             >
                               +{opt.name} {opt.price > 0 && `(Rs. ${opt.price})`}
                             </span>
@@ -229,10 +229,10 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
                     </div>
 
                     <div className="text-right">
-                      <span className="font-extrabold text-white tabular-nums block text-sm">
+                      <span className="font-extrabold text-foreground tabular-nums block text-sm">
                         {formatPkr(it.line_total)}
                       </span>
-                      <span className="text-[11px] text-muted tabular-nums">
+                      <span className="text-[11px] text-muted-foreground tabular-nums">
                         @{formatPkr(it.unit_price)} each
                       </span>
                     </div>
@@ -245,19 +245,19 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-surface-border">
               {/* Delivery Details */}
               <div className="space-y-3">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-display flex items-center gap-2">
+                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider font-display flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-secondary" />
                   <span>Delivery Address</span>
                 </h3>
-                <div className="text-xs text-muted-light space-y-1 bg-surface-elevated/60 p-4 rounded-xl border border-surface-border">
-                  <p className="font-bold text-white text-sm">{order.customer_name}</p>
+                <div className="text-xs text-muted-foreground space-y-1 bg-surface-elevated/60 p-4 rounded-xl border border-surface-border">
+                  <p className="font-bold text-foreground text-sm">{order.customer_name}</p>
                   <p className="text-secondary font-medium">{order.customer_phone}</p>
                   <p className="mt-1 leading-relaxed">{order.delivery_address}</p>
                   {order.delivery_zones && (
-                    <p className="text-muted">Zone: {order.delivery_zones.name}</p>
+                    <p className="text-muted-foreground">Zone: {order.delivery_zones.name}</p>
                   )}
                   {order.delivery_instructions && (
-                    <p className="text-muted italic pt-1 border-t border-surface-border/50 mt-1">
+                    <p className="text-muted-foreground italic pt-1 border-t border-surface-border/50 mt-1">
                       Note: &quot;{order.delivery_instructions}&quot;
                     </p>
                   )}
@@ -266,39 +266,39 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
 
               {/* Payment Summary */}
               <div className="space-y-3">
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-display flex items-center gap-2">
+                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider font-display flex items-center gap-2">
                   <Banknote className="w-4 h-4 text-secondary" />
                   <span>Payment &amp; Totals</span>
                 </h3>
                 <div className="bg-surface-elevated/60 p-4 rounded-xl border border-surface-border space-y-2 text-xs">
-                  <div className="flex justify-between text-muted-light">
+                  <div className="flex justify-between text-muted-foreground">
                     <span>Subtotal:</span>
-                    <span className="font-semibold text-white tabular-nums">
+                    <span className="font-semibold text-foreground tabular-nums">
                       {formatPkr(order.subtotal)}
                     </span>
                   </div>
-                  <div className="flex justify-between text-muted-light">
+                  <div className="flex justify-between text-muted-foreground">
                     <span>Delivery Fee:</span>
-                    <span className="font-semibold text-white tabular-nums">
+                    <span className="font-semibold text-foreground tabular-nums">
                       {formatPkr(order.delivery_fee)}
                     </span>
                   </div>
                   {order.platform_fee > 0 && (
-                    <div className="flex justify-between text-muted-light">
+                    <div className="flex justify-between text-muted-foreground">
                       <span>Platform Fee:</span>
-                      <span className="font-semibold text-white tabular-nums">
+                      <span className="font-semibold text-foreground tabular-nums">
                         {formatPkr(order.platform_fee)}
                       </span>
                     </div>
                   )}
                   <div className="pt-2 border-t border-surface-border flex justify-between items-baseline text-sm">
-                    <span className="font-extrabold text-white">Total Amount Due (COD):</span>
+                    <span className="font-extrabold text-foreground">Total Amount Due (COD):</span>
                     <span className="text-xl font-black text-secondary tabular-nums">
                       {formatPkr(order.total)}
                     </span>
                   </div>
-                  <p className="text-[11px] text-muted pt-1">
-                    Payment Method: <strong className="text-white">Cash on Delivery</strong>
+                  <p className="text-[11px] text-muted-foreground pt-1">
+                    Payment Method: <strong className="text-foreground">Cash on Delivery</strong>
                   </p>
                 </div>
               </div>
@@ -307,9 +307,9 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
 
           {/* Footer Actions */}
           <div className="bg-surface-elevated border-t border-surface-border p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="flex items-center gap-2 text-xs text-muted">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Phone className="w-4 h-4 text-secondary" />
-              <span>Questions? Call us at <strong className="text-white">{BUSINESS_CONFIG.contact.formattedPhone}</strong></span>
+              <span>Questions? Call us at <strong className="text-foreground">{BUSINESS_CONFIG.contact.formattedPhone}</strong></span>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">

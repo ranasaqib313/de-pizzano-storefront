@@ -84,13 +84,13 @@ function OrderConfirmationContent() {
             Demo Order Placed Successfully
           </span>
 
-          <h1 className="text-3xl sm:text-4xl font-black text-white font-display uppercase tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-foreground font-display uppercase tracking-tight">
             THANK YOU FOR YOUR ORDER!
           </h1>
 
-          <p className="text-sm text-muted-light mt-2 leading-relaxed">
+          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
             Order Reference:{' '}
-            <strong className="text-white font-mono tracking-wider">
+            <strong className="text-foreground font-mono tracking-wider">
               {order.id}
             </strong>
           </p>
@@ -101,9 +101,9 @@ function OrderConfirmationContent() {
           <div className="md:col-span-7 space-y-6">
             {/* Ordered Dishes */}
             <div className="bg-surface border border-surface-border rounded-2xl p-5 sm:p-7 shadow-xl space-y-4">
-              <h2 className="text-base font-bold text-white uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center justify-between">
+              <h2 className="text-base font-bold text-foreground uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center justify-between">
                 <span>Items in this Order</span>
-                <span className="text-xs text-muted">
+                <span className="text-xs text-muted-foreground">
                   {order.items.length} {order.items.length === 1 ? 'line item' : 'line items'}
                 </span>
               </h2>
@@ -112,7 +112,7 @@ function OrderConfirmationContent() {
                 {order.items.map((item) => (
                   <div key={item.id} className="py-3 first:pt-0 last:pb-0 flex items-start justify-between gap-3 text-xs sm:text-sm">
                     <div>
-                      <h4 className="font-bold text-white">
+                      <h4 className="font-bold text-foreground">
                         {item.quantity}x {item.name}
                       </h4>
                       {item.variant && (
@@ -121,12 +121,12 @@ function OrderConfirmationContent() {
                         </p>
                       )}
                       {item.selectedOptions && item.selectedOptions.length > 0 && (
-                        <p className="text-[11px] text-muted mt-0.5">
+                        <p className="text-[11px] text-muted-foreground mt-0.5">
                           Addons: {item.selectedOptions.map((o) => o.name).join(', ')}
                         </p>
                       )}
                     </div>
-                    <span className="font-extrabold text-white tabular-nums shrink-0">
+                    <span className="font-extrabold text-foreground tabular-nums shrink-0">
                       {formatPkr(item.totalPrice)}
                     </span>
                   </div>
@@ -135,23 +135,23 @@ function OrderConfirmationContent() {
 
               {/* Price Breakdown */}
               <div className="pt-4 border-t border-surface-border space-y-2 text-xs">
-                <div className="flex justify-between text-muted-light">
+                <div className="flex justify-between text-muted-foreground">
                   <span>Subtotal:</span>
-                  <span className="font-semibold text-white tabular-nums">
+                  <span className="font-semibold text-foreground tabular-nums">
                     {formatPkr(order.pricing.subtotal)}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-muted-light">
+                <div className="flex justify-between text-muted-foreground">
                   <span>Delivery ({order.deliveryAddress.area}):</span>
-                  <span className="font-semibold text-white tabular-nums">
+                  <span className="font-semibold text-foreground tabular-nums">
                     {formatPkr(order.pricing.deliveryFee)}
                   </span>
                 </div>
 
                 <div className="pt-3 border-t border-surface-border flex justify-between items-baseline text-sm">
                   <div>
-                    <span className="font-extrabold text-white block">Total Cash on Delivery:</span>
+                    <span className="font-extrabold text-foreground block">Total Cash on Delivery:</span>
                     <span className="text-[11px] text-secondary">Pay upon arrival to rider</span>
                   </div>
                   <span className="text-2xl font-black text-secondary tabular-nums">
@@ -163,38 +163,38 @@ function OrderConfirmationContent() {
 
             {/* Next Steps Guidance */}
             <div className="bg-surface border border-surface-border rounded-2xl p-5 sm:p-7 shadow-xl space-y-4">
-              <h3 className="text-base font-bold text-white uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center gap-2">
+              <h3 className="text-base font-bold text-foreground uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center gap-2">
                 <Clock className="w-4 h-4 text-secondary" />
                 What Happens Next?
               </h3>
 
-              <div className="space-y-3.5 text-xs text-muted-light leading-relaxed">
+              <div className="space-y-3.5 text-xs text-muted-foreground leading-relaxed">
                 <div className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-surface-elevated border border-surface-border flex items-center justify-center font-bold text-white shrink-0 mt-0.5">
+                  <span className="w-5 h-5 rounded-full bg-surface-elevated border border-surface-border flex items-center justify-center font-bold text-foreground shrink-0 mt-0.5">
                     1
                   </span>
                   <div>
-                    <strong className="text-white block">Order Confirmation Call</strong>
+                    <strong className="text-foreground block">Order Confirmation Call</strong>
                     Our order desk calls you on <span className="text-secondary font-mono">{order.deliveryAddress.phone}</span> within 5 minutes to verify your address.
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-surface-elevated border border-surface-border flex items-center justify-center font-bold text-white shrink-0 mt-0.5">
+                  <span className="w-5 h-5 rounded-full bg-surface-elevated border border-surface-border flex items-center justify-center font-bold text-foreground shrink-0 mt-0.5">
                     2
                   </span>
                   <div>
-                    <strong className="text-white block">Oven Stone-Baking</strong>
+                    <strong className="text-foreground block">Oven Stone-Baking</strong>
                     Pizzas are fresh-dough tossed, topped, and stone-baked hot in our Soldier Bazar oven.
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-surface-elevated border border-surface-border flex items-center justify-center font-bold text-white shrink-0 mt-0.5">
+                  <span className="w-5 h-5 rounded-full bg-surface-elevated border border-surface-border flex items-center justify-center font-bold text-foreground shrink-0 mt-0.5">
                     3
                   </span>
                   <div>
-                    <strong className="text-white block">Delivery & Cash Collection</strong>
+                    <strong className="text-foreground block">Delivery & Cash Collection</strong>
                     Rider arrives at your door. Inspect your hot meal and pay <strong className="text-secondary">{formatPkr(order.pricing.total)}</strong> in cash.
                   </div>
                 </div>
@@ -205,39 +205,39 @@ function OrderConfirmationContent() {
           {/* Right Column: Customer & Delivery Details + Actions */}
           <div className="md:col-span-5 space-y-6">
             <div className="bg-surface border border-surface-border rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-display pb-2 border-b border-surface-border">
+              <h3 className="text-sm font-bold text-foreground uppercase tracking-wider font-display pb-2 border-b border-surface-border">
                 Delivery Details
               </h3>
 
               <div className="space-y-3 text-xs">
                 <div>
-                  <span className="text-muted block text-[11px]">Customer:</span>
-                  <span className="font-semibold text-white">{order.customer.fullName}</span>
+                  <span className="text-muted-foreground block text-[11px]">Customer:</span>
+                  <span className="font-semibold text-foreground">{order.customer.fullName}</span>
                 </div>
 
                 <div>
-                  <span className="text-muted block text-[11px]">Contact Phone:</span>
+                  <span className="text-muted-foreground block text-[11px]">Contact Phone:</span>
                   <span className="font-mono text-secondary font-bold">{order.customer.phone}</span>
                 </div>
 
                 <div>
-                  <span className="text-muted block text-[11px]">Delivery Address:</span>
-                  <p className="text-white font-medium mt-0.5">
+                  <span className="text-muted-foreground block text-[11px]">Delivery Address:</span>
+                  <p className="text-foreground font-medium mt-0.5">
                     {order.deliveryAddress.streetAddress}, {order.deliveryAddress.area}, {order.deliveryAddress.city}
                   </p>
                 </div>
 
                 {order.deliveryAddress.instructions && (
                   <div>
-                    <span className="text-muted block text-[11px]">Special Instructions:</span>
-                    <p className="text-muted-light italic mt-0.5">
+                    <span className="text-muted-foreground block text-[11px]">Special Instructions:</span>
+                    <p className="text-muted-foreground italic mt-0.5">
                       &quot;{order.deliveryAddress.instructions}&quot;
                     </p>
                   </div>
                 )}
 
                 <div className="pt-2 border-t border-surface-border flex items-center justify-between">
-                  <span className="text-muted text-[11px]">Payment Mode:</span>
+                  <span className="text-muted-foreground text-[11px]">Payment Mode:</span>
                   <span className="font-bold text-emerald-400 flex items-center gap-1">
                     <Banknote className="w-3.5 h-3.5" />
                     Cash on Delivery
@@ -271,8 +271,8 @@ function OrderConfirmationContent() {
                 </Button>
               </Link>
 
-              <div className="text-center text-xs text-muted-light pt-2">
-                <span>Restaurant Desk: <strong className="text-white">{BUSINESS_CONFIG.contact.formattedPhone}</strong></span>
+              <div className="text-center text-xs text-muted-foreground pt-2">
+                <span>Restaurant Desk: <strong className="text-foreground">{BUSINESS_CONFIG.contact.formattedPhone}</strong></span>
               </div>
             </div>
           </div>

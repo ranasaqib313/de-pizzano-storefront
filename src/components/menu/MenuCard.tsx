@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { ExternalLink, ShoppingBag, Info, Sparkles, Phone } from 'lucide-react';
+import { ExternalLink, ShoppingBag, Info, Sparkles } from 'lucide-react';
 import { MenuItem } from '@/types/menu';
 import { formatMenuItemPrice } from '@/lib/format-price';
-import { getFoodpandaUrl, getPhoneLink } from '@/lib/links';
+import { getFoodpandaUrl } from '@/lib/links';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
@@ -163,13 +163,13 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
               </>
             ) : (
               <Button
-                variant="outline"
+                variant="primary"
                 size="sm"
-                href={getPhoneLink()}
-                icon={<Phone className="w-3 h-3 text-secondary" />}
-                className="text-xs flex-1 justify-center"
+                href="/menu"
+                icon={<ShoppingBag className="w-3.5 h-3.5" />}
+                className="text-xs flex-1 justify-center font-bold"
               >
-                Order Call
+                Order Online
               </Button>
             )}
           </div>

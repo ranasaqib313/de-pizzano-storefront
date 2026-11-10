@@ -107,10 +107,10 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
       {/* Toolbar: Results Count, Connection Indicator, Search & View Mode Toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-surface border border-surface-border">
         {/* Results Counter & Active Category */}
-        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-light">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
           <span>
-            Showing <strong className="text-white font-mono">{filteredItems.length}</strong> of{' '}
-            <strong className="text-white font-mono">{items.length}</strong> dishes
+            Showing <strong className="text-foreground font-mono">{filteredItems.length}</strong> of{' '}
+            <strong className="text-foreground font-mono">{items.length}</strong> dishes
             {selectedCategory !== 'all' && (
               <span className="text-secondary ml-1 font-semibold">
                 in {categories.find((c) => c.id === selectedCategory)?.label || selectedCategory}
@@ -175,7 +175,7 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
                 'p-1.5 rounded-lg transition-colors cursor-pointer',
                 viewMode === 'grid'
                   ? 'bg-primary text-white shadow-sm'
-                  : 'text-muted hover:text-white'
+                  : 'text-muted-foreground hover:text-foreground'
               )}
               title="Grid View"
               aria-pressed={viewMode === 'grid'}
@@ -190,7 +190,7 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
                 'p-1.5 rounded-lg transition-colors cursor-pointer',
                 viewMode === 'list'
                   ? 'bg-primary text-white shadow-sm'
-                  : 'text-muted hover:text-white'
+                  : 'text-muted-foreground hover:text-foreground'
               )}
               title="List View"
               aria-pressed={viewMode === 'list'}
@@ -230,9 +230,9 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
           )
         ) : (
           <div className="p-12 text-center rounded-2xl bg-surface border border-surface-border">
-            <AlertCircle className="w-10 h-10 text-muted mx-auto mb-3" />
-            <h4 className="text-base font-bold text-white mb-1">No Dishes Found</h4>
-            <p className="text-xs text-muted mb-4">
+            <AlertCircle className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+            <h4 className="text-base font-bold text-foreground mb-1">No Dishes Found</h4>
+            <p className="text-xs text-muted-foreground mb-4">
               No menu items match your search &quot;{searchTerm}&quot; in{' '}
               {selectedCategory === 'all' ? 'the entire menu' : selectedCategory}.
             </p>

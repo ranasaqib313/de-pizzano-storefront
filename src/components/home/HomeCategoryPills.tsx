@@ -45,7 +45,7 @@ export function HomeCategoryPills({ activeCategory, onSelectCategory }: HomeCate
           type="button"
           onClick={() => scroll('left')}
           aria-label="Scroll categories left"
-          className="hidden sm:flex absolute -left-3 z-10 w-8 h-8 rounded-full bg-surface border border-surface-border text-white items-center justify-center shadow-lg hover:bg-surface-elevated hover:scale-105 transition-all cursor-pointer"
+          className="hidden sm:flex absolute -left-3 z-10 w-8 h-8 rounded-full bg-surface border border-surface-border text-foreground items-center justify-center shadow-lg hover:bg-surface-elevated hover:scale-105 transition-all cursor-pointer"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -72,7 +72,7 @@ export function HomeCategoryPills({ activeCategory, onSelectCategory }: HomeCate
                   'flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 cursor-pointer shrink-0 border select-none',
                   isActive
                     ? 'bg-secondary text-background border-secondary font-black shadow-glow-gold scale-[1.02]'
-                    : 'bg-surface border-surface-border text-muted-light hover:text-white hover:bg-surface-elevated hover:border-surface-highlight'
+                    : 'bg-surface border-surface-border text-muted-foreground hover:text-foreground hover:bg-surface-elevated hover:border-surface-highlight'
                 )}
               >
                 <Icon
@@ -88,7 +88,7 @@ export function HomeCategoryPills({ activeCategory, onSelectCategory }: HomeCate
                       'text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-0.5',
                       isActive
                         ? 'bg-background/20 text-background'
-                        : 'bg-surface-elevated text-muted'
+                        : 'bg-surface-elevated text-muted-foreground'
                     )}
                   >
                     {pill.count}
@@ -104,7 +104,7 @@ export function HomeCategoryPills({ activeCategory, onSelectCategory }: HomeCate
           type="button"
           onClick={() => scroll('right')}
           aria-label="Scroll categories right"
-          className="hidden sm:flex absolute -right-3 z-10 w-8 h-8 rounded-full bg-surface border border-surface-border text-white items-center justify-center shadow-lg hover:bg-surface-elevated hover:scale-105 transition-all cursor-pointer"
+          className="hidden sm:flex absolute -right-3 z-10 w-8 h-8 rounded-full bg-surface border border-surface-border text-foreground items-center justify-center shadow-lg hover:bg-surface-elevated hover:scale-105 transition-all cursor-pointer"
         >
           <ChevronRight className="w-4 h-4" />
         </button>

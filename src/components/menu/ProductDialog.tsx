@@ -246,7 +246,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
           {/* Size / Portion Selection */}
           {variants.length > 1 && (
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-white uppercase tracking-wider block">
+              <label className="text-xs font-bold text-foreground uppercase tracking-wider block">
                 1. Select {isPizza ? 'Pizza Size' : 'Portion / Size'} <span className="text-primary">*</span>
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -264,7 +264,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-white font-display">
+                        <span className="text-sm font-bold text-foreground font-display">
                           {variant.name === 'Regular (11")' ? 'Regular / Medium (11")' : variant.name}
                         </span>
                         {isSelected && <Check className="w-4 h-4 text-secondary shrink-0" />}
@@ -273,7 +273,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
                         {formatPkr(variant.price)}
                       </span>
                       {variant.description && (
-                        <span className="text-[10px] text-muted block mt-0.5">
+                        <span className="text-[10px] text-muted-foreground block mt-0.5">
                           {variant.description}
                         </span>
                       )}
@@ -287,7 +287,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
           {/* Crust Selection (For Pizzas with crust options, not for deals or special pre-stuffed crusts) */}
           {isPizza && item?.category !== 'special-flavours' && (
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-white uppercase tracking-wider block">
+              <label className="text-xs font-bold text-foreground uppercase tracking-wider block">
                 2. Select Crust Style
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -305,12 +305,12 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-white">
+                        <span className="text-xs font-semibold text-foreground">
                           {crust.name}
                         </span>
                         {isSelected && <Check className="w-3.5 h-3.5 text-secondary" />}
                       </div>
-                      <span className="text-[11px] text-muted block mt-0.5">
+                      <span className="text-[11px] text-muted-foreground block mt-0.5">
                         {crust.price > 0 ? `+ ${formatPkr(crust.price)}` : 'Included'}
                       </span>
                     </button>
@@ -322,7 +322,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
 
           {/* Optional Add-ons */}
           <div className="space-y-2.5">
-            <label className="text-xs font-bold text-white uppercase tracking-wider block">
+            <label className="text-xs font-bold text-foreground uppercase tracking-wider block">
               {isPizza ? '3. Extra Toppings & Dips (Optional)' : 'Optional Add-ons & Dips'}
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -340,7 +340,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
                     }`}
                   >
                     <div>
-                      <span className="text-xs font-semibold text-white block">
+                      <span className="text-xs font-semibold text-foreground block">
                         {addon.name}
                       </span>
                       <span className="text-[11px] text-secondary font-bold">
@@ -365,7 +365,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
           {/* Quantity Selector & Price Banner */}
           <div className="pt-4 border-t border-surface-border flex items-center justify-between gap-4 flex-wrap bg-surface-elevated/50 p-4 rounded-xl border border-surface-border">
             <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-muted-light uppercase tracking-wider">
+              <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                 Quantity:
               </span>
               <QuantitySelector
@@ -377,7 +377,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
             </div>
 
             <div className="text-right">
-              <span className="text-xs text-muted block">Item Total</span>
+              <span className="text-xs text-muted-foreground block">Item Total</span>
               <span className="text-xl font-black text-secondary tabular-nums">
                 {formatPkr(totalPrice)}
               </span>
@@ -385,7 +385,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
           </div>
 
           {/* Development notice */}
-          <div className="p-3 bg-surface-elevated rounded-xl border border-secondary/20 flex items-start gap-2.5 text-xs text-muted">
+          <div className="p-3 bg-surface-elevated rounded-xl border border-secondary/20 flex items-start gap-2.5 text-xs text-muted-foreground">
             <Info className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
             <p className="leading-relaxed">
               Price reflects provisional public directory listing (Foodpanda). Actual restaurant direct prices may vary and await owner confirmation before launch. Cash on Delivery is available for all Soldier Bazar & Karachi orders.

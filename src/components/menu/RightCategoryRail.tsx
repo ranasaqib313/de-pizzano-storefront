@@ -63,10 +63,10 @@ export function RightCategoryRail({
             <Layers className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-xs font-black text-white font-display uppercase tracking-wider">
+            <h3 className="text-xs font-black text-foreground font-display uppercase tracking-wider">
               Category Rail
             </h3>
-            <span className="text-[10px] text-muted block -mt-0.5">
+            <span className="text-[10px] text-muted-foreground block -mt-0.5">
               Quick Menu Jump
             </span>
           </div>
@@ -86,7 +86,7 @@ export function RightCategoryRail({
             'group relative w-full text-left px-3.5 py-3 rounded-2xl transition-all duration-200 flex items-center justify-between border cursor-pointer',
             activeCategory === 'all'
               ? 'bg-gradient-to-r from-primary via-primary to-primary-hover text-white border-primary shadow-glow-red scale-[1.02]'
-              : 'bg-surface-elevated/40 text-muted-light border-surface-border/60 hover:bg-surface-elevated hover:text-white hover:border-secondary/40'
+              : 'bg-surface-elevated/40 text-muted-foreground border-surface-border/60 hover:bg-surface-elevated hover:text-foreground hover:border-secondary/40'
           )}
         >
           <div className="flex items-center gap-3">
@@ -95,7 +95,7 @@ export function RightCategoryRail({
                 'w-9 h-9 rounded-xl flex items-center justify-center transition-colors shrink-0',
                 activeCategory === 'all'
                   ? 'bg-white/20 text-white'
-                  : 'bg-surface text-secondary group-hover:text-white'
+                  : 'bg-surface text-secondary group-hover:text-foreground'
               )}
             >
               <AllIcon className="w-4 h-4" />
@@ -107,7 +107,7 @@ export function RightCategoryRail({
               <span
                 className={cn(
                   'text-[10px] block',
-                  activeCategory === 'all' ? 'text-white/80' : 'text-muted'
+                  activeCategory === 'all' ? 'text-white/80' : 'text-muted-foreground'
                 )}
               >
                 Entire De Pizzano Menu
@@ -120,7 +120,7 @@ export function RightCategoryRail({
               'text-[11px] font-extrabold px-2 py-0.5 rounded-full shrink-0',
               activeCategory === 'all'
                 ? 'bg-white text-primary font-black shadow-sm'
-                : 'bg-surface border border-surface-border text-muted-light group-hover:text-white'
+                : 'bg-surface border border-surface-border text-muted-foreground group-hover:text-foreground'
             )}
           >
             {totalCount}
@@ -141,7 +141,7 @@ export function RightCategoryRail({
                 'group relative w-full text-left px-3.5 py-3 rounded-2xl transition-all duration-200 flex items-center justify-between border cursor-pointer',
                 isActive
                   ? 'bg-gradient-to-r from-primary via-primary to-primary-hover text-white border-primary shadow-glow-red scale-[1.02]'
-                  : 'bg-surface-elevated/40 text-muted-light border-surface-border/60 hover:bg-surface-elevated hover:text-white hover:border-secondary/40'
+                  : 'bg-surface-elevated/40 text-muted-foreground border-surface-border/60 hover:bg-surface-elevated hover:text-foreground hover:border-secondary/40'
               )}
             >
               <div className="flex items-center gap-3">
@@ -150,7 +150,7 @@ export function RightCategoryRail({
                     'w-9 h-9 rounded-xl flex items-center justify-center transition-colors shrink-0',
                     isActive
                       ? 'bg-white/20 text-white'
-                      : 'bg-surface text-secondary group-hover:text-white'
+                      : 'bg-surface text-secondary group-hover:text-foreground'
                   )}
                 >
                   <CatIcon className="w-4 h-4" />
@@ -162,7 +162,7 @@ export function RightCategoryRail({
                   <span
                     className={cn(
                       'text-[10px] block truncate max-w-[130px]',
-                      isActive ? 'text-white/80' : 'text-muted'
+                      isActive ? 'text-white/80' : 'text-muted-foreground'
                     )}
                   >
                     {cat.id === 'pizza-deals'
@@ -185,7 +185,7 @@ export function RightCategoryRail({
                   'text-[11px] font-extrabold px-2 py-0.5 rounded-full shrink-0',
                   isActive
                     ? 'bg-white text-primary font-black shadow-sm'
-                    : 'bg-surface border border-surface-border text-muted-light group-hover:text-white'
+                    : 'bg-surface border border-surface-border text-muted-foreground group-hover:text-foreground'
                 )}
               >
                 {cat.itemCount}
@@ -196,7 +196,7 @@ export function RightCategoryRail({
       </nav>
 
       {/* Culinary Kitchen Note */}
-      <div className="pt-3 px-2 border-t border-surface-border/60 text-[11px] text-muted space-y-1">
+      <div className="pt-3 px-2 border-t border-surface-border/60 text-[11px] text-muted-foreground space-y-1">
         <p className="flex items-center gap-1.5 text-secondary font-semibold">
           <Flame className="w-3.5 h-3.5 text-primary" />
           Stone-Baked Freshness

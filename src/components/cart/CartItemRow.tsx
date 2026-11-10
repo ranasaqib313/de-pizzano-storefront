@@ -42,13 +42,13 @@ export function CartItemRow({
       {/* Item info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
-          <h4 className="text-sm sm:text-base font-bold text-white font-display truncate">
+          <h4 className="text-sm sm:text-base font-bold text-foreground font-display truncate">
             {item.name}
           </h4>
           <button
             type="button"
             onClick={() => onRemove(item.id)}
-            className="text-muted hover:text-primary transition-colors p-1 -mr-1 focus:outline-none focus:ring-2 focus:ring-primary rounded"
+            className="text-muted-foreground hover:text-primary transition-colors p-1 -mr-1 focus:outline-none focus:ring-2 focus:ring-primary rounded"
             aria-label={`Remove ${item.name} from cart`}
           >
             <Trash2 className="w-4 h-4" />
@@ -68,7 +68,7 @@ export function CartItemRow({
             {item.selectedOptions.map((opt) => (
               <span
                 key={opt.optionId}
-                className="text-[11px] px-2 py-0.5 rounded-md bg-surface border border-surface-border text-muted-light"
+                className="text-[11px] px-2 py-0.5 rounded-md bg-surface border border-surface-border text-muted-foreground"
               >
                 + {opt.name} ({formatPkr(opt.price)})
               </span>
@@ -86,10 +86,10 @@ export function CartItemRow({
           />
 
           <div className="text-right">
-            <span className="text-xs text-muted block sm:inline mr-2">
+            <span className="text-xs text-muted-foreground block sm:inline mr-2">
               {formatPkr(item.unitPrice)} each
             </span>
-            <span className="text-sm sm:text-base font-black text-white tabular-nums">
+            <span className="text-sm sm:text-base font-black text-foreground tabular-nums">
               {formatPkr(item.totalPrice)}
             </span>
           </div>

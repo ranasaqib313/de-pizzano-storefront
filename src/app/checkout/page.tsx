@@ -214,11 +214,11 @@ export default function CheckoutPage() {
       <div className="py-20 bg-background min-h-[70vh]">
         <Container size="md">
           <div className="bg-surface border border-surface-border rounded-2xl p-8 sm:p-12 text-center shadow-xl">
-            <ShoppingBag className="w-16 h-16 text-muted mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-white font-display uppercase tracking-wide mb-2">
+            <ShoppingBag className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-foreground font-display uppercase tracking-wide mb-2">
               Cannot Proceed to Checkout
             </h1>
-            <p className="text-sm text-muted-light mb-6 leading-relaxed max-w-md mx-auto">
+            <p className="text-sm text-muted-foreground mb-6 leading-relaxed max-w-md mx-auto">
               Your cart is currently empty. Please select pizzas, sides, or beverages from our menu before checking out.
             </p>
             <Button variant="primary" size="lg" href="/menu">
@@ -237,22 +237,22 @@ export default function CheckoutPage() {
         <div className="mb-8 pb-4 border-b border-surface-border">
           <Link
             href="/cart"
-            className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-white transition-colors mb-2 font-medium"
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-2 font-medium"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to Cart
           </Link>
-          <h1 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-wide">
+          <h1 className="text-2xl sm:text-3xl font-black text-foreground font-display uppercase tracking-wide">
             Checkout — Cash on Delivery
           </h1>
-          <p className="text-xs sm:text-sm text-muted mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             {user ? (
               <>
-                Logged in as <strong className="text-white">{user.email}</strong>. Enter your delivery address in Karachi to place your order.
+                Logged in as <strong className="text-foreground">{user.email}</strong>. Enter your delivery address in Karachi to place your order.
               </>
             ) : (
               <>
-                Checking out as <strong className="text-white">Guest</strong>. Enter your delivery address and contact details below.
+                Checking out as <strong className="text-foreground">Guest</strong>. Enter your delivery address and contact details below.
               </>
             )}
           </p>
@@ -260,7 +260,7 @@ export default function CheckoutPage() {
 
         {!user && (
           <div className="mb-6 p-4 rounded-xl bg-surface border border-secondary/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2 text-muted-light">
+            <div className="flex items-center gap-2 text-muted-foreground">
               <span className="w-2 h-2 rounded-full bg-secondary" />
               <span>Ordering as <strong>Guest</strong>. You can place your order now, or sign in to save your address.</span>
             </div>
@@ -274,7 +274,7 @@ export default function CheckoutPage() {
           <div className="mb-8 p-4 rounded-xl bg-red-950/40 border border-red-500/40 text-red-200 text-sm flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
             <div>
-              <p className="font-bold text-white">Order Placement Error</p>
+              <p className="font-bold text-red-200">Order Placement Error</p>
               <p className="text-xs mt-0.5 text-red-300">{submitError}</p>
             </div>
           </div>
@@ -288,7 +288,7 @@ export default function CheckoutPage() {
               <div className="bg-surface border border-surface-border rounded-2xl p-5 sm:p-7 shadow-lg space-y-5">
                 <div className="flex items-center gap-2.5 pb-3 border-b border-surface-border">
                   <MapPin className="w-5 h-5 text-secondary" />
-                  <h2 className="text-base font-bold text-white uppercase tracking-wider font-display">
+                  <h2 className="text-base font-bold text-foreground uppercase tracking-wider font-display">
                     1. Delivery Address & Contact
                   </h2>
                 </div>
@@ -385,7 +385,7 @@ export default function CheckoutPage() {
               <div className="bg-surface border border-surface-border rounded-2xl p-5 sm:p-7 shadow-lg space-y-4">
                 <div className="flex items-center gap-2.5 pb-3 border-b border-surface-border">
                   <Banknote className="w-5 h-5 text-secondary" />
-                  <h2 className="text-base font-bold text-white uppercase tracking-wider font-display">
+                  <h2 className="text-base font-bold text-foreground uppercase tracking-wider font-display">
                     2. Payment Method
                   </h2>
                 </div>
@@ -394,10 +394,10 @@ export default function CheckoutPage() {
                 <div className="border border-secondary bg-secondary/10 rounded-xl p-4 flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider font-display">
+                    <h4 className="text-sm font-bold text-foreground uppercase tracking-wider font-display">
                       Cash on Delivery (COD)
                     </h4>
-                    <p className="text-xs text-muted-light mt-1 leading-relaxed">
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                       Pay in exact cash directly to the De Pizzano delivery rider upon receiving your hot meal.
                     </p>
                   </div>
@@ -408,7 +408,7 @@ export default function CheckoutPage() {
             {/* Right Column: Order Summary & Submission */}
             <div className="lg:col-span-5 sticky top-24 space-y-5">
               <div className="bg-surface border border-surface-border rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
-                <h3 className="text-base font-bold text-white uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center justify-between">
+                <h3 className="text-base font-bold text-foreground uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center justify-between">
                   <span>Order Review</span>
                   <span className="text-xs text-secondary font-sans font-semibold">
                     {itemCount} {itemCount === 1 ? 'dish' : 'dishes'}
@@ -420,7 +420,7 @@ export default function CheckoutPage() {
                   {items.map((item) => (
                     <div key={item.id} className="pt-2.5 first:pt-0 flex items-start justify-between text-xs">
                       <div className="flex-1 pr-2">
-                        <span className="font-bold text-white block truncate">
+                        <span className="font-bold text-foreground block truncate">
                           {item.quantity}x {item.name}
                         </span>
                         {item.variant && (
@@ -429,12 +429,12 @@ export default function CheckoutPage() {
                           </span>
                         )}
                         {item.selectedOptions && item.selectedOptions.length > 0 && (
-                          <span className="text-[10px] text-muted block">
+                          <span className="text-[10px] text-muted-foreground block">
                             +{item.selectedOptions.map((o) => o.name).join(', ')}
                           </span>
                         )}
                       </div>
-                      <span className="font-semibold text-white tabular-nums">
+                      <span className="font-semibold text-foreground tabular-nums">
                         {formatPkr(item.totalPrice)}
                       </span>
                     </div>
@@ -443,22 +443,22 @@ export default function CheckoutPage() {
 
                 {/* Pricing totals */}
                 <div className="pt-4 border-t border-surface-border space-y-2 text-xs">
-                  <div className="flex justify-between text-muted-light">
+                  <div className="flex justify-between text-muted-foreground">
                     <span>Subtotal:</span>
-                    <span className="font-semibold text-white tabular-nums">
+                    <span className="font-semibold text-foreground tabular-nums">
                       {formatPkr(pricing.subtotal)}
                     </span>
                   </div>
 
-                  <div className="flex justify-between text-muted-light">
+                  <div className="flex justify-between text-muted-foreground">
                     <span>Delivery ({selectedZone?.areaName}):</span>
-                    <span className="font-semibold text-white tabular-nums">
+                    <span className="font-semibold text-foreground tabular-nums">
                       {formatPkr(pricing.deliveryFee)}
                     </span>
                   </div>
 
                   <div className="pt-3 border-t border-surface-border flex justify-between items-baseline text-sm">
-                    <span className="font-extrabold text-white">COD Amount Due:</span>
+                    <span className="font-extrabold text-foreground">COD Amount Due:</span>
                     <span className="text-2xl font-black text-secondary tabular-nums">
                       {formatPkr(pricing.total)}
                     </span>

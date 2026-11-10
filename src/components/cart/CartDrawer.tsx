@@ -71,10 +71,10 @@ export function CartDrawer() {
                   <ShoppingBag className="w-4 h-4" />
                 </div>
                 <div>
-                  <h2 className="text-base font-bold text-white uppercase tracking-wider font-display">
+                  <h2 className="text-base font-bold text-foreground uppercase tracking-wider font-display">
                     Your Cart
                   </h2>
-                  <p className="text-xs text-muted">
+                  <p className="text-xs text-muted-foreground">
                     {itemCount} {itemCount === 1 ? 'item' : 'items'} selected
                   </p>
                 </div>
@@ -83,7 +83,7 @@ export function CartDrawer() {
               <button
                 type="button"
                 onClick={closeCartDrawer}
-                className="p-2 rounded-lg text-muted hover:text-white hover:bg-surface border border-surface-border transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-surface border border-surface-border transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                 aria-label="Close cart"
               >
                 <X className="w-5 h-5" />
@@ -106,13 +106,13 @@ export function CartDrawer() {
                 </div>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-center p-6">
-                  <div className="w-16 h-16 rounded-2xl bg-surface-elevated border border-surface-border flex items-center justify-center text-muted mb-4">
+                  <div className="w-16 h-16 rounded-2xl bg-surface-elevated border border-surface-border flex items-center justify-center text-muted-foreground mb-4">
                     <ShoppingBag className="w-8 h-8" />
                   </div>
-                  <h3 className="text-base font-bold text-white mb-1.5 font-display">
+                  <h3 className="text-base font-bold text-foreground mb-1.5 font-display">
                     Your cart is empty
                   </h3>
-                  <p className="text-xs text-muted max-w-xs mb-6 leading-relaxed">
+                  <p className="text-xs text-muted-foreground max-w-xs mb-6 leading-relaxed">
                     Explore our 26 researched dishes spanning handcrafted pizzas, pastas, toasted sandwiches, and loaded fries.
                   </p>
                   <Button
@@ -131,19 +131,19 @@ export function CartDrawer() {
             {items.length > 0 && (
               <div className="p-4 sm:p-5 border-t border-surface-border bg-surface-elevated space-y-3.5">
                 <div className="space-y-1.5 text-xs">
-                  <div className="flex justify-between text-muted-light">
+                  <div className="flex justify-between text-muted-foreground">
                     <span>Subtotal:</span>
-                    <span className="font-semibold text-white tabular-nums">
+                    <span className="font-semibold text-foreground tabular-nums">
                       {formatPkr(pricing.subtotal)}
                     </span>
                   </div>
-                  <div className="flex justify-between text-muted-light">
+                  <div className="flex justify-between text-muted-foreground">
                     <span>Estimated Delivery (Soldier Bazar):</span>
-                    <span className="font-semibold text-white tabular-nums">
+                    <span className="font-semibold text-foreground tabular-nums">
                       {formatPkr(pricing.deliveryFee)}
                     </span>
                   </div>
-                  <div className="flex justify-between text-sm font-extrabold text-white pt-2 border-t border-surface-border">
+                  <div className="flex justify-between text-sm font-extrabold text-foreground pt-2 border-t border-surface-border">
                     <span>Payable Total (COD):</span>
                     <span className="text-secondary font-black text-base tabular-nums">
                       {formatPkr(pricing.total)}

@@ -78,8 +78,8 @@ export function HeaderSearch() {
   return (
     <div ref={containerRef} className="relative w-full max-w-lg mx-auto">
       <form onSubmit={handleSubmit} className="relative flex items-center">
-        <div className="absolute left-3.5 text-muted pointer-events-none">
-          <Search className="w-4 h-4 text-muted-light" />
+        <div className="absolute left-3.5 text-muted-foreground pointer-events-none">
+          <Search className="w-4 h-4 text-muted-foreground" />
         </div>
 
         <input
@@ -93,7 +93,7 @@ export function HeaderSearch() {
           onFocus={() => setIsOpen(true)}
           placeholder="Search pizzas, deals, sides..."
           aria-label="Search pizzas, deals, sides"
-          className="w-full pl-10 pr-20 py-2 sm:py-2.5 rounded-full bg-surface border border-surface-border hover:border-surface-highlight focus:border-secondary focus:bg-surface-elevated text-xs sm:text-sm text-foreground placeholder-muted-foreground focus:outline-none transition-all shadow-inner"
+          className="w-full pl-10 pr-20 py-2 sm:py-2.5 rounded-full bg-surface border border-surface-border hover:border-surface-highlight focus:border-secondary focus:bg-surface-elevated text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none transition-all shadow-inner"
         />
 
         <div className="absolute right-3 flex items-center gap-1.5">
@@ -168,7 +168,7 @@ export function HeaderSearch() {
               ))}
             </div>
           ) : (
-            <div className="p-6 text-center text-muted text-xs">
+            <div className="p-6 text-center text-muted-foreground text-xs">
               No dishes found matching &quot;{query}&quot;. Try &quot;Tikka&quot;, &quot;Deal&quot;, or &quot;Fries&quot;.
             </div>
           )}

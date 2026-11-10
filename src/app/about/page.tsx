@@ -28,8 +28,8 @@ export default function AboutPage() {
 
         {/* Narrative & Concept Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
-          <div className="lg:col-span-7 space-y-6 text-muted-light leading-relaxed text-sm sm:text-base">
-            <h3 className="text-2xl font-bold text-white font-display uppercase tracking-wide">
+          <div className="lg:col-span-7 space-y-6 text-muted-foreground leading-relaxed text-sm sm:text-base">
+            <h3 className="text-2xl font-bold text-foreground font-display uppercase tracking-wide">
               Culinary Focus & Local Roots
             </h3>
             <p>
@@ -48,7 +48,7 @@ export default function AboutPage() {
                 <span className="text-secondary font-bold block text-sm mb-1">
                   Established Hub
                 </span>
-                <span className="text-xs text-muted">
+                <span className="text-xs text-muted-foreground">
                   Soldier Bazar No. 3, Karachi, Pakistan.
                 </span>
               </div>
@@ -56,7 +56,7 @@ export default function AboutPage() {
                 <span className="text-primary font-bold block text-sm mb-1">
                   Menu Selection
                 </span>
-                <span className="text-xs text-muted">
+                <span className="text-xs text-muted-foreground">
                   26 distinct items across 6 culinary categories.
                 </span>
               </div>
@@ -70,18 +70,18 @@ export default function AboutPage() {
                 <Flame className="w-5 h-5 text-secondary" />
               </div>
               <div>
-                <h4 className="text-base font-bold text-white uppercase tracking-wider">
+                <h4 className="text-base font-bold text-foreground uppercase tracking-wider">
                   Our Quality Promise
                 </h4>
-                <p className="text-xs text-muted">Authentic Flavours &amp; Fresh Ingredients</p>
+                <p className="text-xs text-muted-foreground">Authentic Flavours &amp; Fresh Ingredients</p>
               </div>
             </div>
 
-            <p className="text-xs text-muted leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Every pizza and fast-food specialty is freshly baked to order using premium mozzarella, custom dough, and signature spice blends created specifically for our Karachi patrons.
             </p>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-3 text-xs text-foreground">
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>Stone-baked crusts with 100% pure dairy mozzarella.</span>
@@ -115,7 +115,7 @@ export default function AboutPage() {
             <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
               Complete Offerings
             </span>
-            <h3 className="text-3xl font-extrabold text-white font-display uppercase tracking-tight mt-1">
+            <h3 className="text-3xl font-extrabold text-foreground font-display uppercase tracking-tight mt-1">
               Six Specialized Categories
             </h3>
           </div>
@@ -127,20 +127,20 @@ export default function AboutPage() {
                 className="bg-surface border border-surface-border rounded-xl p-5 hover:border-secondary/40 transition-colors"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-white text-base uppercase font-display">
+                  <h4 className="font-bold text-foreground text-base uppercase font-display">
                     {category.label}
                   </h4>
                   <span className="px-2.5 py-0.5 text-xs font-semibold bg-surface-elevated text-secondary rounded-full">
                     {category.itemCount} Items
                   </span>
                 </div>
-                <p className="text-xs text-muted leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   {category.description}
                 </p>
                 <div className="mt-4 pt-3 border-t border-surface-border/50">
                   <Link
                     href={`/menu`}
-                    className="text-xs font-semibold text-secondary hover:text-white transition-colors inline-flex items-center gap-1"
+                    className="text-xs font-semibold text-secondary hover:text-foreground transition-colors inline-flex items-center gap-1"
                   >
                     <span>View items</span>
                     <ArrowRight className="w-3 h-3" />
@@ -153,10 +153,10 @@ export default function AboutPage() {
 
         {/* CTA Banner */}
         <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-surface via-surface-elevated to-surface border border-surface-border text-center">
-          <h3 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-wide mb-3">
+          <h3 className="text-2xl sm:text-3xl font-black text-foreground font-display uppercase tracking-wide mb-3">
             Ready To Experience De Pizzano?
           </h3>
-          <p className="text-sm text-muted max-w-xl mx-auto mb-6">
+          <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-6">
             Browse our complete 26-item menu or order directly through the official Foodpanda delivery channel.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">

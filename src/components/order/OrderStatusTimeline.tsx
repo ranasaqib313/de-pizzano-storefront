@@ -67,10 +67,10 @@ export function OrderStatusTimeline({
     return (
       <div className={cn('p-5 rounded-2xl bg-red-950/30 border border-primary/40 text-center', className)}>
         <AlertTriangle className="w-8 h-8 text-primary mx-auto mb-2" />
-        <h4 className="text-base font-bold text-white uppercase tracking-wider font-display">
+        <h4 className="text-base font-bold text-foreground uppercase tracking-wider font-display">
           Order Cancelled
         </h4>
-        <p className="text-xs text-muted-light mt-1 max-w-sm mx-auto">
+        <p className="text-xs text-muted-foreground mt-1 max-w-sm mx-auto">
           This order was cancelled. If you have questions or need assistance, please call our restaurant order line.
         </p>
       </div>
@@ -121,8 +121,8 @@ export function OrderStatusTimeline({
                       isCurrent
                         ? 'text-secondary'
                         : isCompleted
-                        ? 'text-white'
-                        : 'text-muted'
+                        ? 'text-foreground'
+                        : 'text-muted-foreground'
                     )}
                   >
                     {step.label}
@@ -134,7 +134,7 @@ export function OrderStatusTimeline({
                   </h4>
 
                   {historyEntry && (
-                    <span className="text-[11px] text-muted-light tabular-nums font-mono">
+                    <span className="text-[11px] text-muted-foreground tabular-nums font-mono">
                       {new Date(historyEntry.timestamp).toLocaleTimeString('en-PK', {
                         hour: '2-digit',
                         minute: '2-digit',
@@ -146,7 +146,7 @@ export function OrderStatusTimeline({
                 <p
                   className={cn(
                     'text-xs mt-1 leading-relaxed max-w-md',
-                    isCurrent || isCompleted ? 'text-muted-light' : 'text-muted/60'
+                    isCurrent || isCompleted ? 'text-muted-foreground' : 'text-muted-foreground/60'
                   )}
                 >
                   {historyEntry?.note || step.description}

@@ -62,7 +62,7 @@ export function Hero() {
               custom={0.1}
               initial="hidden"
               animate="visible"
-              className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black tracking-tight text-white font-display leading-[1.08] uppercase"
+              className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black tracking-tight text-foreground font-display leading-[1.08] uppercase"
             >
               BIG FLAVOURS.{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary-light">
@@ -77,7 +77,7 @@ export function Hero() {
               custom={0.2}
               initial="hidden"
               animate="visible"
-              className="text-base sm:text-lg md:text-xl text-muted-light max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed"
             >
               Fresh stone oven pizzas, meal combos, toasted sandwiches, baked pastas, and crispy fries. Made with soft &amp; crispy dough and 100% real cheese in Soldier Bazar, Karachi.
             </motion.p>
@@ -88,19 +88,19 @@ export function Hero() {
               custom={0.3}
               initial="hidden"
               animate="visible"
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 py-2 text-xs sm:text-sm text-muted"
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 py-2 text-xs sm:text-sm text-muted-foreground"
             >
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-secondary" />
-                <span className="text-white font-semibold">50 Delicious</span> Dishes
+                <span className="text-foreground font-semibold">50 Delicious</span> Dishes
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-primary" />
-                <span className="text-white font-semibold">6 Verified</span> Categories
+                <span className="text-foreground font-semibold">6 Verified</span> Categories
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="text-white font-semibold">Home Delivery</span> & Takeaway
+                <span className="text-foreground font-semibold">Home Delivery</span> & Takeaway
               </div>
             </motion.div>
 
@@ -125,7 +125,7 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setOrderModalOpen(true)}
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-surface border border-secondary/40 text-white hover:bg-surface-elevated hover:border-secondary transition-all flex items-center justify-center gap-2 text-sm font-bold cursor-pointer"
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-surface border border-secondary/40 text-foreground hover:bg-surface-elevated hover:border-secondary transition-all flex items-center justify-center gap-2 text-sm font-bold cursor-pointer"
               >
                 {orderType === 'delivery' ? (
                   <>
@@ -197,7 +197,7 @@ export function Hero() {
 
                 {/* Badge Overlay */}
                 <div className="absolute bottom-6 inset-x-6 text-center bg-surface/90 backdrop-blur-md p-3 rounded-2xl border border-surface-border shadow-xl">
-                  <h3 className="text-base sm:text-lg font-black text-white font-display uppercase tracking-wider">
+                  <h3 className="text-base sm:text-lg font-black text-foreground font-display uppercase tracking-wider">
                     DE PIZZANO ARTISANAL PIZZA
                   </h3>
                   <p className="text-[11px] text-secondary font-bold tracking-widest uppercase mt-0.5">
@@ -209,7 +209,7 @@ export function Hero() {
                 <motion.div
                   animate={{ y: [0, -5, 0] }}
                   transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut', delay: 0.5 }}
-                  className="absolute top-4 right-4 bg-background/95 border border-primary/40 px-3 py-1 rounded-xl text-[11px] font-bold text-white shadow-lg z-10 flex items-center gap-1.5"
+                  className="absolute top-4 right-4 bg-surface/95 border border-primary/40 px-3 py-1 rounded-xl text-[11px] font-bold text-foreground shadow-lg z-10 flex items-center gap-1.5"
                 >
                   <Flame className="w-3.5 h-3.5 text-primary" /> Stone-Baked
                 </motion.div>

@@ -144,7 +144,7 @@ export function ArtisanalCategoryBoard({
                         'text-[10px] font-bold px-1.5 py-0.2 rounded-md',
                         isSelected
                           ? 'bg-black/30 text-white'
-                          : 'bg-surface-elevated text-muted border border-surface-border'
+                          : 'bg-surface-elevated text-muted-foreground border border-surface-border'
                       )}
                     >
                       {cat.count}

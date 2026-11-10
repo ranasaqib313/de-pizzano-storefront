@@ -74,8 +74,8 @@ export default function MyOrdersPage() {
             ) : (
               <Database className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
             )}
-            <div className="text-xs text-muted-light leading-relaxed">
-              <strong className="text-white block mb-0.5 uppercase tracking-wider">
+            <div className="text-xs text-muted-foreground leading-relaxed">
+              <strong className="text-foreground block mb-0.5 uppercase tracking-wider">
                 {dataSource === 'database'
                   ? 'SUPABASE POSTGRESQL (RLS SECURED)'
                   : 'CLIENT SESSION & DEMO ORDERS'}
@@ -98,7 +98,7 @@ export default function MyOrdersPage() {
               type="button"
               onClick={fetchOrders}
               disabled={isLoading}
-              className="p-2 rounded-lg bg-surface-elevated text-muted hover:text-white border border-surface-border transition-colors cursor-pointer"
+              className="p-2 rounded-lg bg-surface-elevated text-muted-foreground hover:text-foreground border border-surface-border transition-colors cursor-pointer"
               title="Refresh Orders"
               aria-label="Refresh Orders"
             >
@@ -125,8 +125,8 @@ export default function MyOrdersPage() {
           /* Error State */
           <div className="bg-surface border border-primary/40 rounded-2xl p-8 text-center max-w-md mx-auto shadow-xl">
             <AlertCircle className="w-12 h-12 text-primary mx-auto mb-3" />
-            <h3 className="text-base font-bold text-white mb-2">Could Not Load Orders</h3>
-            <p className="text-xs text-muted mb-6">{errorMessage}</p>
+            <h3 className="text-base font-bold text-foreground mb-2">Could Not Load Orders</h3>
+            <p className="text-xs text-muted-foreground mb-6">{errorMessage}</p>
             <Button variant="primary" size="sm" onClick={fetchOrders}>
               Try Again
             </Button>
@@ -156,7 +156,7 @@ export default function MyOrdersPage() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-white text-sm sm:text-base">
+                          <span className="font-mono font-bold text-foreground text-sm sm:text-base">
                             {order.id}
                           </span>
                           <OrderStatusBadge status={order.status} size="sm" />
@@ -226,11 +226,11 @@ export default function MyOrdersPage() {
         ) : (
           /* Empty Orders State */
           <div className="bg-surface border border-surface-border rounded-2xl p-10 sm:p-14 text-center max-w-lg mx-auto shadow-xl">
-            <ShoppingBag className="w-14 h-14 text-muted mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-white mb-2 font-display uppercase tracking-wider">
+            <ShoppingBag className="w-14 h-14 text-muted-foreground mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-foreground mb-2 font-display uppercase tracking-wider">
               No Orders Found
             </h2>
-            <p className="text-xs text-muted max-w-sm mx-auto mb-6 leading-relaxed">
+            <p className="text-xs text-muted-foreground max-w-sm mx-auto mb-6 leading-relaxed">
               You haven&apos;t placed any orders with this account yet. Browse our menu to build your first meal.
             </p>
             <Button variant="primary" size="md" href="/menu">

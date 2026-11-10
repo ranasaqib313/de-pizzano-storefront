@@ -27,7 +27,7 @@ export function CartSummary({
 }: CartSummaryProps) {
   return (
     <div className="rounded-2xl bg-surface border border-surface-border p-5 sm:p-6 shadow-xl flex flex-col gap-5">
-      <h3 className="text-base font-bold text-white uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center justify-between">
+      <h3 className="text-base font-bold text-foreground uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center justify-between">
         <span>Order Summary</span>
         <span className="text-xs text-secondary font-sans font-semibold flex items-center gap-1.5">
           <Banknote className="w-4 h-4 text-secondary" />
@@ -38,7 +38,7 @@ export function CartSummary({
       {/* Delivery Zone Selector */}
       {onZoneChange && (
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="delivery-zone-select" className="text-xs font-semibold text-muted-light flex items-center gap-1">
+          <label htmlFor="delivery-zone-select" className="text-xs font-semibold text-muted-foreground flex items-center gap-1">
             <Truck className="w-3.5 h-3.5 text-secondary" />
             Delivery Destination (Karachi)
           </label>
@@ -83,9 +83,9 @@ export function CartSummary({
         </div>
 
         {pricing.platformFee > 0 && (
-          <div className="flex justify-between text-muted-light">
+          <div className="flex justify-between text-muted-foreground">
             <span>Platform Service Fee</span>
-            <span className="font-semibold text-white tabular-nums">
+            <span className="font-semibold text-foreground tabular-nums">
               {formatPkr(pricing.platformFee)}
             </span>
           </div>
@@ -93,7 +93,7 @@ export function CartSummary({
 
         <div className="pt-3 border-t border-surface-border flex justify-between items-baseline">
           <div className="flex flex-col">
-            <span className="text-base font-extrabold text-white">Payable Total</span>
+            <span className="text-base font-extrabold text-foreground">Payable Total</span>
             <span className="text-[11px] text-secondary">Pay upon arrival in cash (COD)</span>
           </div>
           <span className="text-2xl font-black text-secondary tabular-nums">
@@ -103,7 +103,7 @@ export function CartSummary({
       </div>
 
       {/* Cash on Delivery Notice */}
-      <div className="p-3 rounded-xl bg-surface-elevated border border-secondary/20 flex items-start gap-2.5 text-xs text-muted-light leading-relaxed">
+      <div className="p-3 rounded-xl bg-surface-elevated border border-secondary/20 flex items-start gap-2.5 text-xs text-muted-foreground leading-relaxed">
         <ShieldCheck className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
         <p>
           Pay in cash when your fresh order is handed to you by our delivery rider. No card required.

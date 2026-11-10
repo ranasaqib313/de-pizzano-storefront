@@ -68,13 +68,13 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Flame className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-lg text-white font-display">DE PIZZANO</span>
+            <span className="font-bold text-lg text-foreground font-display">DE PIZZANO</span>
           </div>
 
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-muted-light hover:text-white rounded-lg bg-surface border border-surface-border focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="p-2 text-muted-foreground hover:text-foreground rounded-lg bg-surface border border-surface-border focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
             aria-label="Close Navigation Menu"
           >
             <X className="w-5 h-5" />
@@ -102,12 +102,12 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
                 <span className="text-[11px] font-semibold text-secondary block uppercase tracking-wider">
                   {orderType === 'delivery' ? 'Home Delivery' : 'Takeaway Pickup'}
                 </span>
-                <span className="text-xs font-bold text-white block truncate max-w-[180px]">
+                <span className="text-xs font-bold text-foreground block truncate max-w-[180px]">
                   {orderType === 'delivery' ? (selectedZone?.name || 'Karachi') : 'Soldier Bazar No. 3'}
                 </span>
               </div>
             </div>
-            <span className="text-xs text-muted flex items-center gap-1 font-semibold">
+            <span className="text-xs text-muted-foreground flex items-center gap-1 font-semibold">
               Change <ChevronRight className="w-3.5 h-3.5" />
             </span>
           </button>
@@ -122,7 +122,7 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
           >
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-4 h-4 text-primary-light" />
-              <span className="text-xs font-bold text-white">Cart</span>
+              <span className="text-xs font-bold text-foreground">Cart</span>
             </div>
             {itemCount > 0 && (
               <span className="px-2 py-0.5 rounded-full bg-secondary text-background text-[10px] font-black">
@@ -139,7 +139,7 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
                 className="flex-1 p-3 rounded-xl bg-surface border border-surface-border flex items-center gap-2 hover:bg-surface-elevated transition-colors truncate"
               >
                 <User className="w-4 h-4 text-secondary shrink-0" />
-                <span className="text-xs font-bold text-white truncate">
+                <span className="text-xs font-bold text-foreground truncate">
                   {profile?.full_name?.split(' ')[0] || user?.email?.split('@')[0]}
                 </span>
               </Link>
@@ -149,7 +149,7 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
                   signOut();
                   onClose();
                 }}
-                className="p-3 rounded-xl bg-surface border border-surface-border text-muted hover:text-primary transition-colors cursor-pointer"
+                className="p-3 rounded-xl bg-surface border border-surface-border text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                 aria-label="Sign Out"
                 title="Sign Out"
               >
@@ -163,7 +163,7 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
               className="p-3 rounded-xl bg-surface border border-surface-border flex items-center gap-2 hover:bg-surface-elevated transition-colors"
             >
               <User className="w-4 h-4 text-secondary" />
-              <span className="text-xs font-bold text-white">Account</span>
+              <span className="text-xs font-bold text-foreground">Account</span>
             </Link>
           )}
         </div>
@@ -180,8 +180,8 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
                 className={cn(
                   'flex flex-col px-3.5 py-2.5 rounded-xl transition-colors',
                   isActive
-                    ? 'bg-primary/20 text-white border-l-4 border-primary font-semibold'
-                    : 'text-muted-light hover:text-white hover:bg-surface/60'
+                    ? 'bg-primary/10 text-primary border-l-4 border-primary font-semibold'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-surface/60'
                 )}
               >
                 <div className="flex items-center justify-between">
@@ -193,7 +193,7 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
                   )}
                 </div>
                 {item.description && (
-                  <span className="text-[11px] text-muted mt-0.5">{item.description}</span>
+                  <span className="text-[11px] text-muted-foreground mt-0.5">{item.description}</span>
                 )}
               </Link>
             );
@@ -225,18 +225,8 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
             Order on Foodpanda
           </Button>
 
-          <Button
-            variant="outline"
-            size="sm"
-            href={getPhoneLink()}
-            className="w-full justify-center text-xs"
-            icon={<Phone className="w-3.5 h-3.5 text-secondary" />}
-          >
-            Call {BUSINESS_CONFIG.contact.formattedPhone}
-          </Button>
-
           {/* Verification Warning Notice */}
-          <div className="bg-surface/80 p-2.5 rounded-lg border border-surface-border text-[11px] text-muted leading-relaxed text-center">
+          <div className="bg-surface/80 p-2.5 rounded-lg border border-surface-border text-[11px] text-muted-foreground leading-relaxed text-center">
             <span className="text-secondary font-semibold block mb-0.5">Authentic De Pizzano Storefront</span>
             Handcrafted oven-baked pizza delivery & takeaway in Karachi.
           </div>

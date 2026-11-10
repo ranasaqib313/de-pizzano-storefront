@@ -107,14 +107,14 @@ function RegisterContent() {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-glow-red">
               <Flame className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-black text-white font-display uppercase tracking-wider">
+            <span className="text-2xl font-black text-foreground font-display uppercase tracking-wider">
               DE PIZZANO
             </span>
           </Link>
-          <h1 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-wide">
+          <h1 className="text-2xl sm:text-3xl font-black text-foreground font-display uppercase tracking-wide">
             Create Customer Account
           </h1>
-          <p className="text-xs sm:text-sm text-muted mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Join De Pizzano for order tracking and faster Cash on Delivery checkout.
           </p>
         </div>
@@ -133,7 +133,7 @@ function RegisterContent() {
             type="button"
             onClick={handleGoogleSignUp}
             disabled={isGoogleLoading}
-            className="w-full py-2.5 px-4 rounded-xl border border-surface-border bg-surface-elevated hover:bg-surface-highlight text-white text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-3 shadow-sm hover:border-secondary/40 focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 cursor-pointer"
+            className="w-full py-2.5 px-4 rounded-xl border border-surface-border bg-surface-elevated hover:bg-surface-highlight text-foreground text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-3 shadow-sm hover:border-secondary/40 focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 cursor-pointer"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path
@@ -161,7 +161,7 @@ function RegisterContent() {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-surface-border" />
             </div>
-            <span className="relative px-3 bg-surface text-[11px] text-muted uppercase font-semibold">
+            <span className="relative px-3 bg-surface text-[11px] text-muted-foreground uppercase font-semibold">
               Or register with email
             </span>
           </div>
@@ -231,7 +231,7 @@ function RegisterContent() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="p-1 text-muted hover:text-white transition-colors focus:outline-none"
+                    className="p-1 text-muted-foreground hover:text-foreground transition-colors focus:outline-none"
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -257,13 +257,13 @@ function RegisterContent() {
                     setErrors((prev) => ({ ...prev, confirmPassword: undefined }));
                 }}
                 error={!!errors.confirmPassword}
-                icon={<Lock className="w-4 h-4 text-muted" />}
+                icon={<Lock className="w-4 h-4 text-muted-foreground" />}
                 autoComplete="new-password"
                 rightElement={
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="p-1 text-muted hover:text-white transition-colors focus:outline-none"
+                    className="p-1 text-muted-foreground hover:text-foreground transition-colors focus:outline-none"
                     aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                   >
                     {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -284,7 +284,7 @@ function RegisterContent() {
           </form>
 
           {/* Login link */}
-          <div className="mt-6 pt-5 border-t border-surface-border text-center text-xs text-muted">
+          <div className="mt-6 pt-5 border-t border-surface-border text-center text-xs text-muted-foreground">
             Already have an account?{' '}
             <Link
               href="/login"
@@ -296,7 +296,7 @@ function RegisterContent() {
         </div>
 
         {/* Security badge note */}
-        <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted text-center">
+        <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground text-center">
           <ShieldCheck className="w-4 h-4 text-secondary shrink-0" />
           <span>Automatic customer profile trigger & password hashing via Supabase</span>
         </div>

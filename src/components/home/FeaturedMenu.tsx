@@ -27,7 +27,7 @@ export function FeaturedMenu() {
             <Link
               key={category.id}
               href={`/menu`}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-surface border border-surface-border text-muted-light hover:text-white hover:border-secondary/50 hover:bg-surface-elevated transition-all"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-surface border border-surface-border text-muted-foreground hover:text-foreground hover:border-secondary/50 hover:bg-surface-elevated transition-all"
             >
               {category.label} ({category.itemCount})
             </Link>

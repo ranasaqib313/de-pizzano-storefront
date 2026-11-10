@@ -62,8 +62,8 @@ export function QuantitySelector({
         disabled={isMin}
         aria-label="Decrease quantity"
         className={cn(
-          'flex items-center justify-center rounded-lg text-muted-light transition-all',
-          'hover:bg-surface-elevated hover:text-white active:scale-95',
+          'flex items-center justify-center rounded-lg text-muted-foreground transition-all',
+          'hover:bg-surface-elevated hover:text-foreground active:scale-95',
           'disabled:opacity-30 disabled:pointer-events-none',
           'focus:outline-none focus:ring-2 focus:ring-primary',
           currentSize.btn
@@ -74,7 +74,7 @@ export function QuantitySelector({
 
       <span
         className={cn(
-          'text-center font-bold text-white tabular-nums',
+          'text-center font-bold text-foreground tabular-nums',
           currentSize.text
         )}
         aria-live="polite"
@@ -89,8 +89,8 @@ export function QuantitySelector({
         disabled={isMax}
         aria-label="Increase quantity"
         className={cn(
-          'flex items-center justify-center rounded-lg text-muted-light transition-all',
-          'hover:bg-surface-elevated hover:text-white active:scale-95',
+          'flex items-center justify-center rounded-lg text-muted-foreground transition-all',
+          'hover:bg-surface-elevated hover:text-foreground active:scale-95',
           'disabled:opacity-30 disabled:pointer-events-none',
           'focus:outline-none focus:ring-2 focus:ring-primary',
           currentSize.btn

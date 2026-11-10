@@ -194,10 +194,10 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
             <div className="w-12 h-12 rounded-2xl bg-surface border border-surface-border text-secondary flex items-center justify-center mx-auto animate-spin">
               <RefreshCw className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-bold text-white uppercase tracking-wider font-display">
+            <h2 className="text-xl font-bold text-foreground uppercase tracking-wider font-display">
               Connecting to Live Order Sync...
             </h2>
-            <p className="text-xs text-muted">
+            <p className="text-xs text-muted-foreground">
               Fetching real-time order status and verified dispatch timeline.
             </p>
           </div>
@@ -213,12 +213,12 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
         <Container size="sm">
           <div className="bg-surface border border-surface-border rounded-2xl p-8 sm:p-10 text-center shadow-xl">
             <AlertCircle className="w-14 h-14 text-secondary mx-auto mb-4" />
-            <h1 className="text-2xl font-black text-white font-display uppercase tracking-wide mb-2">
+            <h1 className="text-2xl font-black text-foreground font-display uppercase tracking-wide mb-2">
               Order Not Found
             </h1>
-            <p className="text-xs sm:text-sm text-muted-light mb-6 leading-relaxed max-w-sm mx-auto">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-6 leading-relaxed max-w-sm mx-auto">
               We couldn&apos;t locate an order matching &quot;
-              <strong className="text-white font-mono">{orderId}</strong>&quot;, or it belongs to another account under PostgreSQL Row Level Security (RLS).
+              <strong className="text-foreground font-mono">{orderId}</strong>&quot;, or it belongs to another account under PostgreSQL Row Level Security (RLS).
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button variant="primary" size="md" href="/orders">
@@ -252,7 +252,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <Link
             href="/orders"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-muted-light hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to My Orders</span>
@@ -265,7 +265,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                 'flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium transition-all shadow-sm',
                 isLiveSyncActive
                   ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300'
-                  : 'bg-surface border-surface-border text-muted-light'
+                  : 'bg-surface border-surface-border text-muted-foreground'
               )}
             >
               <span className="relative flex h-2 w-2">
@@ -282,7 +282,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
               <span>
                 {isLiveSyncActive ? 'Live Sync Active' : 'Polling Active (15s)'}
               </span>
-              <span className="text-[10px] text-muted hidden md:inline">
+              <span className="text-[10px] text-muted-foreground hidden md:inline">
                 • {lastSyncedAt.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
               </span>
             </div>
@@ -291,7 +291,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
               type="button"
               onClick={() => fetchOrderDetails(false)}
               disabled={isRefreshing}
-              className="p-1.5 rounded-xl bg-surface border border-surface-border text-muted hover:text-white transition-colors disabled:opacity-50"
+              className="p-1.5 rounded-xl bg-surface border border-surface-border text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
               title="Refresh order status"
               aria-label="Refresh order status"
             >
@@ -305,7 +305,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-surface-border">
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
-                <span className="text-xs font-bold uppercase tracking-wider text-muted">
+                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                   Official Order Reference:
                 </span>
                 <span className="text-lg sm:text-2xl font-black font-mono text-secondary tracking-wider">
@@ -314,7 +314,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                 <button
                   type="button"
                   onClick={copyOrderNumber}
-                  className="p-1.5 rounded-lg bg-surface-elevated hover:bg-surface-border text-muted hover:text-white transition-colors"
+                  className="p-1.5 rounded-lg bg-surface-elevated hover:bg-surface-border text-muted-foreground hover:text-foreground transition-colors"
                   title="Copy Order Number"
                   aria-label="Copy Order Number"
                 >
@@ -323,7 +323,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                 <OrderStatusBadge status={order.status} size="md" />
               </div>
 
-              <div className="flex items-center gap-4 text-xs text-muted-light mt-2 flex-wrap">
+              <div className="flex items-center gap-4 text-xs text-muted-foreground mt-2 flex-wrap">
                 <span className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-secondary" />
                   Placed: {formattedDate} at {formattedTime}
@@ -339,10 +339,10 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
             {/* Estimated Delivery Time Box */}
             <div className="bg-surface-elevated/80 border border-secondary/20 rounded-xl p-4 sm:px-6 sm:py-3.5 text-left md:text-right flex md:flex-col justify-between items-center md:items-end">
               <div>
-                <span className="text-[11px] uppercase tracking-wider text-muted font-bold block">
+                <span className="text-[11px] uppercase tracking-wider text-muted-foreground font-bold block">
                   Estimated Delivery
                 </span>
-                <span className="text-xl sm:text-2xl font-black text-white font-display tracking-tight">
+                <span className="text-xl sm:text-2xl font-black text-foreground font-display tracking-tight">
                   {estimatedMinutes} - {estimatedMinutes + 10} Mins
                 </span>
               </div>
@@ -353,7 +353,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
           </div>
 
           {/* Quick Notice */}
-          <div className="pt-4 flex items-center justify-between text-xs text-muted flex-wrap gap-2">
+          <div className="pt-4 flex items-center justify-between text-xs text-muted-foreground flex-wrap gap-2">
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>
@@ -362,7 +362,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                   : 'Displaying demo order. Live Supabase database connected.'}
               </span>
             </div>
-            <span className="text-[11px] text-muted">
+            <span className="text-[11px] text-muted-foreground">
               Auto-updating via Supabase Realtime
             </span>
           </div>
@@ -374,10 +374,10 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
           <div className="lg:col-span-7 bg-surface border border-surface-border rounded-2xl p-6 sm:p-8 shadow-xl">
             <div className="flex items-center justify-between pb-6 border-b border-surface-border mb-6">
               <div>
-                <h2 className="text-lg font-bold text-white uppercase tracking-wider font-display">
+                <h2 className="text-lg font-bold text-foreground uppercase tracking-wider font-display">
                   Live Dispatch Timeline
                 </h2>
-                <p className="text-xs text-muted mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   Track each milestone from kitchen stone-baking to rider arrival.
                 </p>
               </div>
@@ -397,12 +397,12 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
           <div className="lg:col-span-5 space-y-6">
             {/* Items & Financial Summary */}
             <div className="bg-surface border border-surface-border rounded-2xl p-6 shadow-xl">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-display pb-4 border-b border-surface-border flex items-center justify-between">
+              <h3 className="text-sm font-bold text-foreground uppercase tracking-wider font-display pb-4 border-b border-surface-border flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <ShoppingBag className="w-4 h-4 text-secondary" />
                   Order Summary
                 </span>
-                <span className="text-xs font-mono text-muted-light">
+                <span className="text-xs font-mono text-muted-foreground">
                   {order.items.reduce((acc, it) => acc + it.quantity, 0)} Items
                 </span>
               </h3>
@@ -414,24 +414,24 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-bold text-white">
+                          <span className="text-xs font-bold text-foreground">
                             {item.quantity}x
                           </span>
-                          <span className="text-xs font-semibold text-white truncate">
+                          <span className="text-xs font-semibold text-foreground truncate">
                             {item.name}
                           </span>
                         </div>
 
                         {item.variant && (
-                          <span className="text-[11px] text-muted block mt-0.5">
+                          <span className="text-[11px] text-muted-foreground block mt-0.5">
                             Size: {item.variant.name}
                           </span>
                         )}
 
                         {item.selectedOptions && item.selectedOptions.length > 0 && (
-                          <div className="text-[10px] text-muted-light mt-0.5 flex flex-wrap gap-1">
+                          <div className="text-[10px] text-muted-foreground mt-0.5 flex flex-wrap gap-1">
                             {item.selectedOptions.map((opt, i) => (
-                              <span key={i} className="bg-surface-elevated px-1.5 py-0.5 rounded text-muted-light">
+                              <span key={i} className="bg-surface-elevated px-1.5 py-0.5 rounded text-muted-foreground">
                                 + {opt.name}
                               </span>
                             ))}
@@ -449,15 +449,15 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
 
               {/* Pricing Breakdown */}
               <div className="pt-4 border-t border-surface-border space-y-2 text-xs">
-                <div className="flex justify-between text-muted">
+                <div className="flex justify-between text-muted-foreground">
                   <span>Subtotal</span>
-                  <span className="font-mono text-muted-light">
+                  <span className="font-mono text-muted-foreground">
                     {formatPkr(order.pricing.subtotal)}
                   </span>
                 </div>
-                <div className="flex justify-between text-muted">
+                <div className="flex justify-between text-muted-foreground">
                   <span>Delivery Fee</span>
-                  <span className="font-mono text-muted-light">
+                  <span className="font-mono text-muted-foreground">
                     {order.pricing.deliveryFee > 0 ? formatPkr(order.pricing.deliveryFee) : 'FREE'}
                   </span>
                 </div>
@@ -469,7 +469,7 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                     </span>
                   </div>
                 )}
-                <div className="pt-2 border-t border-surface-border flex justify-between items-center text-sm font-bold text-white">
+                <div className="pt-2 border-t border-surface-border flex justify-between items-center text-sm font-bold text-foreground">
                   <span>Grand Total</span>
                   <span className="text-lg font-black font-mono text-secondary">
                     {formatPkr(order.pricing.total)}
@@ -484,23 +484,23 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
 
             {/* Delivery Address Details */}
             <div className="bg-surface border border-surface-border rounded-2xl p-6 shadow-xl">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center gap-2">
+              <h3 className="text-sm font-bold text-foreground uppercase tracking-wider font-display pb-3 border-b border-surface-border flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-secondary" />
                 Delivery Information
               </h3>
 
               <div className="pt-3 space-y-2 text-xs">
                 <div>
-                  <span className="text-muted block text-[10px] uppercase tracking-wider font-semibold">
+                  <span className="text-muted-foreground block text-[10px] uppercase tracking-wider font-semibold">
                     Recipient
                   </span>
-                  <span className="text-white font-medium">
+                  <span className="text-foreground font-medium">
                     {order.deliveryAddress.fullName || order.customer.fullName}
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-muted block text-[10px] uppercase tracking-wider font-semibold">
+                  <span className="text-muted-foreground block text-[10px] uppercase tracking-wider font-semibold">
                     Contact Phone
                   </span>
                   <span className="text-secondary font-mono">
@@ -509,10 +509,10 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                 </div>
 
                 <div>
-                  <span className="text-muted block text-[10px] uppercase tracking-wider font-semibold">
+                  <span className="text-muted-foreground block text-[10px] uppercase tracking-wider font-semibold">
                     Delivery Address
                   </span>
-                  <p data-testid="tracker-delivery-address" className="text-muted-light leading-relaxed mt-0.5">
+                  <p data-testid="tracker-delivery-address" className="text-muted-foreground leading-relaxed mt-0.5">
                     {order.deliveryAddress.streetAddress}
                     {order.deliveryAddress.area && `, ${order.deliveryAddress.area}`}
                     {order.deliveryAddress.city && `, ${order.deliveryAddress.city}`}
@@ -521,10 +521,10 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
 
                 {order.deliveryAddress.instructions && (
                   <div className="pt-1">
-                    <span className="text-muted block text-[10px] uppercase tracking-wider font-semibold">
+                    <span className="text-muted-foreground block text-[10px] uppercase tracking-wider font-semibold">
                       Delivery Instructions
                     </span>
-                    <p className="text-muted-light italic mt-0.5">
+                    <p className="text-muted-foreground italic mt-0.5">
                       &quot;{order.deliveryAddress.instructions}&quot;
                     </p>
                   </div>
@@ -539,19 +539,19 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                   <HelpCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white uppercase tracking-wider font-display">
+                  <h4 className="text-sm font-bold text-foreground uppercase tracking-wider font-display">
                     Need Help With Your Order?
                   </h4>
-                  <p className="text-xs text-muted mt-0.5 leading-relaxed">
+                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                     Have special requests or need to check on your rider? Contact the kitchen dispatch.
                   </p>
-                  <p className="text-sm font-bold text-white mt-2">
+                  <p className="text-sm font-bold text-foreground mt-2">
                     {BUSINESS_CONFIG.contact.formattedPhone}
                   </p>
                 </div>
               </div>
 
-              <div className="text-[11px] text-muted text-center flex items-center justify-center gap-3">
+              <div className="text-[11px] text-muted-foreground text-center flex items-center justify-center gap-3">
                 <span>Hours: {BUSINESS_CONFIG.operatingHours.display}</span>
                 <span>•</span>
                 <span>Soldier Bazar, Karachi</span>

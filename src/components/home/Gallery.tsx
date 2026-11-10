@@ -174,7 +174,7 @@ export function Gallery() {
               className={`px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-full border transition-all duration-200 ${
                 activeCategory === cat
                   ? 'bg-primary text-white border-primary shadow-glow-red'
-                  : 'bg-surface border-surface-border text-muted-light hover:border-secondary/50 hover:text-white'
+                  : 'bg-surface border-surface-border text-muted-foreground hover:border-secondary/50 hover:text-foreground'
               }`}
             >
               {cat}
@@ -249,10 +249,10 @@ export function Gallery() {
 
                 {/* Bottom text */}
                 <div className="absolute bottom-0 left-0 right-0 z-20 p-4 space-y-1">
-                  <h3 className="text-sm sm:text-base font-bold text-white font-display group-hover:text-secondary transition-colors leading-snug">
+                  <h3 className="text-sm sm:text-base font-bold text-foreground font-display group-hover:text-secondary transition-colors leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-[11px] text-muted leading-relaxed line-clamp-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                  <p className="text-[11px] text-muted-foreground leading-relaxed line-clamp-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                     {item.caption}
                   </p>
                 </div>
@@ -323,10 +323,10 @@ export function Gallery() {
                     >
                       {currentLightboxItem.category}
                     </span>
-                    <h3 className="text-lg sm:text-xl font-black text-white font-display">
+                    <h3 className="text-lg sm:text-xl font-black text-foreground font-display">
                       {currentLightboxItem.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-muted mt-1 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
                       {currentLightboxItem.caption}
                     </p>
                   </div>

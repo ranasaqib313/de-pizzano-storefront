@@ -63,13 +63,13 @@ export function MobileBottomNav() {
               'flex flex-col items-center justify-center gap-1 py-1 px-2.5 rounded-xl transition-colors text-[10px] font-semibold',
               active
                 ? 'text-secondary font-bold'
-                : 'text-muted-light hover:text-white'
+                : 'text-muted-foreground hover:text-foreground'
             )}
           >
             <div
               className={cn(
                 'p-1.5 rounded-xl transition-all',
-                active ? 'bg-secondary/15 text-secondary' : 'text-muted-light'
+                active ? 'bg-secondary/15 text-secondary' : 'text-muted-foreground'
               )}
             >
               <Icon className="w-4 h-4" />
@@ -84,7 +84,7 @@ export function MobileBottomNav() {
         type="button"
         onClick={openCartDrawer}
         aria-label={`View Shopping Cart (${itemCount} items)`}
-        className="flex flex-col items-center justify-center gap-1 py-1 px-2.5 rounded-xl text-muted-light hover:text-white text-[10px] font-semibold cursor-pointer"
+        className="flex flex-col items-center justify-center gap-1 py-1 px-2.5 rounded-xl text-muted-foreground hover:text-foreground text-[10px] font-semibold cursor-pointer"
       >
         <div className="relative p-1.5 rounded-xl bg-primary text-white shadow-sm">
           <ShoppingBag className="w-4 h-4" />
@@ -94,7 +94,7 @@ export function MobileBottomNav() {
             </span>
           )}
         </div>
-        <span className="text-white font-bold">Cart</span>
+        <span className="text-foreground font-bold">Cart</span>
       </button>
     </nav>
   );

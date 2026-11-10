@@ -243,7 +243,7 @@ export function HomePromoCarousel() {
             type="button"
             onClick={prevSlide}
             aria-label="Previous Slide"
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface/70 hover:bg-surface border border-surface-border text-white flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 shadow-lg z-20 cursor-pointer"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface/70 hover:bg-surface border border-surface-border text-foreground flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 shadow-lg z-20 cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -251,7 +251,7 @@ export function HomePromoCarousel() {
             type="button"
             onClick={nextSlide}
             aria-label="Next Slide"
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface/70 hover:bg-surface border border-surface-border text-white flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 shadow-lg z-20 cursor-pointer"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface/70 hover:bg-surface border border-surface-border text-foreground flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 shadow-lg z-20 cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" />
           </button>

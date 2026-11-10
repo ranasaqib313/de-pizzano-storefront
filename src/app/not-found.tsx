@@ -16,11 +16,11 @@ export default function NotFound() {
           404 — Page Not Found
         </span>
 
-        <h1 className="text-4xl sm:text-5xl font-black text-white font-display uppercase tracking-tight">
+        <h1 className="text-4xl sm:text-5xl font-black text-foreground font-display uppercase tracking-tight">
           THIS SLICE HAS MOVED
         </h1>
 
-        <p className="text-sm sm:text-base text-muted max-w-md mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto leading-relaxed">
           The page you requested doesn&apos;t exist or may have been updated. Head back to explore our full 26-item menu.
         </p>
 
