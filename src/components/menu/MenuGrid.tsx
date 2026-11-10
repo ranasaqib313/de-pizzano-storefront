@@ -40,10 +40,10 @@ export function MenuGrid({ initialItems, initialCategories, initialSource = 'fal
         ]);
         if (isMounted) {
           if (prodResult.items && prodResult.items.length > 0) {
-            setItems(prodResult.items);
+            setItems(prodResult.items.filter((i) => i.category !== 'pizza-deals'));
           }
           if (catResult.categories && catResult.categories.length > 0) {
-            setCategories(catResult.categories);
+            setCategories(catResult.categories.filter((c) => c.id !== 'pizza-deals'));
           }
           setDataSource(prodResult.source);
         }

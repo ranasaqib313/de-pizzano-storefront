@@ -10,7 +10,7 @@ import { KARACHI_DELIVERY_ZONES } from '@/data/delivery-zones';
 
 export interface CartSummaryProps {
   pricing: PriceBreakdown;
-  selectedZone: DeliveryZone;
+  selectedZone?: DeliveryZone | null;
   onZoneChange?: (zone: DeliveryZone) => void;
   showCheckoutButton?: boolean;
   onCheckoutClick?: () => void;
@@ -45,15 +45,16 @@ export function CartSummary({
           <div className="relative">
             <select
               id="delivery-zone-select"
-              value={selectedZone.id}
+              value={selectedZone?.id || ''}
               onChange={(e) => {
                 const zone = KARACHI_DELIVERY_ZONES.find((z) => z.id === e.target.value);
-                if (zone) onZoneChange(zone);
+                if (zone && onZoneChange) onZoneChange(zone);
               }}
-              className="w-full text-xs rounded-xl bg-surface-elevated text-white border border-surface-border px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+              className="w-full text-xs rounded-xl bg-surface-elevated text-foreground border border-surface-border px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
             >
+              <option value="" disabled>Select your delivery area...</option>
               {KARACHI_DELIVERY_ZONES.map((zone) => (
-                <option key={zone.id} value={zone.id} className="bg-surface text-white">
+                <option key={zone.id} value={zone.id} className="bg-surface text-foreground">
                   {zone.name} — {formatPkr(zone.fee)} ({zone.estimatedMinutes})
                 </option>
               ))}
@@ -64,19 +65,19 @@ export function CartSummary({
 
       {/* Cost Breakdown */}
       <div className="space-y-2.5 text-sm">
-        <div className="flex justify-between text-muted-light">
+        <div className="flex justify-between text-muted-foreground">
           <span>Items Subtotal</span>
-          <span className="font-semibold text-white tabular-nums">
+          <span className="font-semibold text-foreground tabular-nums">
             {formatPkr(pricing.subtotal)}
           </span>
         </div>
 
-        <div className="flex justify-between text-muted-light">
+        <div className="flex justify-between text-muted-foreground">
           <span className="flex items-center gap-1">
             Delivery Fee
-            <span className="text-[11px] text-muted">({selectedZone.areaName})</span>
+            <span className="text-[11px] text-muted-foreground">({selectedZone ? selectedZone.areaName : 'Standard'})</span>
           </span>
-          <span className="font-semibold text-white tabular-nums">
+          <span className="font-semibold text-foreground tabular-nums">
             {formatPkr(pricing.deliveryFee)}
           </span>
         </div>

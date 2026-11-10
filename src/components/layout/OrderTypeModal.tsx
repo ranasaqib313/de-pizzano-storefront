@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bike, Store, MapPin, X, Check, Clock, ChevronRight } from 'lucide-react';
+import { Bike, Store, MapPin, X, Check, Clock, Fuel, Sparkles, Navigation } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import { KARACHI_DELIVERY_ZONES } from '@/data/delivery-zones';
+import { KARACHI_DELIVERY_ZONES, BASE_PETROL_PRICE } from '@/data/delivery-zones';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { OrderType } from '@/types/storefront';
+import { OrderType, DeliveryZone } from '@/types/storefront';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 
@@ -15,10 +15,17 @@ interface OrderTypeModalProps {
   onClose: () => void;
 }
 
+/**
+ * LocationModal (OrderTypeModal)
+ * A clean, compact, centered popup with dynamic fuel-indexed delivery pricing.
+ * High contrast in both light and dark mode with full WCAG AA compliance.
+ */
 export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
   const { orderType, setOrderType, selectedZone, setSelectedZone } = useCart();
   const [activeType, setActiveType] = useState<OrderType>(orderType);
-  const [activeZoneId, setActiveZoneId] = useState<string>(selectedZone?.id || KARACHI_DELIVERY_ZONES[0].id);
+  const [activeZoneId, setActiveZoneId] = useState<string>(
+    selectedZone?.id || KARACHI_DELIVERY_ZONES[0].id
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -41,199 +48,239 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto">
+          {/* Backdrop with Blur */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
           />
 
-          {/* Modal Card */}
+          {/* Modal Container - Compact, centered, high-contrast */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 16 }}
+            initial={{ opacity: 0, scale: 0.95, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 16 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-            className="relative w-full max-w-lg bg-surface border border-surface-border rounded-3xl shadow-2xl overflow-hidden z-10"
+            exit={{ opacity: 0, scale: 0.95, y: 12 }}
+            transition={{ type: 'spring', damping: 26, stiffness: 360 }}
+            className="relative w-[95%] sm:w-full max-w-lg bg-card text-card-foreground border border-border rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[88vh]"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-surface-border bg-surface-elevated/40">
+            <div className="flex items-center justify-between p-4 sm:p-5 border-b border-border bg-surface-elevated/40 shrink-0">
               <div>
-                <h3 className="text-xl font-black text-white font-display uppercase tracking-wide">
-                  Select Order Mode
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-secondary/15 text-secondary border border-secondary/30 mb-1">
+                  <Sparkles className="w-3 h-3" /> Order Mode &amp; Area
+                </span>
+                <h3 className="text-lg sm:text-xl font-black text-foreground font-display uppercase tracking-tight">
+                  How would you like your order?
                 </h3>
-                <p className="text-xs text-muted mt-0.5">
-                  Choose how you want to receive your fresh De Pizzano order
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Select delivery area for dynamic petrol-based pricing
                 </p>
               </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="w-9 h-9 rounded-full bg-surface border border-surface-border text-muted hover:text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-8 h-8 rounded-full bg-surface border border-border text-foreground hover:text-secondary flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary cursor-pointer shrink-0 ml-3"
                 aria-label="Close modal"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Content */}
-            <div className="p-6 space-y-4">
-              {/* Option 1: Delivery */}
-              <div
-                onClick={() => setActiveType('delivery')}
-                className={cn(
-                  'cursor-pointer rounded-2xl p-4 border transition-all duration-200 select-none',
-                  activeType === 'delivery'
-                    ? 'bg-primary/10 border-primary shadow-glow-red/20 ring-1 ring-primary'
-                    : 'bg-surface-elevated/60 border-surface-border hover:bg-surface-elevated text-muted-light'
-                )}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3.5">
+            {/* Scrollable Body */}
+            <div className="p-4 sm:p-5 space-y-3.5 overflow-y-auto flex-1">
+              {/* Mode Selectors (Equal Height Cards) */}
+              <div className="grid grid-cols-2 gap-2.5">
+                {/* Delivery Option */}
+                <button
+                  type="button"
+                  onClick={() => setActiveType('delivery')}
+                  className={cn(
+                    'p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between select-none relative h-full min-h-[115px]',
+                    activeType === 'delivery'
+                      ? 'bg-primary/10 border-primary ring-2 ring-primary/40 shadow-sm'
+                      : 'bg-surface border-border hover:border-border/80 hover:bg-surface-elevated'
+                  )}
+                >
+                  <div className="flex items-center justify-between w-full mb-1.5">
                     <div
                       className={cn(
-                        'w-11 h-11 rounded-xl flex items-center justify-center transition-colors',
+                        'w-8 h-8 rounded-xl flex items-center justify-center transition-colors',
                         activeType === 'delivery'
-                          ? 'bg-primary text-white shadow-glow-red'
-                          : 'bg-surface text-muted'
+                          ? 'bg-primary text-white shadow-md'
+                          : 'bg-surface-elevated text-foreground'
                       )}
                     >
-                      <Bike className="w-6 h-6" />
+                      <Bike className="w-4 h-4" />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-bold text-white text-base">Home Delivery</h4>
-                        {activeType === 'delivery' && (
-                          <span className="text-[10px] uppercase font-extrabold bg-primary text-white px-2 py-0.5 rounded-full">
-                            Active
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-xs text-muted mt-0.5">
-                        Hot & fresh to your doorstep across Karachi
-                      </p>
-                    </div>
+                    {activeType === 'delivery' && (
+                      <span className="w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center text-[9px]">
+                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                      </span>
+                    )}
                   </div>
-                  <div className="text-right">
-                    <span className="text-xs font-bold text-secondary flex items-center gap-1 justify-end">
-                      <Clock className="w-3.5 h-3.5" /> 35–45 min
+                  <div>
+                    <h4 className="font-bold text-xs sm:text-sm text-foreground">
+                      Home Delivery
+                    </h4>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                      Hot &amp; fresh to your door
+                    </p>
+                    <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-secondary">
+                      <Clock className="w-2.5 h-2.5" /> 25–45 mins
                     </span>
                   </div>
-                </div>
+                </button>
 
-                {/* Sub-selector for delivery area when delivery is active */}
-                {activeType === 'delivery' && (
-                  <div className="mt-4 pt-3.5 border-t border-surface-border/80">
-                    <label className="block text-xs font-semibold text-muted-light mb-1.5 flex items-center gap-1.5">
+                {/* Pickup Option */}
+                <button
+                  type="button"
+                  onClick={() => setActiveType('pickup')}
+                  className={cn(
+                    'p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between select-none relative h-full min-h-[115px]',
+                    activeType === 'pickup'
+                      ? 'bg-secondary/10 border-secondary ring-2 ring-secondary/40 shadow-sm'
+                      : 'bg-surface border-border hover:border-border/80 hover:bg-surface-elevated'
+                  )}
+                >
+                  <div className="flex items-center justify-between w-full mb-1.5">
+                    <div
+                      className={cn(
+                        'w-8 h-8 rounded-xl flex items-center justify-center transition-colors',
+                        activeType === 'pickup'
+                          ? 'bg-secondary text-black shadow-md font-bold'
+                          : 'bg-surface-elevated text-foreground'
+                      )}
+                    >
+                      <Store className="w-4 h-4" />
+                    </div>
+                    {activeType === 'pickup' && (
+                      <span className="w-4 h-4 rounded-full bg-secondary text-black flex items-center justify-center text-[9px] font-bold">
+                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-xs sm:text-sm text-foreground">
+                      Takeaway Pickup
+                    </h4>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                      Soldier Bazar counter
+                    </p>
+                    <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+                      Free (Rs. 0) • 15–20 mins
+                    </span>
+                  </div>
+                </button>
+              </div>
+
+              {/* Sub-section: Delivery Areas with Smart Petrol-Indexed Fees */}
+              {activeType === 'delivery' ? (
+                <div className="pt-1.5 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-foreground flex items-center gap-1.5 uppercase tracking-wide">
                       <MapPin className="w-3.5 h-3.5 text-secondary" />
-                      Select Your Delivery Area:
+                      Select Delivery Area:
                     </label>
-                    <div className="space-y-1.5">
-                      {KARACHI_DELIVERY_ZONES.map((zone) => (
-                        <button
+
+                    {/* Dynamic Petrol Indicator Pill */}
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-foreground bg-surface px-2 py-0.5 rounded-full border border-border">
+                      <Fuel className="w-3 h-3 text-secondary" />
+                      Fuel: Rs. {BASE_PETROL_PRICE}/L
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5 max-h-[240px] overflow-y-auto pr-1">
+                    {KARACHI_DELIVERY_ZONES.map((zone) => {
+                      const isSelected = activeZoneId === zone.id;
+                      return (
+                        <div
                           key={zone.id}
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setActiveZoneId(zone.id);
-                          }}
+                          onClick={() => setActiveZoneId(zone.id)}
                           className={cn(
-                            'w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-medium flex items-center justify-between border transition-all',
-                            activeZoneId === zone.id
-                              ? 'bg-surface border-secondary text-white font-bold'
-                              : 'bg-surface/50 border-surface-border/50 text-muted hover:text-white hover:bg-surface'
+                            'w-full text-left p-2.5 sm:p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between select-none',
+                            isSelected
+                              ? 'bg-surface-elevated border-secondary ring-1 ring-secondary/50 text-foreground font-semibold shadow-sm'
+                              : 'bg-surface border-border text-foreground hover:bg-surface-elevated/70'
                           )}
                         >
-                          <div>
-                            <span className="text-white font-semibold">{zone.name}</span>
-                            <span className="block text-[11px] text-muted truncate max-w-[280px]">
-                              {zone.areaName} • {zone.estimatedMinutes}
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <div
+                              className={cn(
+                                'w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs transition-colors',
+                                isSelected
+                                  ? 'bg-secondary text-black font-black'
+                                  : 'bg-surface-elevated text-muted-foreground'
+                              )}
+                            >
+                              {isSelected ? <Check className="w-3 h-3 stroke-[3]" /> : <Navigation className="w-2.5 h-2.5" />}
+                            </div>
+                            <div className="min-w-0">
+                              <span className="text-xs sm:text-sm font-bold text-foreground block truncate">
+                                {zone.name}
+                              </span>
+                              <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground mt-0.5">
+                                <span>{zone.estimatedMinutes}</span>
+                                {zone.distanceKm && (
+                                  <>
+                                    <span>•</span>
+                                    <span className="text-secondary font-semibold">
+                                      {zone.distanceKm} km
+                                    </span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-right shrink-0 ml-3">
+                            <span className="text-xs sm:text-sm font-black text-secondary block">
+                              Rs. {zone.fee}
+                            </span>
+                            <span className="text-[9px] uppercase tracking-wider text-muted-foreground font-semibold">
+                              Delivery
                             </span>
                           </div>
-                          <span className="text-secondary font-bold shrink-0 ml-2">
-                            Rs. {zone.fee}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                )}
-              </div>
-
-              {/* Option 2: Takeaway / Pickup */}
-              <div
-                onClick={() => setActiveType('pickup')}
-                className={cn(
-                  'cursor-pointer rounded-2xl p-4 border transition-all duration-200 select-none',
-                  activeType === 'pickup'
-                    ? 'bg-secondary/10 border-secondary shadow-glow-gold/20 ring-1 ring-secondary'
-                    : 'bg-surface-elevated/60 border-surface-border hover:bg-surface-elevated text-muted-light'
-                )}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3.5">
-                    <div
-                      className={cn(
-                        'w-11 h-11 rounded-xl flex items-center justify-center transition-colors',
-                        activeType === 'pickup'
-                          ? 'bg-secondary text-black shadow-glow-gold font-bold'
-                          : 'bg-surface text-muted'
-                      )}
-                    >
-                      <Store className="w-6 h-6" />
-                    </div>
+                </div>
+              ) : (
+                /* Pickup Location Details */
+                <div className="p-3.5 rounded-xl bg-surface border border-border text-xs space-y-1.5">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
                     <div>
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-bold text-white text-base">Takeaway Pickup</h4>
-                        {activeType === 'pickup' && (
-                          <span className="text-[10px] uppercase font-extrabold bg-secondary text-black px-2 py-0.5 rounded-full">
-                            Active
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-xs text-muted mt-0.5">
-                        Collect directly from our Soldier Bazar kitchen counter
+                      <span className="font-bold text-foreground block text-xs sm:text-sm">
+                        De Pizzano Soldier Bazar Kitchen
+                      </span>
+                      <p className="text-muted-foreground mt-0.5 text-xs leading-relaxed">
+                        {BUSINESS_CONFIG.primaryLocation.address}
+                      </p>
+                      <p className="text-[11px] text-secondary font-semibold mt-1">
+                        Landmark: {BUSINESS_CONFIG.primaryLocation.landmark} • {BUSINESS_CONFIG.operatingHours.display}
                       </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <span className="text-xs font-bold text-emerald-400 flex items-center gap-1 justify-end">
-                      Free (Rs. 0)
-                    </span>
-                    <span className="text-[11px] text-muted flex items-center gap-1 justify-end mt-0.5">
-                      <Clock className="w-3 h-3" /> 15–25 min
-                    </span>
-                  </div>
                 </div>
-
-                {activeType === 'pickup' && (
-                  <div className="mt-4 pt-3.5 border-t border-surface-border/80 text-xs text-muted-light space-y-1">
-                    <div className="flex items-start gap-1.5 text-white font-medium">
-                      <MapPin className="w-3.5 h-3.5 text-secondary shrink-0 mt-0.5" />
-                      <span>{BUSINESS_CONFIG.primaryLocation.address}</span>
-                    </div>
-                    <p className="text-[11px] text-muted pl-5">
-                      Landmark: {BUSINESS_CONFIG.primaryLocation.landmark} • {BUSINESS_CONFIG.operatingHours.display}
-                    </p>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
 
             {/* Footer Buttons */}
-            <div className="p-6 pt-2 border-t border-surface-border/60 flex items-center justify-end gap-3 bg-surface-elevated/20">
-              <Button variant="ghost" size="sm" onClick={onClose}>
+            <div className="p-3.5 sm:p-4 border-t border-border flex items-center justify-end gap-2.5 bg-surface-elevated/30 shrink-0">
+              <Button variant="ghost" size="sm" onClick={onClose} className="text-xs">
                 Cancel
               </Button>
               <Button
                 variant="primary"
-                size="md"
+                size="sm"
                 onClick={handleConfirm}
-                icon={<Check className="w-4 h-4" />}
+                icon={<Check className="w-3.5 h-3.5" />}
                 iconPosition="right"
+                className="shadow-glow-red text-xs font-bold"
               >
                 Confirm {activeType === 'delivery' ? 'Delivery' : 'Takeaway'}
               </Button>

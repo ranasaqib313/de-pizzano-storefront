@@ -4,13 +4,13 @@ import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink, getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
 
 export function LocationSection() {
   const loc = BUSINESS_CONFIG.primaryLocation;
 
   return (
-    <section className="py-20 bg-background relative">
+    <section className="py-20 bg-background relative transition-colors duration-300">
       <Container size="xl">
         <SectionHeading
           badge="Visit Or Order"
@@ -20,18 +20,18 @@ export function LocationSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Main Location Card */}
-          <div className="lg:col-span-7 bg-surface border border-surface-border rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-card border border-border rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-lg transition-colors">
             <div>
-              <div className="flex items-center justify-between gap-4 pb-6 border-b border-surface-border">
+              <div className="flex items-center justify-between gap-4 pb-6 border-b border-border">
                 <div>
                   <span className="text-xs font-semibold text-secondary uppercase tracking-wider block mb-1">
                     Primary Branch
                   </span>
-                  <h3 className="text-2xl font-bold text-white font-display uppercase">
+                  <h3 className="text-2xl font-bold text-foreground font-display uppercase">
                     {loc.name}
                   </h3>
                 </div>
-                <span className="px-3 py-1 text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
+                <span className="px-3 py-1 text-xs font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full">
                   Open Daily
                 </span>
               </div>
@@ -40,10 +40,10 @@ export function LocationSection() {
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-semibold uppercase text-muted tracking-wider">
+                    <h4 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">
                       Full Address
                     </h4>
-                    <p className="text-sm font-medium text-white mt-0.5">
+                    <p className="text-sm font-medium text-foreground mt-0.5">
                       {loc.address}, {loc.landmark}, {loc.city}, {loc.country}.
                     </p>
                   </div>
@@ -52,13 +52,13 @@ export function LocationSection() {
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-semibold uppercase text-muted tracking-wider">
+                    <h4 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">
                       Business Operating Hours
                     </h4>
-                    <p className="text-sm font-medium text-white mt-0.5">
+                    <p className="text-sm font-medium text-foreground mt-0.5">
                       {BUSINESS_CONFIG.operatingHours.daily}
                     </p>
-                    <p className="text-xs text-muted-dark mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {BUSINESS_CONFIG.operatingHours.note}
                     </p>
                   </div>
@@ -67,16 +67,13 @@ export function LocationSection() {
                 <div className="flex items-start gap-3">
                   <Phone className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-semibold uppercase text-muted tracking-wider">
+                    <h4 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">
                       Public Listing Contact
                     </h4>
-                    <a
-                      href={getPhoneLink()}
-                      className="text-sm font-bold text-white hover:text-secondary transition-colors mt-0.5 inline-block"
-                    >
+                    <span className="text-sm font-bold text-foreground mt-0.5 inline-block">
                       {BUSINESS_CONFIG.contact.formattedPhone}
-                    </a>
-                    <p className="text-xs text-muted-dark mt-0.5">
+                    </span>
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {BUSINESS_CONFIG.contact.disclaimer}
                     </p>
                   </div>
@@ -84,7 +81,7 @@ export function LocationSection() {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-surface-border flex flex-col sm:flex-row gap-3">
+            <div className="pt-6 border-t border-border flex flex-col sm:flex-row gap-3">
               <Button
                 variant="primary"
                 size="md"
@@ -110,51 +107,17 @@ export function LocationSection() {
           </div>
 
           {/* Secondary Information & Architecture Readiness Card */}
-          <div className="lg:col-span-5 bg-surface-elevated/60 border border-surface-border rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+          <div className="lg:col-span-5 bg-surface-elevated/70 border border-border rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-colors">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <AlertCircle className="w-5 h-5 text-secondary" />
-                <h4 className="text-base font-bold text-white uppercase tracking-wider">
+                <h4 className="text-base font-bold text-foreground uppercase tracking-wider">
                   Location Architecture
                 </h4>
               </div>
-
-              <p className="text-xs text-muted leading-relaxed mb-6">
-                This website is built around the primary verified branch in Soldier Bazar No. 3. Historical directories mention unverified references to Korangi, Mehmoodabad, or North Karachi. Under strict integrity guidelines, only the confirmed Soldier Bazar branch is published as active.
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                De Pizzano operates from Soldier Bazar No. 3, servicing neighborhoods across Karachi with high-speed delivery dispatch.
               </p>
-
-              <div className="space-y-3">
-                <div className="p-3 bg-surface rounded-xl border border-surface-border">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-semibold text-white">Soldier Bazar No. 3</span>
-                    <span className="text-secondary font-medium">Primary Active</span>
-                  </div>
-                  <span className="text-[11px] text-muted-dark block mt-0.5">
-                    Shop No. 9, Murtaza Terrace, Soldier Bazar No. 3
-                  </span>
-                </div>
-
-                <div className="p-3 bg-surface/40 rounded-xl border border-surface-border/60 opacity-60">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-medium text-muted-light">Additional Branches</span>
-                    <span className="text-muted-dark font-medium">Awaiting Owner Confirmation</span>
-                  </div>
-                  <span className="text-[11px] text-muted-dark block mt-0.5">
-                    Multi-branch routing engine ready for post-launch activation
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-surface-border">
-              <Button
-                variant="outline"
-                size="sm"
-                href="/locations"
-                className="w-full text-xs justify-center"
-              >
-                View Full Branch Information
-              </Button>
             </div>
           </div>
         </div>
@@ -162,4 +125,3 @@ export function LocationSection() {
     </section>
   );
 }
-

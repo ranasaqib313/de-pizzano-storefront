@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
-import { RightNavRail } from '@/components/layout/RightNavRail';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
+import { DockAwareLayout } from '@/components/layout/DockAwareLayout';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { CartProvider } from '@/context/CartContext';
 import { AuthProvider } from '@/context/AuthContext';
@@ -88,24 +88,28 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`dark ${inter.variable}`}>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.className} min-h-screen flex flex-col lg:pr-[72px] xl:pr-[76px] bg-background text-foreground antialiased selection:bg-primary selection:text-white`}>
-        <AuthProvider>
-          <CartProvider>
-            <Navbar />
-            <main className="flex-1 pb-16 lg:pb-0">{children}</main>
-            <Footer />
-            <CartDrawer />
-            <RightNavRail />
-            <MobileBottomNav />
-          </CartProvider>
-        </AuthProvider>
+      <body className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground antialiased overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-300`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <AuthProvider>
+            <CartProvider>
+              {/* Navbar is OUTSIDE the padded wrapper — renders full-width with no left offset */}
+              <Navbar />
+              {/* DockAwareLayout owns the dock ↔ content shift state */}
+              <DockAwareLayout>
+                {children}
+              </DockAwareLayout>
+              <CartDrawer />
+              <MobileBottomNav />
+            </CartProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

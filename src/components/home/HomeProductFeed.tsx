@@ -2,13 +2,12 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { MENU_ITEMS, MENU_CATEGORIES } from '@/data/menu';
 import { MenuItem, MenuCategoryId } from '@/types/menu';
 import { ArtisanalCategoryBoard } from './ArtisanalCategoryBoard';
 import { MenuCard } from '@/components/menu/MenuCard';
 import { ProductDialog } from '@/components/menu/ProductDialog';
-import { Button } from '@/components/ui/Button';
 
 export function HomeProductFeed() {
   const [activeCategory, setActiveCategory] = useState<MenuCategoryId>('all');
@@ -24,13 +23,13 @@ export function HomeProductFeed() {
   }, [activeCategory]);
 
   const categoryName = useMemo(() => {
-    if (activeCategory === 'all') return 'Trending Dishes & Deals';
+    if (activeCategory === 'all') return 'Popular Dishes & Deals';
     const cat = MENU_CATEGORIES.find((c) => c.id === activeCategory);
     return cat ? cat.label : 'Menu Selection';
   }, [activeCategory]);
 
   return (
-    <section aria-label="Menu Catalog" className="w-full pb-16 overflow-hidden">
+    <section aria-label="Menu Catalog" className="w-full pb-12 sm:pb-16 overflow-hidden">
       {/* Artisanal Category Board Navigation */}
       <ArtisanalCategoryBoard
         activeCategory={activeCategory}
@@ -42,19 +41,19 @@ export function HomeProductFeed() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-3 border-b border-surface-border">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-secondary" />
-            <h3 className="text-lg sm:text-xl font-black text-white font-display uppercase tracking-wider">
+            <h3 className="text-lg sm:text-xl font-black text-foreground font-display uppercase tracking-wider">
               {categoryName}
             </h3>
-            <span className="text-xs font-bold text-muted bg-surface-elevated px-2.5 py-0.5 rounded-full border border-surface-border">
+            <span className="text-xs font-bold text-muted-foreground bg-surface-elevated px-2.5 py-0.5 rounded-full border border-surface-border">
               {displayedItems.length} dishes
             </span>
           </div>
 
           <Link
             href="/menu"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary hover:text-white transition-colors group self-start sm:self-auto"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary hover:text-foreground transition-colors group self-start sm:self-auto"
           >
-            <span>Browse Full 50-Item Menu</span>
+            <span>Browse Full Menu</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
@@ -76,32 +75,6 @@ export function HomeProductFeed() {
             <p className="text-muted text-sm">No items found in this section.</p>
           </div>
         )}
-
-        {/* Bottom Menu Banner CTA */}
-        <div className="mt-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-surface via-surface-elevated to-surface border border-surface-border flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-          <div className="space-y-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-1.5 text-secondary text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" /> Handcrafted in Soldier Bazar No. 3
-            </div>
-            <h4 className="text-xl sm:text-2xl font-black text-white font-display uppercase">
-              Craving something custom or looking for special deals?
-            </h4>
-            <p className="text-xs sm:text-sm text-muted max-w-xl">
-              Explore our full 50-dish menu with 24 signature pizza flavours, cheese stuffed crusts, toasted sandwiches, and loaded sides.
-            </p>
-          </div>
-
-          <Button
-            variant="primary"
-            size="lg"
-            href="/menu"
-            icon={<ArrowRight className="w-4 h-4" />}
-            iconPosition="right"
-            className="shadow-glow-red shrink-0 text-xs sm:text-sm font-bold"
-          >
-            View Full 50 Dishes
-          </Button>
-        </div>
       </div>
 
       {/* Product Customization Modal when clicked */}

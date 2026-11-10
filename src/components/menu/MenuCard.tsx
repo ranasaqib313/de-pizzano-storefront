@@ -35,7 +35,7 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
   return (
     <div
       className={cn(
-        'group relative bg-surface border border-surface-border hover:border-secondary/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 flex',
+        'group relative bg-card border border-border hover:border-secondary/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-card hover:-translate-y-1 flex',
         isList ? 'flex-col sm:flex-row items-stretch' : 'flex-col h-full'
       )}
     >
@@ -103,17 +103,17 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
           >
             <div>
               {/* Product Name */}
-              <h3 className="text-lg font-bold text-white group-hover:text-secondary transition-colors font-display tracking-wide">
+              <h3 className="text-lg font-bold text-foreground group-hover:text-secondary transition-colors font-display tracking-wide">
                 {item.name}
               </h3>
 
               {/* Product Description */}
               {item.description ? (
-                <p className="mt-2 text-xs text-muted-light line-clamp-2 leading-relaxed">
+                <p className="mt-2 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
                   {item.description}
                 </p>
               ) : (
-                <p className="mt-2 text-xs text-muted-dark italic">
+                <p className="mt-2 text-xs text-muted-foreground italic">
                   Handcrafted fresh to order with pure mozzarella and stone-baked crust.
                 </p>
               )}
@@ -126,10 +126,10 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
                 isList ? 'sm:flex-col sm:items-end sm:gap-0' : 'mt-3'
               )}
             >
-              <span className="text-xl font-extrabold text-white">
+              <span className="text-xl font-extrabold text-foreground">
                 {formattedPrice}
               </span>
-              <span className="text-[10px] text-muted-dark uppercase tracking-wider">
+              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
                 (Public listing rate)
               </span>
             </div>
@@ -137,7 +137,7 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
         </div>
 
         {/* Card Actions: Focus on Direct On-Site Order */}
-        <div className="mt-5 pt-4 border-t border-surface-border/60 flex flex-col gap-2">
+        <div className="mt-5 pt-4 border-t border-border flex flex-col gap-2">
           <div className="flex items-center gap-2">
             {onSelect ? (
               <>
@@ -174,10 +174,10 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
             )}
           </div>
 
-          {/* Secondary External Partner Reference */}
-          <div className="flex items-center justify-between text-[11px] text-muted-dark px-1">
-            <span className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+          {/* Secondary External Partner Reference - High Contrast in Light/Dark */}
+          <div className="flex items-center justify-between text-[11px] text-muted-foreground font-medium px-1">
+            <span className="flex items-center gap-1.5 text-foreground font-semibold">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400 inline-block shadow-sm" />
               Kitchen Live (Soldier Bazar)
             </span>
             <a
@@ -185,7 +185,7 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Order on Foodpanda (External)"
-              className="text-[#D70F64] hover:underline inline-flex items-center gap-1 font-medium"
+              className="text-[#D70F64] hover:underline inline-flex items-center gap-1 font-bold"
             >
               Foodpanda
               <ExternalLink className="w-2.5 h-2.5" />

@@ -108,5 +108,6 @@ export interface DeliveryZone {
   fee: number; // Integer PKR
   estimatedMinutes: string;
   isActive: boolean;
+  distanceKm?: number; // Distance in KM from Soldier Bazar kitchen
 }
 

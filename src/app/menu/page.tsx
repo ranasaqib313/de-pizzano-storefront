@@ -11,9 +11,9 @@ import { Button } from '@/components/ui/Button';
 import { getFoodpandaUrl, getPhoneLink } from '@/lib/links';
 
 export const metadata: Metadata = {
-  title: 'Full Menu (50 Items) — Pizza Deals, Flavours, Pastas & Sides',
+  title: 'Full Menu — 24 Pizza Flavours, Pastas, Sandwiches & Sides',
   description:
-    'Explore all 50 authentic menu items of De Pizzano, Soldier Bazar No. 3, Karachi: Value Deals, 24 Pizza Flavours, Stuffed Crust Specials, Sandwiches, Pastas, and Sides.',
+    'Explore authentic menu items of De Pizzano, Soldier Bazar No. 3, Karachi: 24 Pizza Flavours, Stuffed Crust Specials, Sandwiches, Pastas, and Sides.',
 };
 
 export default async function MenuPage() {
@@ -22,14 +22,18 @@ export default async function MenuPage() {
     getMenuCategories(),
   ]);
 
+  // Remove all Combo Deals from /menu: only show individual dishes
+  const menuOnlyItems = items.filter((item) => item.category !== 'pizza-deals');
+  const menuOnlyCategories = categories.filter((cat) => cat.id !== 'pizza-deals');
+
   return (
     <div className="py-12 sm:py-16 bg-background">
       <Container size="xl">
         {/* Header Section */}
         <SectionHeading
-          badge="Complete Verified Menu"
+          badge="A La Carte Menu"
           title="DE PIZZANO MENU"
-          subtitle="Explore all 50 dishes spanning our value pizza deals, signature flavours, stuffed crust specials, toasted sandwiches, rich pastas, and savoury sides."
+          subtitle="Explore all handmade dishes: 24 signature pizza flavours, cheese stuffed crusts, toasted sandwiches, rich pastas, and savoury sides. (For meal combos, visit our Deals page)."
         />
 
         {/* Pricing Notice & External Ordering Banner */}
@@ -38,10 +42,10 @@ export default async function MenuPage() {
             <div className="flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-                  Real Restaurant Menu & Direct Ordering
+                <h4 className="text-sm font-bold text-foreground uppercase tracking-wider">
+                  Fresh Kitchen Menu &amp; Direct Ordering
                 </h4>
-                <p className="text-xs text-muted mt-1 leading-relaxed max-w-3xl">
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed max-w-3xl">
                   Order online with fast home delivery across Karachi or visit our takeaway counter at Soldier Bazar No. 3. All orders include server-verified pricing and fresh preparation.
                 </p>
               </div>
@@ -73,7 +77,7 @@ export default async function MenuPage() {
         </div>
 
         {/* Interactive Menu Grid with Filters and Search */}
-        <MenuGrid initialItems={items} initialCategories={categories} initialSource={source} />
+        <MenuGrid initialItems={menuOnlyItems} initialCategories={menuOnlyCategories} initialSource={source} />
       </Container>
     </div>
   );

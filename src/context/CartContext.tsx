@@ -35,7 +35,7 @@ interface CartContextType {
   items: CartItem[];
   itemCount: number;
   pricing: PriceBreakdown;
-  selectedZone: DeliveryZone;
+  selectedZone: DeliveryZone | null;
   setSelectedZone: (zone: DeliveryZone) => void;
   orderType: OrderType;
   setOrderType: (type: OrderType) => void;
@@ -57,7 +57,7 @@ const ORDER_TYPE_STORAGE_KEY = 'depizzano_order_type_v1';
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  const [selectedZone, setSelectedZoneState] = useState<DeliveryZone>(KARACHI_DELIVERY_ZONES[0]);
+  const [selectedZone, setSelectedZoneState] = useState<DeliveryZone | null>(null);
   const [orderType, setOrderTypeState] = useState<OrderType>('delivery');
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -260,7 +260,7 @@ const defaultCartContext: CartContextType = {
     discount: 0,
     total: 0,
   },
-  selectedZone: KARACHI_DELIVERY_ZONES[0],
+  selectedZone: null,
   setSelectedZone: () => {},
   orderType: 'delivery',
   setOrderType: () => {},

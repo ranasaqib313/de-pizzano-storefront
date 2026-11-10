@@ -93,7 +93,7 @@ export function HeaderSearch() {
           onFocus={() => setIsOpen(true)}
           placeholder="Search pizzas, deals, sides..."
           aria-label="Search pizzas, deals, sides"
-          className="w-full pl-10 pr-20 py-2 sm:py-2.5 rounded-full bg-surface border border-surface-border hover:border-surface-highlight focus:border-secondary focus:bg-surface-elevated text-xs sm:text-sm text-white placeholder-muted-light focus:outline-none transition-all shadow-inner"
+          className="w-full pl-10 pr-20 py-2 sm:py-2.5 rounded-full bg-surface border border-surface-border hover:border-surface-highlight focus:border-secondary focus:bg-surface-elevated text-xs sm:text-sm text-foreground placeholder-muted-foreground focus:outline-none transition-all shadow-inner"
         />
 
         <div className="absolute right-3 flex items-center gap-1.5">
@@ -104,12 +104,12 @@ export function HeaderSearch() {
                 setQuery('');
                 setResults([]);
               }}
-              className="p-1 text-muted hover:text-white rounded-full transition-colors cursor-pointer"
+              className="p-1 text-muted-foreground hover:text-foreground rounded-full transition-colors cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           ) : (
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md bg-surface-elevated border border-surface-border text-[10px] font-mono text-muted select-none">
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md bg-surface-elevated border border-surface-border text-[10px] font-mono text-muted-foreground select-none">
               Ctrl K
             </kbd>
           )}
@@ -119,7 +119,7 @@ export function HeaderSearch() {
       {/* Autocomplete Dropdown */}
       {isOpen && (query.trim().length > 0 || results.length > 0) && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-surface/98 border border-surface-border rounded-2xl shadow-2xl backdrop-blur-xl z-50 overflow-hidden divide-y divide-surface-border/60 animate-in fade-in zoom-in-95 duration-150">
-          <div className="p-2.5 bg-surface-elevated/50 flex items-center justify-between text-[11px] text-muted">
+          <div className="p-2.5 bg-surface-elevated/50 flex items-center justify-between text-[11px] text-muted-foreground">
             <span>Discovered Dishes ({results.length})</span>
             <span className="text-secondary font-semibold">Press Enter to view all</span>
           </div>
@@ -143,16 +143,16 @@ export function HeaderSearch() {
                           className="object-cover group-hover:scale-105 transition-transform"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-muted">
+                        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                           <Pizza className="w-5 h-5" />
                         </div>
                       )}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs sm:text-sm font-bold text-white truncate group-hover:text-secondary transition-colors">
+                      <h4 className="text-xs sm:text-sm font-bold text-foreground truncate group-hover:text-secondary transition-colors">
                         {item.name}
                       </h4>
-                      <p className="text-[10px] text-muted truncate max-w-[220px]">
+                      <p className="text-[10px] text-muted-foreground truncate max-w-[220px]">
                         {item.description || item.category}
                       </p>
                     </div>
@@ -162,7 +162,7 @@ export function HeaderSearch() {
                     <span className="text-xs font-mono font-bold text-secondary">
                       {formatPkr(item.price)}
                     </span>
-                    <ArrowRight className="w-3.5 h-3.5 text-muted group-hover:text-white transition-colors" />
+                    <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
                   </div>
                 </button>
               ))}

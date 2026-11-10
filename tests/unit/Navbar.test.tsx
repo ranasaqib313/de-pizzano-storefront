@@ -11,21 +11,28 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe('Navbar Component', () => {
-  test('renders brand title DE PIZZANO and tagline', () => {
+  test('renders brand title DE PIZZANO without cluttered tagline (per Task 1 UX cleanup)', () => {
     render(<Navbar />);
     expect(screen.getAllByText(/DE PIZZANO/i)[0]).toBeInTheDocument();
-    expect(screen.getByText(/Tasty Delicious/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Tasty Delicious/i)).not.toBeInTheDocument();
   });
 
-  test('renders demo preview badge announcement', () => {
+  test('does not render demo preview badge announcement (removed per UX cleanup)', () => {
     render(<Navbar />);
-    expect(screen.getByText(/INDEPENDENT WEBSITE CONCEPT/i)).toBeInTheDocument();
+    expect(screen.queryByText(/INDEPENDENT WEBSITE CONCEPT/i)).not.toBeInTheDocument();
   });
 
-  test('renders location/delivery selector and search input', () => {
+  test('renders location/delivery selector with default Select Location text and search input', () => {
     render(<Navbar />);
-    expect(screen.getAllByTitle(/click to switch delivery \/ takeaway location/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByTitle(/click to select delivery location/i)[0]).toBeInTheDocument();
+    expect(screen.getByText(/Select Location/i)).toBeInTheDocument();
     expect(screen.getAllByPlaceholderText(/search pizzas, deals, sides/i)[0]).toBeInTheDocument();
+  });
+
+  test('renders user sign-in/profile link and theme toggle button', () => {
+    render(<Navbar />);
+    expect(screen.getByRole('link', { name: /sign in/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /toggle theme/i })).toBeInTheDocument();
   });
 
   test('renders cart button with item count', () => {

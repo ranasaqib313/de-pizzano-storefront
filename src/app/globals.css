@@ -5,34 +5,95 @@
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-display: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --background: #171311;
-  --foreground: #ffffff;
-  --surface: #211c19;
-  --primary: #d92d2d;
-  --secondary: #f3b544;
+  
+  /* Light Mode Semantic Color Tokens (WCAG AA Compliant OKLCH) */
+  --background: oklch(0.98 0 0);
+  --foreground: oklch(0.2 0 0);
+  --foreground-secondary: oklch(0.35 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0 0);
+  --surface: oklch(1 0 0);
+  --surface-elevated: oklch(0.95 0 0);
+  --surface-border: oklch(0.2 0 0 / 0.1);
+  --border: oklch(0.2 0 0 / 0.12);
+  --primary: #C62828;
+  --primary-hover: #B71C1C;
+  --primary-foreground: #FFFFFF;
+  --secondary: #D98207;
+  --secondary-hover: #B45309;
+  --secondary-foreground: #FFFFFF;
+  --muted: oklch(0.93 0 0);
+  --muted-foreground: oklch(0.42 0 0);
+  --muted-light: oklch(0.32 0 0);
+  
+  /* Dock Glassmorphism Variables */
+  --dock-bg: rgba(255, 255, 255, 0.85);
+  --dock-border: oklch(0.2 0 0 / 0.12);
+  --dock-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  /* Dark Mode Semantic Color Tokens (WCAG AA Compliant OKLCH) */
+  --background: oklch(0.15 0 0);
+  --foreground: oklch(0.95 0 0);
+  --foreground-secondary: oklch(0.75 0 0);
+  --card: oklch(0.19 0 0);
+  --card-foreground: oklch(0.95 0 0);
+  --surface: oklch(0.19 0 0);
+  --surface-elevated: oklch(0.24 0 0);
+  --surface-border: oklch(1 0 0 / 0.1);
+  --border: oklch(1 0 0 / 0.1);
+  --primary: #D92D2D;
+  --primary-hover: #C22323;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F3B544;
+  --secondary-hover: #E0A02E;
+  --secondary-foreground: #121212;
+  --muted: oklch(0.23 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+  --muted-light: oklch(0.8 0 0);
+  
+  /* Dock Glassmorphism Variables */
+  --dock-bg: rgba(20, 20, 20, 0.8);
+  --dock-border: oklch(1 0 0 / 0.1);
+  --dock-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
-    background-color: #171311;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
-    background-color: #171311;
-    color: #ffffff;
+    background-color: var(--background);
+    color: var(--foreground);
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
-    background-color: #d92d2d;
+    background-color: var(--primary);
     color: #ffffff;
   }
+}
+
+/* View Transitions API (Circular Reveal Animation Support) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
 }
 
 /* Custom scrollbar */
@@ -42,25 +103,26 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #171311;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #38302b;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #f3b544;
+  background: var(--secondary);
 }
 
 /* Subtle background glow effects */
 .bg-radial-gradient {
-  background: radial-gradient(circle at 50% 20%, rgba(217, 45, 45, 0.12) 0%, rgba(23, 19, 17, 0) 70%);
+  background: radial-gradient(circle at 50% 20%, rgba(217, 45, 45, 0.12) 0%, transparent 70%);
 }
 
 .bg-hero-glow {
-  background: radial-gradient(circle at 60% 30%, rgba(243, 181, 68, 0.08) 0%, rgba(217, 45, 45, 0.06) 40%, rgba(23, 19, 17, 0) 75%);
+  background: radial-gradient(circle at 60% 30%, rgba(243, 181, 68, 0.08) 0%, rgba(217, 45, 45, 0.06) 40%, transparent 75%);
 }
 
 /* Accessibility reduced-motion support */
@@ -74,4 +136,3 @@
     scroll-behavior: auto !important;
   }
 }
-

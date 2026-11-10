@@ -33,14 +33,14 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          'text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white font-display uppercase',
+          'text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground font-display uppercase',
           titleClassName
         )}
       >
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-base sm:text-lg text-muted-light font-normal leading-relaxed">
+        <p className="mt-4 text-base sm:text-lg text-muted-foreground font-normal leading-relaxed">
           {subtitle}
         </p>
       )}

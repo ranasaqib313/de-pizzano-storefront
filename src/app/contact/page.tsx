@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import React from 'react';
-import { Phone, MapPin, Clock, ExternalLink, ShieldCheck, Mail, AlertCircle } from 'lucide-react';
+import { Phone, MapPin, Clock, ExternalLink, Mail, AlertCircle } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink, getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
 import { ACTIVE_SOCIAL_LINKS } from '@/data/social-links';
 
 export const metadata: Metadata = {
@@ -43,16 +43,6 @@ export default function ContactPage() {
                   <p className="text-xs text-muted mt-1 leading-relaxed">
                     {BUSINESS_CONFIG.contact.disclaimer}
                   </p>
-                  <div className="mt-4">
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      href={getPhoneLink()}
-                      icon={<Phone className="w-3.5 h-3.5" />}
-                    >
-                      Click to Call Now
-                    </Button>
-                  </div>
                 </div>
               </div>
             </div>

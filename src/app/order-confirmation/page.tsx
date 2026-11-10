@@ -9,10 +9,8 @@ import { Order } from '@/types/storefront';
 import { formatPkr } from '@/lib/cart-calculations';
 import { MOCK_ORDERS } from '@/data/mock-orders';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink } from '@/lib/links';
 import {
   CheckCircle2,
-  ShieldAlert,
   Clock,
   MapPin,
   Banknote,
@@ -96,17 +94,6 @@ function OrderConfirmationContent() {
               {order.id}
             </strong>
           </p>
-        </div>
-
-        {/* Prototype Demo Warning Banner */}
-        <div className="mb-8 p-4 rounded-2xl bg-surface border-2 border-secondary/40 shadow-xl flex items-start gap-3">
-          <ShieldAlert className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
-          <div className="text-xs text-muted-light leading-relaxed">
-            <strong className="text-white block mb-0.5 uppercase tracking-wider">
-              DEMO SIMULATION NOTICE — NO REAL FOOD TRANSMITTED
-            </strong>
-            This order was created in simulation mode for Phase 1 stakeholder demonstration. The restaurant kitchen has not received this order. Real live order submission with Supabase backend will be implemented in Phase 2.
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
@@ -284,15 +271,9 @@ function OrderConfirmationContent() {
                 </Button>
               </Link>
 
-              <Button
-                variant="ghost"
-                size="sm"
-                href={getPhoneLink()}
-                className="w-full justify-center text-xs text-muted-light"
-                icon={<Phone className="w-3.5 h-3.5 text-secondary" />}
-              >
-                Call Restaurant Desk: {BUSINESS_CONFIG.contact.formattedPhone}
-              </Button>
+              <div className="text-center text-xs text-muted-light pt-2">
+                <span>Restaurant Desk: <strong className="text-white">{BUSINESS_CONFIG.contact.formattedPhone}</strong></span>
+              </div>
             </div>
           </div>
         </div>

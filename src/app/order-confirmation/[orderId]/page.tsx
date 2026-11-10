@@ -160,12 +160,6 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
               {order.order_number}
             </strong>
           </p>
-
-          {/* Demo Simulation Notice Badge */}
-          <div className="mt-4 p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-xs flex items-center justify-center gap-2 max-w-xl mx-auto">
-            <span className="font-bold text-secondary">DEMO SIMULATION NOTICE:</span>
-            <span>This is an independent restaurant demonstration platform. For actual food orders, call {BUSINESS_CONFIG.contact.formattedPhone}.</span>
-          </div>
         </div>
 
         {/* Live Order Confirmation Card */}

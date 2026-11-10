@@ -5,7 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink, getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'Location & Directions — Soldier Bazar, Karachi',
@@ -56,7 +56,7 @@ export default function LocationsPage() {
           </div>
 
           <div className="p-6 sm:p-8 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {/* Address */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-secondary">
@@ -96,12 +96,9 @@ export default function LocationsPage() {
                     Direct Contact
                   </h4>
                 </div>
-                <a
-                  href={getPhoneLink()}
-                  className="text-sm font-bold text-white hover:text-secondary transition-colors block"
-                >
+                <span className="text-sm font-bold text-white block">
                   {BUSINESS_CONFIG.contact.formattedPhone}
-                </a>
+                </span>
                 <p className="text-xs text-muted-dark leading-tight">
                   {BUSINESS_CONFIG.contact.disclaimer}
                 </p>
@@ -116,19 +113,9 @@ export default function LocationsPage() {
                 href={getMapsDirectionsUrl()}
                 external
                 icon={<MapPin className="w-4 h-4" />}
-                className="flex-1 justify-center"
+                className="w-full sm:w-auto justify-center"
               >
                 Open Google Maps Directions
-              </Button>
-
-              <Button
-                variant="outline"
-                size="md"
-                href={getPhoneLink()}
-                icon={<Phone className="w-4 h-4 text-secondary" />}
-                className="flex-1 justify-center"
-              >
-                Call {BUSINESS_CONFIG.contact.formattedPhone}
               </Button>
             </div>
           </div>

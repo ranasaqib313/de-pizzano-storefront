@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,23 +10,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#171311',
-        foreground: '#FFFFFF',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
+        border: 'var(--border)',
         surface: {
-          DEFAULT: '#211C19',
-          elevated: '#2A2420',
-          border: '#38302B',
-          highlight: '#483E38',
+          DEFAULT: 'var(--surface)',
+          elevated: 'var(--surface-elevated)',
+          border: 'var(--surface-border)',
+          highlight: 'var(--border)',
         },
         primary: {
-          DEFAULT: '#D92D2D',
-          hover: '#C22323',
+          DEFAULT: 'var(--primary)',
+          hover: 'var(--primary-hover)',
           light: '#F85151',
           dark: '#9E1919',
         },
         secondary: {
-          DEFAULT: '#F3B544',
-          hover: '#E0A02E',
+          DEFAULT: 'var(--secondary)',
+          hover: 'var(--secondary-hover)',
           light: '#F7CB77',
           dark: '#B87B1E',
         },
@@ -35,9 +41,10 @@ const config: Config = {
           dark: '#D8C3AA',
         },
         muted: {
-          DEFAULT: '#B8ACA2',
-          light: '#D3C9C2',
-          dark: '#85786E',
+          DEFAULT: 'var(--muted-foreground)',
+          light: 'var(--muted-light)',
+          dark: 'var(--muted)',
+          bg: 'var(--muted)',
         },
       },
       fontFamily: {
@@ -47,7 +54,8 @@ const config: Config = {
       boxShadow: {
         'glow-red': '0 0 35px -5px rgba(217, 45, 45, 0.35)',
         'glow-gold': '0 0 35px -5px rgba(243, 181, 68, 0.35)',
-        'card': '0 10px 30px -10px rgba(0, 0, 0, 0.6)',
+        'card': '0 10px 30px -10px rgba(0, 0, 0, 0.2)',
+        'dock': 'var(--dock-shadow)',
       },
     },
   },
@@ -55,4 +63,3 @@ const config: Config = {
 };
 
 export default config;
-

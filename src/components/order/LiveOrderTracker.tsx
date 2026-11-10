@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/Button';
 import { Order, OrderStatus, OrderStatusHistoryItem } from '@/types/storefront';
 import { formatPkr } from '@/lib/cart-calculations';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink } from '@/lib/links';
 import { getOrderById, mapDatabaseStatus } from '@/lib/supabase/services/order-service';
 import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
@@ -18,7 +17,6 @@ import {
   Clock,
   MapPin,
   Banknote,
-  Phone,
   ShoppingBag,
   ArrowLeft,
   Check,
@@ -505,12 +503,9 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                   <span className="text-muted block text-[10px] uppercase tracking-wider font-semibold">
                     Contact Phone
                   </span>
-                  <a
-                    href={`tel:${order.deliveryAddress.phone || order.customer.phone}`}
-                    className="text-secondary hover:underline font-mono"
-                  >
+                  <span className="text-secondary font-mono">
                     {order.deliveryAddress.phone || order.customer.phone}
-                  </a>
+                  </span>
                 </div>
 
                 <div>
@@ -548,22 +543,12 @@ export function LiveOrderTracker({ orderId }: LiveOrderTrackerProps) {
                     Need Help With Your Order?
                   </h4>
                   <p className="text-xs text-muted mt-0.5 leading-relaxed">
-                    Have special requests or need to check on your rider? Call our direct kitchen dispatch line.
+                    Have special requests or need to check on your rider? Contact the kitchen dispatch.
+                  </p>
+                  <p className="text-sm font-bold text-white mt-2">
+                    {BUSINESS_CONFIG.contact.formattedPhone}
                   </p>
                 </div>
-              </div>
-
-              <div className="pt-1">
-                <Button
-                  variant="primary"
-                  size="md"
-                  href={getPhoneLink()}
-                  external
-                  icon={<Phone className="w-4 h-4" />}
-                  className="w-full justify-center font-bold"
-                >
-                  Call Kitchen: {BUSINESS_CONFIG.contact.formattedPhone}
-                </Button>
               </div>
 
               <div className="text-[11px] text-muted text-center flex items-center justify-center gap-3">

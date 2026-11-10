@@ -94,7 +94,7 @@ export function ArtisanalCategoryBoard({
         {/* Section Subtitle */}
         <div className="flex items-center gap-2 mb-4">
           <span className="w-2 h-2 rounded-full bg-secondary" />
-          <span className="text-xs font-bold uppercase tracking-wider text-muted-light">
+          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
             Select Category to Filter Kitchen Menu
           </span>
         </div>
@@ -118,7 +118,7 @@ export function ArtisanalCategoryBoard({
                   'group flex-shrink-0 snap-start flex items-center gap-3 px-4 py-3 rounded-2xl border transition-all duration-200 text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary select-none',
                   isSelected
                     ? 'bg-gradient-to-r from-primary to-primary-hover border-primary text-white shadow-glow-red scale-[1.02]'
-                    : 'bg-surface hover:bg-surface-elevated border-surface-border hover:border-secondary/50 text-white'
+                    : 'bg-surface hover:bg-surface-elevated border-surface-border hover:border-secondary/50 text-foreground'
                 )}
               >
                 {/* Category Icon */}

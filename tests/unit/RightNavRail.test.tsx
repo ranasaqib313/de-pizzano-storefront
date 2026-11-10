@@ -1,14 +1,15 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { LeftNavDock } from '@/components/layout/LeftNavDock';
 import { RightNavRail } from '@/components/layout/RightNavRail';
 
 jest.mock('next/navigation', () => ({
   usePathname: () => '/',
 }));
 
-describe('RightNavRail Component (Site-Wide Right Navigation)', () => {
-  test('renders site-wide right navigation rail with primary links', () => {
-    render(<RightNavRail />);
+describe('LeftNavDock Component (Aurora Floating Glass Dock)', () => {
+  test('renders left floating glass dock with primary navigation links', () => {
+    render(<LeftNavDock />);
 
     expect(screen.getByRole('complementary', { name: /site navigation/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
@@ -18,14 +19,19 @@ describe('RightNavRail Component (Site-Wide Right Navigation)', () => {
     expect(screen.getByRole('link', { name: 'My Orders' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Track Live Order' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Contact & Support' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Customer Account' })).toBeInTheDocument();
+    // Customer Account profile was moved to top header per UX redesign requirements
+    expect(screen.queryByRole('link', { name: 'Customer Account' })).not.toBeInTheDocument();
   });
 
   test('contains external Foodpanda link', () => {
-    render(<RightNavRail />);
+    render(<LeftNavDock />);
     const fpLink = screen.getByRole('link', { name: /order on foodpanda/i });
     expect(fpLink).toBeInTheDocument();
     expect(fpLink).toHaveAttribute('href', expect.stringContaining('foodpanda.pk'));
   });
-});
 
+  test('RightNavRail backward-compatibility alias renders LeftNavDock properly', () => {
+    render(<RightNavRail />);
+    expect(screen.getByRole('complementary', { name: /site navigation/i })).toBeInTheDocument();
+  });
+});

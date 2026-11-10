@@ -8,7 +8,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { CartItemRow } from '@/components/cart/CartItemRow';
 import { CartSummary } from '@/components/cart/CartSummary';
 import { Button } from '@/components/ui/Button';
-import { ShoppingBag, ArrowLeft, Trash2, ShieldAlert } from 'lucide-react';
+import { ShoppingBag, ArrowLeft, Trash2 } from 'lucide-react';
 import { KARACHI_DELIVERY_ZONES } from '@/data/delivery-zones';
 
 export default function CartPage() {
@@ -69,17 +69,6 @@ export default function CartPage() {
               Clear Cart
             </button>
           )}
-        </div>
-
-        {/* Prototype Demo Banner */}
-        <div className="mb-8 p-4 rounded-xl bg-surface border border-secondary/20 flex items-start gap-3">
-          <ShieldAlert className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
-          <div className="text-xs text-muted leading-relaxed">
-            <strong className="text-white block mb-0.5 uppercase tracking-wider">
-              Phase 1 Client Prototype Notice
-            </strong>
-            Cash on Delivery is the sole payment option. Cart calculations operate with integer PKR precision to prevent rounding discrepancies.
-          </div>
         </div>
 
         {items.length > 0 ? (

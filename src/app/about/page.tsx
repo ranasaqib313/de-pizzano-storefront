@@ -63,36 +63,36 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Right Column: Independent Proposal Callout */}
+          {/* Right Column: Restaurant Quality & Heritage */}
           <div className="lg:col-span-5 bg-surface border border-surface-border rounded-2xl p-6 sm:p-8 space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-surface-border">
               <div className="w-10 h-10 rounded-xl bg-secondary/15 flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5 text-secondary" />
+                <Flame className="w-5 h-5 text-secondary" />
               </div>
               <div>
                 <h4 className="text-base font-bold text-white uppercase tracking-wider">
-                  Independent Project
+                  Our Quality Promise
                 </h4>
-                <p className="text-xs text-muted">Proposal & Review Concept</p>
+                <p className="text-xs text-muted">Authentic Flavours &amp; Fresh Ingredients</p>
               </div>
             </div>
 
             <p className="text-xs text-muted leading-relaxed">
-              This website is an independent sales and design concept developed to demonstrate the commercial value of a dedicated digital presence for De Pizzano.
+              Every pizza and fast-food specialty is freshly baked to order using premium mozzarella, custom dough, and signature spice blends created specifically for our Karachi patrons.
             </p>
 
             <div className="space-y-3 text-xs">
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Zero fabricated ratings, fake reviews, or exaggerated claims.</span>
+                <span>Stone-baked crusts with 100% pure dairy mozzarella.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Strict reliance on researched public directory records.</span>
+                <span>Handcrafted fresh dough and slow-simmered sauces daily.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Ready for seamless integration with verified owner credentials.</span>
+                <span>Prompt doorstep delivery and warm counter takeaway service.</span>
               </div>
             </div>
 
@@ -100,10 +100,10 @@ export default function AboutPage() {
               <Button
                 variant="primary"
                 size="sm"
-                href="/contact"
+                href="/menu"
                 className="w-full justify-center text-xs"
               >
-                Owner Verification Details
+                Explore Full Menu
               </Button>
             </div>
           </div>

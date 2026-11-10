@@ -127,3 +127,4 @@ All 21 required visual evidence screenshots have been captured directly via Play
 - **Server-Side Price Recalculation:** Client-submitted prices are discarded in `order-actions.ts`; all amounts are verified server-side against database base prices and variant deltas.
 - **Row-Level Security (RLS):** Supabase RLS policies verified to prevent cross-customer order inspection.
 - **No Inactive Payment Gateways Simulated:** Cash on Delivery is strictly the sole active checkout pathway; all card processors display honest "Coming Soon" statuses.
+

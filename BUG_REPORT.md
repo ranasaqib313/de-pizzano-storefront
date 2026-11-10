@@ -65,3 +65,4 @@ The following items are intentional product specifications and documented busine
 3. **Foodpanda External Fallback:**
    - **Status:** By Design.
    - **Detail:** External Foodpanda ordering links are preserved as secondary options (`Foodpanda ↗`) to provide customers with an alternative if they prefer third-party delivery apps. Direct on-site ordering is always the primary prominent CTA.
+

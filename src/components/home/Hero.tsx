@@ -79,7 +79,7 @@ export function Hero() {
               animate="visible"
               className="text-base sm:text-lg md:text-xl text-muted-light max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed"
             >
-              Authentic artisanal pizzas, value bundle deals, toasted sandwiches, rich baked pastas and crispy sides. Handcrafted with fresh fermented dough and 100% mozzarella in Soldier Bazar, Karachi.
+              Fresh stone oven pizzas, meal combos, toasted sandwiches, baked pastas, and crispy fries. Made with soft &amp; crispy dough and 100% real cheese in Soldier Bazar, Karachi.
             </motion.p>
 
             {/* Metrics Bar */}
@@ -92,7 +92,7 @@ export function Hero() {
             >
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-secondary" />
-                <span className="text-white font-semibold">50 Authentic</span> Dishes
+                <span className="text-white font-semibold">50 Delicious</span> Dishes
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-primary" />

@@ -33,9 +33,9 @@ export function MobileBottomNav() {
     {
       id: 'deals',
       label: 'Deals',
-      href: '/menu#pizza-deals',
+      href: '/deals',
       icon: Sparkles,
-      isActive: false,
+      isActive: pathname === '/deals',
     },
     {
       id: 'orders',
@@ -49,7 +49,7 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Mobile Bottom Bar"
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/95 border-t border-surface-border backdrop-blur-md px-3 py-2 flex items-center justify-around shadow-2xl safe-bottom"
+      className="flex md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/95 border-t border-surface-border backdrop-blur-md px-3 py-2 items-center justify-around shadow-2xl safe-bottom"
     >
       {items.map((item) => {
         const Icon = item.icon;

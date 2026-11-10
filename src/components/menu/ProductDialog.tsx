@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { X, ShoppingBag, Plus, Check, AlertCircle, Phone, Info } from 'lucide-react';
+import { X, ShoppingBag, Plus, Check, AlertCircle, Info } from 'lucide-react';
 import { MenuItem } from '@/types/menu';
 import { ProductVariant, ProductOption } from '@/types/storefront';
 import {
@@ -20,7 +20,6 @@ import {
 import { useCart } from '@/context/CartContext';
 import { QuantitySelector } from '@/components/cart/QuantitySelector';
 import { Button } from '@/components/ui/Button';
-import { getPhoneLink } from '@/lib/links';
 
 interface ProductDialogProps {
   item: MenuItem | null;
@@ -182,12 +181,12 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
       />
 
       {/* Modal Dialog Content */}
-      <div className="relative w-full max-w-xl bg-surface border border-surface-border rounded-2xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh]">
+      <div className="relative w-[95%] sm:w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh]">
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-background/80 text-muted-light hover:text-white backdrop-blur-md border border-surface-border transition-colors focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-background/80 text-foreground hover:text-primary backdrop-blur-md border border-border transition-colors focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
           aria-label="Close Product Details"
         >
           <X className="w-5 h-5" />
@@ -208,7 +207,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
               🍕
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/30" />
           <div className="absolute bottom-3 left-4">
             <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-background/90 backdrop-blur-md text-secondary border border-secondary/30 rounded-full">
               {item.category.replace('-', ' ')}
@@ -224,7 +223,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
               <div>
                 <h3
                   id="product-dialog-title"
-                  className="text-xl sm:text-2xl font-black text-white font-display uppercase tracking-wide"
+                  className="text-xl sm:text-2xl font-black text-foreground font-display uppercase tracking-wide"
                 >
                   {item.name}
                 </h3>
@@ -234,7 +233,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
               </div>
             </div>
             {item.description ? (
-              <p className="text-sm text-muted-light mt-2 leading-relaxed">
+              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
                 {item.description}
               </p>
             ) : (
@@ -395,17 +394,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
         </div>
 
         {/* Modal Bottom Actions */}
-        <div className="p-4 sm:p-5 border-t border-surface-border bg-surface-elevated flex flex-col sm:flex-row items-center gap-3">
-          <Button
-            variant="outline"
-            size="md"
-            href={getPhoneLink()}
-            className="w-full sm:w-auto text-xs shrink-0"
-            icon={<Phone className="w-3.5 h-3.5 text-secondary" />}
-          >
-            Call Order Desk
-          </Button>
-
+        <div className="p-4 sm:p-5 border-t border-surface-border bg-surface-elevated flex items-center gap-3">
           <Button
             variant="primary"
             size="md"
