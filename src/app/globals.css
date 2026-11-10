@@ -23,7 +23,7 @@
   --secondary-hover: #B45309;
   --secondary-foreground: #FFFFFF;
   --muted: oklch(0.93 0 0);
-  --muted-foreground: oklch(0.42 0 0);
+  --muted-foreground: oklch(0.4 0 0);
   --muted-light: oklch(0.32 0 0);
   
   /* Dock Glassmorphism Variables */
@@ -72,28 +72,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
     background-color: var(--primary);
     color: #ffffff;
   }
-}
-
-/* View Transitions API (Circular Reveal Animation Support) */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-old(root) {
-  z-index: 1;
-}
-
-::view-transition-new(root) {
-  z-index: 9999;
 }
 
 /* Custom scrollbar */

@@ -157,7 +157,7 @@ export function Hero() {
               custom={0.5}
               initial="hidden"
               animate="visible"
-              className="pt-2 flex items-center justify-center lg:justify-start gap-2 text-xs text-muted-dark"
+              className="pt-2 flex items-center justify-center lg:justify-start gap-2 text-xs text-muted-foreground"
             >
               <MapPin className="w-3.5 h-3.5 text-secondary shrink-0" />
               <span>Shop No. 9, Murtaza Terrace, Soldier Bazar No. 3, Karachi</span>

@@ -99,7 +99,7 @@ export function AdminSidebar() {
                       {item.count}
                     </span>
                   )}
-                  <ChevronRight className={cn('w-3.5 h-3.5', isActive ? 'text-white' : 'text-muted-dark')} />
+                  <ChevronRight className={cn('w-3.5 h-3.5', isActive ? 'text-white' : 'text-muted-foreground')} />
                 </div>
               </Link>
             );
@@ -116,7 +116,7 @@ export function AdminSidebar() {
           <span className="font-semibold">View Customer Storefront</span>
           <ExternalLink className="w-3.5 h-3.5 text-secondary" />
         </Link>
-        <div className="text-[10px] text-muted-dark text-center">
+        <div className="text-[10px] text-muted-foreground text-center">
           De Pizzano Kitchen OS v2.0 • Soldier Bazar
         </div>
       </div>

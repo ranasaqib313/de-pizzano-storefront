@@ -27,7 +27,7 @@ export function AboutSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-background relative overflow-hidden transition-colors duration-300">
+    <section className="py-16 sm:py-20 bg-background relative overflow-hidden">
       <Container size="xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Text & Pillars */}

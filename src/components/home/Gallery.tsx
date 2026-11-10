@@ -262,7 +262,7 @@ export function Gallery() {
         </motion.div>
 
         {/* Disclaimer */}
-        <div className="mt-8 text-center text-xs text-muted-dark">
+        <div className="mt-8 text-center text-xs text-muted-foreground">
           <p className="flex items-center justify-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-secondary inline" />
             <span>
@@ -330,7 +330,7 @@ export function Gallery() {
                       {currentLightboxItem.caption}
                     </p>
                   </div>
-                  <span className="text-xs text-muted-dark shrink-0 mt-1 font-mono">
+                  <span className="text-xs text-muted-foreground shrink-0 mt-1 font-mono">
                     {lightboxIndex + 1} / {filteredItems.length}
                   </span>
                 </div>

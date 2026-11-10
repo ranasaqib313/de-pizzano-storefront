@@ -113,7 +113,7 @@ export function LeftNavDock({ onExpandedChange }: LeftNavDockProps) {
       <div className="relative p-[1px] rounded-[38px] bg-gradient-to-b from-white/20 via-white/5 to-transparent dark:from-white/20 dark:via-white/5 dark:to-transparent shadow-2xl">
         
         {/* Floating Glassmorphic Pill Dock Body */}
-        <div className="relative flex flex-col items-start p-2 rounded-[37px] bg-[var(--dock-bg)]/90 backdrop-blur-2xl transition-colors duration-300">
+        <div className="relative flex flex-col items-start p-2 rounded-[37px] bg-[var(--dock-bg)]/90 backdrop-blur-2xl">
           
           {/* Brand Crest / Home Quick Link */}
           <Link

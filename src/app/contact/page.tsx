@@ -37,10 +37,10 @@ export default function ContactPage() {
                   <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
                     Phone Inquiries & Orders
                   </span>
-                  <h3 className="text-xl font-bold text-white mt-1">
+                  <h3 className="text-xl font-bold text-foreground mt-1">
                     {BUSINESS_CONFIG.contact.formattedPhone}
                   </h3>
-                  <p className="text-xs text-muted mt-1 leading-relaxed">
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     {BUSINESS_CONFIG.contact.disclaimer}
                   </p>
                 </div>
@@ -57,10 +57,10 @@ export default function ContactPage() {
                   <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
                     Restaurant Address
                   </span>
-                  <h3 className="text-lg font-bold text-white mt-1">
+                  <h3 className="text-lg font-bold text-foreground mt-1">
                     {BUSINESS_CONFIG.primaryLocation.address}
                   </h3>
-                  <p className="text-xs text-muted-light mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     {BUSINESS_CONFIG.primaryLocation.landmark}, {BUSINESS_CONFIG.primaryLocation.city}, Pakistan.
                   </p>
                   <div className="mt-4">
@@ -88,10 +88,10 @@ export default function ContactPage() {
                   <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
                     Online Delivery Partner
                   </span>
-                  <h3 className="text-lg font-bold text-white mt-1">
+                  <h3 className="text-lg font-bold text-foreground mt-1">
                     Foodpanda Restaurant Page
                   </h3>
-                  <p className="text-xs text-muted mt-1 leading-relaxed">
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     Order hot pizza, creamy pasta and appetizers delivered to your home via Foodpanda.
                   </p>
                   <div className="mt-4">
@@ -117,16 +117,16 @@ export default function ContactPage() {
             <div className="bg-surface border border-surface-border rounded-2xl p-6 sm:p-7">
               <div className="flex items-center gap-3 pb-4 border-b border-surface-border">
                 <Clock className="w-5 h-5 text-secondary" />
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+                <h4 className="text-sm font-bold text-foreground uppercase tracking-wider">
                   Operating Hours
                 </h4>
               </div>
               <div className="pt-4 space-y-2">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-muted-light">Everyday (Mon – Sun)</span>
-                  <span className="text-white font-bold">12:00 PM – 3:00 AM</span>
+                  <span className="text-muted-foreground">Everyday (Mon – Sun)</span>
+                  <span className="text-foreground font-bold">12:00 PM – 3:00 AM</span>
                 </div>
-                <p className="text-xs text-muted-dark pt-2 leading-relaxed">
+                <p className="text-xs text-muted-foreground pt-2 leading-relaxed">
                   {BUSINESS_CONFIG.operatingHours.note}
                 </p>
               </div>
@@ -134,7 +134,7 @@ export default function ContactPage() {
 
             {/* Social Media Notice */}
             <div className="bg-surface border border-surface-border rounded-2xl p-6 sm:p-7">
-              <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2">
+              <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">
                 Social Media Channels
               </h4>
               {ACTIVE_SOCIAL_LINKS.length > 0 ? (
@@ -152,14 +152,14 @@ export default function ContactPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-muted leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Social accounts (Facebook / Instagram) remain pending owner authentication before public links are activated.
                 </p>
               )}
             </div>
 
             {/* Owner Concept Review Notice */}
-            <div className="bg-surface-elevated/70 border border-secondary/20 rounded-2xl p-6 text-xs text-muted space-y-2">
+            <div className="bg-surface-elevated/70 border border-secondary/20 rounded-2xl p-6 text-xs text-muted-foreground space-y-2">
               <div className="flex items-center gap-2 text-secondary font-bold">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>Notice for Restaurant Management</span>

@@ -43,7 +43,7 @@ const config: Config = {
         muted: {
           DEFAULT: 'var(--muted-foreground)',
           light: 'var(--muted-light)',
-          dark: 'var(--muted)',
+          dark: 'var(--muted-foreground)',
           bg: 'var(--muted)',
         },
       },

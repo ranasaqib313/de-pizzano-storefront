@@ -35,7 +35,7 @@ export default function LocationsPage() {
                   Primary Verified Branch
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-white font-display uppercase mt-1">
+              <h3 className="text-2xl font-bold text-foreground font-display uppercase mt-1">
                 {loc.name}
               </h3>
             </div>
@@ -61,11 +61,11 @@ export default function LocationsPage() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-secondary">
                   <MapPin className="w-4 h-4" />
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
                     Address
                   </h4>
                 </div>
-                <p className="text-sm text-muted-light leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {loc.address},<br />
                   {loc.landmark},<br />
                   {loc.city}, {loc.country}.
@@ -76,14 +76,14 @@ export default function LocationsPage() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-secondary">
                   <Clock className="w-4 h-4" />
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
                     Public Hours
                   </h4>
                 </div>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-sm font-semibold text-foreground">
                   {BUSINESS_CONFIG.operatingHours.daily}
                 </p>
-                <p className="text-xs text-muted-dark leading-tight">
+                <p className="text-xs text-muted-foreground leading-tight">
                   {BUSINESS_CONFIG.operatingHours.note}
                 </p>
               </div>
@@ -92,14 +92,14 @@ export default function LocationsPage() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-secondary">
                   <Phone className="w-4 h-4" />
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
                     Direct Contact
                   </h4>
                 </div>
-                <span className="text-sm font-bold text-white block">
+                <span className="text-sm font-bold text-foreground block">
                   {BUSINESS_CONFIG.contact.formattedPhone}
                 </span>
-                <p className="text-xs text-muted-dark leading-tight">
+                <p className="text-xs text-muted-foreground leading-tight">
                   {BUSINESS_CONFIG.contact.disclaimer}
                 </p>
               </div>
@@ -128,13 +128,13 @@ export default function LocationsPage() {
               <AlertCircle className="w-5 h-5 text-secondary" />
             </div>
             <div>
-              <h4 className="text-base font-bold text-white uppercase tracking-wider">
+              <h4 className="text-base font-bold text-foreground uppercase tracking-wider">
                 Multi-Branch Architecture Readiness
               </h4>
-              <p className="text-xs text-muted mt-2 leading-relaxed">
+              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
                 A historical directory from 2025 noted potential secondary references (Korangi, Mehmoodabad, North Karachi). In accordance with strict data integrity guidelines, unconfirmed branches are omitted from the active public directory.
               </p>
-              <p className="text-xs text-muted-dark mt-2 leading-relaxed">
+              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
                 The application schema has been engineered to dynamically support multi-branch selection, localized menus, and individual location ordering once verified by the restaurant management.
               </p>
             </div>

@@ -9,7 +9,7 @@ import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
 
 export function Footer() {
   return (
-    <footer className="bg-surface border-t border-border text-muted-foreground mt-auto transition-colors duration-300">
+    <footer className="bg-surface border-t border-border text-muted-foreground mt-auto">
       {/* Main Footer Content */}
       <div className="py-12 md:py-16">
         <Container size="xl">

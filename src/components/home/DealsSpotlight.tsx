@@ -21,7 +21,7 @@ export function DealsSpotlight() {
   const deals = MENU_ITEMS.filter((item) => item.category === 'pizza-deals').slice(0, 4);
 
   return (
-    <section aria-label="Verified Deals & Meal Bundles" className="w-full py-12 bg-surface/40 border-b border-border transition-colors duration-300">
+    <section aria-label="Verified Deals & Meal Bundles" className="w-full py-12 bg-surface/40 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}

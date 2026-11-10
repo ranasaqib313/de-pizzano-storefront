@@ -16,7 +16,7 @@ export default function DealsPage() {
   const deals = MENU_ITEMS.filter((item) => item.category === 'pizza-deals');
 
   return (
-    <div className="py-12 sm:py-16 bg-background transition-colors duration-300">
+    <div className="py-12 sm:py-16 bg-background">
       <Container size="xl">
         {/* Header Section */}
         <SectionHeading

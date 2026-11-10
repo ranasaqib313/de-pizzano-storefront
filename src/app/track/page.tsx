@@ -81,19 +81,19 @@ function OrderTrackingContent() {
         {/* Search Card */}
         <div className="bg-surface border border-surface-border rounded-2xl p-6 sm:p-10 shadow-xl mb-10">
           <form onSubmit={handleSearchSubmit} className="space-y-4">
-            <label htmlFor="order-search" className="block text-xs font-bold uppercase tracking-wider text-muted">
+            <label htmlFor="order-search" className="block text-xs font-bold uppercase tracking-wider text-muted-foreground">
               Order Reference Number
             </label>
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
-                <Search className="w-5 h-5 text-muted absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Search className="w-5 h-5 text-muted-foreground absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   id="order-search"
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   placeholder="e.g. DP-20261107-1234 or DPZ-2026-8921"
-                  className="w-full bg-surface-elevated border border-surface-border rounded-xl pl-12 pr-4 py-3.5 text-sm text-white placeholder-muted focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-mono tracking-wider transition-colors"
+                  className="w-full bg-surface-elevated border border-surface-border rounded-xl pl-12 pr-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-mono tracking-wider"
                 />
               </div>
 
@@ -111,7 +111,7 @@ function OrderTrackingContent() {
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-surface-border flex items-center justify-between text-xs text-muted flex-wrap gap-2">
+          <div className="mt-6 pt-6 border-t border-surface-border flex items-center justify-between text-xs text-muted-foreground flex-wrap gap-2">
             <span className="flex items-center gap-1.5 text-emerald-400">
               <ShieldCheck className="w-4 h-4 shrink-0" />
               Connected to Live Supabase PostgreSQL Realtime
@@ -128,7 +128,7 @@ function OrderTrackingContent() {
             <span className="text-xs font-bold uppercase tracking-wider text-secondary">
               Kitchen Milestone Timeline
             </span>
-            <span className="text-[11px] text-muted">
+            <span className="text-[11px] text-muted-foreground">
               Live status progression across 7 kitchen milestones
             </span>
           </div>
@@ -139,10 +139,10 @@ function OrderTrackingContent() {
                 key={st}
                 type="button"
                 onClick={() => setSimulatedStatus(st)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
                   simulatedStatus === st
                     ? 'bg-secondary text-neutral-950 shadow-glow-gold'
-                    : 'bg-surface-elevated text-muted hover:text-white border border-surface-border'
+                    : 'bg-surface-elevated text-muted-foreground hover:text-foreground border border-surface-border'
                 }`}
               >
                 {st}
@@ -157,8 +157,8 @@ function OrderTrackingContent() {
                 <Bike className="w-5 h-5 text-secondary" />
               </div>
               <div>
-                <span className="text-xs text-muted block uppercase tracking-wider">Kitchen Status</span>
-                <span className="text-sm font-bold text-white">
+                <span className="text-xs text-muted-foreground block uppercase tracking-wider">Kitchen Status</span>
+                <span className="text-sm font-bold text-foreground">
                   {simulatedStatus === 'Out for Delivery' ? 'Rider on the Way' : simulatedStatus === 'Cancelled' ? 'Order Cancelled' : simulatedStatus}
                 </span>
               </div>
@@ -172,7 +172,7 @@ function OrderTrackingContent() {
         {/* Recent Orders Quick Links */}
         {recentOrders.length > 0 && (
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-muted font-display">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground font-display">
               Recent Orders On This Device
             </h3>
             <div className="grid grid-cols-1 gap-3">
@@ -187,10 +187,10 @@ function OrderTrackingContent() {
                       <ShoppingBag className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-sm font-mono font-bold text-white block">
+                      <span className="text-sm font-mono font-bold text-foreground block">
                         {ro.id}
                       </span>
-                      <span className="text-xs text-muted">
+                      <span className="text-xs text-muted-foreground">
                         Status: <strong className="text-secondary">{ro.status}</strong>
                       </span>
                     </div>

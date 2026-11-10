@@ -153,7 +153,7 @@ export function ArtisanalCategoryBoard({
                   <span
                     className={cn(
                       'text-[10px] truncate max-w-[130px]',
-                      isSelected ? 'text-white/80' : 'text-muted-dark'
+                      isSelected ? 'text-white/90' : 'text-muted-foreground'
                     )}
                   >
                     {cat.subtitle}

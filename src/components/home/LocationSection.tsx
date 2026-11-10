@@ -10,7 +10,7 @@ export function LocationSection() {
   const loc = BUSINESS_CONFIG.primaryLocation;
 
   return (
-    <section className="py-20 bg-background relative transition-colors duration-300">
+    <section className="py-20 bg-background relative">
       <Container size="xl">
         <SectionHeading
           badge="Visit Or Order"

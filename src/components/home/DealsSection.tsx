@@ -136,16 +136,16 @@ export function DealsSection() {
                     <span className="text-[11px] font-extrabold uppercase tracking-widest text-secondary bg-surface-elevated px-2.5 py-1 rounded-xl border border-surface-border">
                       {deal.badge}
                     </span>
-                    <span className="text-xs text-muted font-medium">
-                      Serves: <strong className="text-white">{deal.serves}</strong>
+                    <span className="text-xs text-muted-foreground font-medium">
+                      Serves: <strong className="text-foreground">{deal.serves}</strong>
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white font-display mb-2">
+                  <h3 className="text-xl font-bold text-foreground font-display mb-2">
                     {deal.title}
                   </h3>
 
-                  <p className="text-xs text-muted leading-relaxed mb-6">
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-6">
                     {deal.description}
                   </p>
                 </div>
@@ -153,7 +153,7 @@ export function DealsSection() {
                 {/* Card Bottom */}
                 <div className="pt-4 border-t border-surface-border/80 flex items-center justify-between gap-3">
                   <div>
-                    <span className="text-[10px] text-muted block uppercase tracking-wider font-semibold">
+                    <span className="text-[10px] text-muted-foreground block uppercase tracking-wider font-semibold">
                       Bundle Price
                     </span>
                     <span className="text-2xl font-black text-secondary font-display">

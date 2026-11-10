@@ -24,7 +24,7 @@ export function EditorialHero() {
   return (
     <section
       aria-label="Promotional Showcase"
-      className="relative w-full overflow-hidden bg-gradient-to-b from-surface/60 via-background to-background pt-8 sm:pt-12 pb-12 sm:pb-16 border-b border-border transition-colors duration-300"
+      className="relative w-full overflow-hidden bg-gradient-to-b from-surface/60 via-background to-background pt-8 sm:pt-12 pb-12 sm:pb-16 border-b border-border"
     >
       {/* Background Ambient Glows */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
@@ -98,7 +98,7 @@ export function EditorialHero() {
             <motion.div
               whileHover={{ y: -8, scale: 1.02, boxShadow: '0px 20px 40px rgba(0,0,0,0.3)' }}
               transition={{ type: 'spring', stiffness: 300 }}
-              className="relative rounded-3xl bg-card text-card-foreground border border-border p-5 sm:p-6 shadow-2xl overflow-hidden group transition-colors duration-300"
+              className="relative rounded-3xl bg-card text-card-foreground border border-border p-5 sm:p-6 shadow-2xl overflow-hidden group"
             >
               
               {/* Highlight Ribbon with Glassmorphic Badges */}
