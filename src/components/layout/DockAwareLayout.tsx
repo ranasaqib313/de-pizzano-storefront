@@ -32,16 +32,16 @@ export function DockAwareLayout({ children }: DockAwareLayoutProps) {
       {/* Fixed dock — notifies layout when it expands */}
       <LeftNavDock onExpandedChange={handleExpandedChange} />
 
-      {/* Content + Footer shift right smoothly when dock expands */}
+      {/* Content + Footer shift right smoothly when dock expands, with pb-24 on mobile to clear bottom nav */}
       <div
         className={cn(
-          'flex flex-col flex-1 transition-[padding-left] duration-300 ease-out will-change-[padding-left]',
+          'flex flex-col flex-1 pb-24 md:pb-0 transition-[padding-left] duration-300 ease-out will-change-[padding-left]',
           isExpanded
             ? 'pl-0 md:pl-64 lg:pl-[270px] xl:pl-[280px]'
             : 'pl-0 md:pl-32 lg:pl-36'
         )}
       >
-        <main className="flex-1 pb-20 md:pb-0">{children}</main>
+        <main className="flex-1">{children}</main>
         <Footer />
       </div>
     </>
