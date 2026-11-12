@@ -4,7 +4,7 @@ import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl } from '@/lib/links';
 
 export function LocationSection() {
   const loc = BUSINESS_CONFIG.primaryLocation;
@@ -88,20 +88,9 @@ export function LocationSection() {
                 href={getMapsDirectionsUrl()}
                 external
                 icon={<MapPin className="w-4 h-4" />}
-                className="flex-1 justify-center"
+                className="w-full justify-center"
               >
                 Directions on Google Maps
-              </Button>
-              <Button
-                variant="foodpanda"
-                size="md"
-                href={getFoodpandaUrl()}
-                external
-                icon={<ExternalLink className="w-4 h-4" />}
-                iconPosition="right"
-                className="flex-1 justify-center"
-              >
-                Order on Foodpanda
               </Button>
             </div>
           </div>

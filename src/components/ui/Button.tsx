@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'foodpanda';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   external?: boolean;
@@ -39,8 +39,6 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
         'border border-surface-border bg-surface/50 text-foreground hover:bg-surface hover:border-muted focus:ring-primary',
       ghost:
         'text-muted-light hover:text-white hover:bg-surface/60 focus:ring-primary',
-      foodpanda:
-        'bg-[#D70F64] text-white font-semibold hover:bg-[#B80D56] shadow-md hover:shadow-[0_0_25px_-5px_rgba(215,15,100,0.5)] focus:ring-[#D70F64]',
     };
 
     const sizes = {

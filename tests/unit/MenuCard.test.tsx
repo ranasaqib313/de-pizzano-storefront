@@ -47,13 +47,5 @@ describe('MenuCard Component', () => {
     fireEvent.click(detailsBtn);
     expect(handleSelect).toHaveBeenCalledWith(mockItemStarting);
   });
-
-  test('Foodpanda button points to external ordering link', () => {
-    render(<MenuCard item={mockItemStarting} />);
-    const fpLink = screen.getByRole('link', { name: /foodpanda/i });
-    expect(fpLink).toHaveAttribute('href');
-    expect(fpLink.getAttribute('href')).toContain('foodpanda.pk');
-    expect(fpLink).toHaveAttribute('target', '_blank');
-  });
 });
 

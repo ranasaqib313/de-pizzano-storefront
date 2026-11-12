@@ -8,7 +8,7 @@ import { Flame, Utensils, ExternalLink, Phone, MapPin, Sparkles, Bike, Store, Ar
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getFoodpandaUrl, getMapsDirectionsUrl } from '@/lib/links';
+import { getMapsDirectionsUrl } from '@/lib/links';
 import { useCart } from '@/context/CartContext';
 import { OrderTypeModal } from '@/components/layout/OrderTypeModal';
 

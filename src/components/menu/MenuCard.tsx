@@ -2,10 +2,9 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { ExternalLink, ShoppingBag, Info, Sparkles } from 'lucide-react';
+import { ShoppingBag, Info, Sparkles } from 'lucide-react';
 import { MenuItem } from '@/types/menu';
 import { formatMenuItemPrice } from '@/lib/format-price';
-import { getFoodpandaUrl } from '@/lib/links';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
@@ -174,22 +173,13 @@ export function MenuCard({ item, onSelect, layout = 'grid' }: MenuCardProps) {
             )}
           </div>
 
-          {/* Secondary External Partner Reference - High Contrast in Light/Dark */}
+          {/* Status Indicator - High Contrast in Light/Dark */}
           <div className="flex items-center justify-between text-[11px] text-muted-foreground font-medium px-1">
             <span className="flex items-center gap-1.5 text-foreground font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400 inline-block shadow-sm" />
               Kitchen Live (Soldier Bazar)
             </span>
-            <a
-              href={getFoodpandaUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Order on Foodpanda (External)"
-              className="text-[#D70F64] hover:underline inline-flex items-center gap-1 font-bold"
-            >
-              Foodpanda
-              <ExternalLink className="w-2.5 h-2.5" />
-            </a>
+            <span className="text-secondary font-bold">Fresh Daily</span>
           </div>
         </div>
       </div>

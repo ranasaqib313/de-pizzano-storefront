@@ -110,17 +110,8 @@ test.describe('De Pizzano Restaurant Web Experience', () => {
     await expect(page.getByText('Starting at Rs. 750').first()).toBeVisible(); // Pizzas
   });
 
-  test('11, 12 & 13. External Foodpanda, phone call, and Google Maps links are accurate', async ({ page }) => {
+  test('11, 12 & 13. Google Maps link is accurate', async ({ page }) => {
     await page.goto('/contact');
-
-    // Phone link
-    const callLink = page.getByRole('link', { name: /click to call now/i });
-    await expect(callLink).toHaveAttribute('href', 'tel:+923182588631');
-
-    // Foodpanda link
-    const fpLink = page.getByRole('link', { name: /go to foodpanda listing/i });
-    await expect(fpLink).toHaveAttribute('href', 'https://www.foodpanda.pk/restaurant/s5nk/de-pizzano-soldier-bazar');
-    await expect(fpLink).toHaveAttribute('target', '_blank');
 
     // Maps link
     const mapLink = page.getByRole('link', { name: /open google maps/i });

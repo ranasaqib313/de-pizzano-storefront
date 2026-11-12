@@ -16,7 +16,6 @@ import {
   Flame,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getFoodpandaUrl } from '@/lib/links';
 
 /**
  * The Aurora Floating Glass Dock
@@ -224,42 +223,6 @@ export function LeftNavDock({ onExpandedChange }: LeftNavDockProps) {
               );
             })}
           </nav>
-
-          {/* Divider */}
-          <div className="w-7 h-[1px] bg-border mx-auto my-1.5 self-center" />
-
-          {/* External Foodpanda Partner Pill */}
-          <a
-            href={getFoodpandaUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Order on Foodpanda"
-            onMouseEnter={() => setHoveredId('foodpanda')}
-            onMouseLeave={() => setHoveredId(null)}
-            className="relative flex items-center h-10 rounded-full cursor-pointer overflow-hidden text-[#D70F64] hover:bg-[#D70F64]/10 transition-colors duration-200"
-          >
-            <div className="w-11 h-10 shrink-0 flex items-center justify-center">
-              <motion.div
-                animate={{ scale: hoveredId === 'foodpanda' ? 1.1 : 1 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              >
-                <ExternalLink className="w-4 h-4" />
-              </motion.div>
-            </div>
-            <motion.div
-              initial={false}
-              animate={{
-                width: hoveredId === 'foodpanda' ? 'auto' : 0,
-                opacity: hoveredId === 'foodpanda' ? 1 : 0,
-                paddingRight: hoveredId === 'foodpanda' ? 14 : 0,
-              }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="overflow-hidden whitespace-nowrap flex items-center gap-1.5 pointer-events-none"
-            >
-              <span className="text-[11px] font-bold">Foodpanda</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D70F64]" />
-            </motion.div>
-          </a>
         </div>
       </div>
     </aside>

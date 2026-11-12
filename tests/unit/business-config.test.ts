@@ -1,5 +1,5 @@
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink, getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getPhoneLink, getMapsDirectionsUrl } from '@/lib/links';
 
 describe('Business Configuration & Safety Checks', () => {
   test('primary contact phone matches provisional research', () => {
@@ -24,11 +24,6 @@ describe('Business Configuration & Safety Checks', () => {
     const mapsUrl = getMapsDirectionsUrl();
     expect(mapsUrl).toContain('Soldier+Bazar');
     expect(mapsUrl).toContain('Karachi');
-  });
-
-  test('foodpanda link points to verified De Pizzano restaurant page', () => {
-    const fpUrl = getFoodpandaUrl();
-    expect(fpUrl).toContain('foodpanda.pk/restaurant/s5nk/de-pizzano-soldier-bazar');
   });
 
   test('demo notice is clearly configured', () => {

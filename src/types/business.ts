@@ -37,7 +37,6 @@ export interface BusinessConfig {
   };
   primaryLocation: BusinessLocation;
   externalLinks: {
-    foodpanda: string;
     mapsDirections: string;
   };
   demoNotice: {

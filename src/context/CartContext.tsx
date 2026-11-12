@@ -47,6 +47,8 @@ interface CartContextType {
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
   isInitialized: boolean;
+  isModalOpen: boolean;
+  setModalOpen: (open: boolean) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -60,7 +62,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [selectedZone, setSelectedZoneState] = useState<DeliveryZone | null>(null);
   const [orderType, setOrderTypeState] = useState<OrderType>('delivery');
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
+  const [isModalOpenState, setIsModalOpenState] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+
+  const isModalOpen = isModalOpenState || isCartDrawerOpen;
+  const setModalOpen = useCallback((open: boolean) => {
+    setIsModalOpenState(open);
+  }, []);
 
   // Load persisted cart on mount
   useEffect(() => {
@@ -227,6 +235,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       updateQuantity,
       clearCart,
       isInitialized,
+      isModalOpen,
+      setModalOpen,
     }),
     [
       items,
@@ -244,6 +254,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       updateQuantity,
       clearCart,
       isInitialized,
+      isModalOpen,
+      setModalOpen,
     ]
   );
 
@@ -272,6 +284,8 @@ const defaultCartContext: CartContextType = {
   updateQuantity: () => {},
   clearCart: () => {},
   isInitialized: true,
+  isModalOpen: false,
+  setModalOpen: () => {},
 };
 
 export function useCart() {

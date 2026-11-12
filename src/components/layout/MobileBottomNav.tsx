@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 
 export function MobileBottomNav() {
   const pathname = usePathname();
-  const { itemCount, openCartDrawer } = useCart();
+  const { itemCount, openCartDrawer, isModalOpen } = useCart();
 
   if (pathname?.startsWith('/admin')) {
     return null;
@@ -49,7 +49,10 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Mobile Bottom Bar"
-      className="fixed bottom-0 left-0 w-full flex md:hidden z-40 bg-background/90 backdrop-blur-md border-t border-surface-border px-3 py-2 items-center justify-around shadow-2xl safe-bottom"
+      className={cn(
+        'fixed bottom-0 left-0 w-full flex md:hidden z-40 bg-background/90 backdrop-blur-md border-t border-surface-border px-3 py-2 items-center justify-around shadow-2xl safe-bottom',
+        isModalOpen && 'hidden'
+      )}
     >
       {items.map((item) => {
         const Icon = item.icon;

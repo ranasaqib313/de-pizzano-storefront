@@ -27,7 +27,7 @@ interface ProductDialogProps {
 }
 
 export function ProductDialog({ item, onClose }: ProductDialogProps) {
-  const { addItem } = useCart();
+  const { addItem, setModalOpen } = useCart();
 
   const isPizza =
     item?.category === 'pizza-flavours' ||
@@ -65,6 +65,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
   // Reset states when item opens
   useEffect(() => {
     if (item) {
+      setModalOpen(true);
       const defaultVar = (item.variants && item.variants.length > 0)
         ? (item.variants.find((v) => v.isDefault) || item.variants[0])
         : isPizza
@@ -82,6 +83,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
       setIsAdded(false);
       document.body.style.overflow = 'hidden';
     } else {
+      setModalOpen(false);
       document.body.style.overflow = '';
     }
 
@@ -93,10 +95,11 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      setModalOpen(false);
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [item, isPizza, onClose]);
+  }, [item, isPizza, onClose, setModalOpen]);
 
   if (!item) return null;
 
@@ -181,7 +184,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
       />
 
       {/* Modal Dialog Content */}
-      <div className="relative w-[95%] sm:w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh] pb-6 sm:pb-0">
+      <div className="relative w-[95%] sm:w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh] pb-24 md:pb-6">
         {/* Close Button */}
         <button
           type="button"
@@ -384,17 +387,17 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
             </div>
           </div>
 
-          {/* Development notice */}
+          {/* Direct kitchen notice */}
           <div className="p-3 bg-surface-elevated rounded-xl border border-secondary/20 flex items-start gap-2.5 text-xs text-muted-foreground">
             <Info className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
             <p className="leading-relaxed">
-              Price reflects provisional public directory listing (Foodpanda). Actual restaurant direct prices may vary and await owner confirmation before launch. Cash on Delivery is available for all Soldier Bazar & Karachi orders.
+              Direct Kitchen Pricing. Prices are subject to change. Handcrafted fresh with 100% pure dairy mozzarella. Cash on Delivery is available for all Soldier Bazar &amp; Karachi orders.
             </p>
           </div>
         </div>
 
         {/* Modal Bottom Actions */}
-        <div className="p-4 sm:p-5 border-t border-surface-border bg-surface-elevated flex items-center gap-3">
+        <div className="p-4 sm:p-5 border-t border-surface-border bg-surface-elevated flex items-center gap-3 shrink-0 pb-6 sm:pb-5">
           <Button
             variant="primary"
             size="md"

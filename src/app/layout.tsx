@@ -30,7 +30,6 @@ export const metadata: Metadata = {
     'Soldier Bazar Pizza',
     'Pizza Restaurant Soldier Bazar',
     'Chicken Tikka Pizza',
-    'Foodpanda De Pizzano',
     'Fast Food Karachi',
   ],
   authors: [{ name: 'De Pizzano Concept Design' }],
@@ -76,7 +75,7 @@ export default function RootLayout({
       '@type': 'OrderAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: BUSINESS_CONFIG.externalLinks.foodpanda,
+        urlTemplate: 'https://de-pizzano-karachi.demo/menu',
         inLanguage: 'en-PK',
         actionPlatform: [
           'http://schema.org/DesktopWebPlatform',

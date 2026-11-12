@@ -109,7 +109,7 @@ export function AboutSection() {
                 </div>
                 <div className="flex justify-between items-center py-1">
                   <span className="text-muted-foreground">Online Ordering Destination</span>
-                  <span className="text-secondary font-medium">Foodpanda Verified Listing</span>
+                  <span className="text-secondary font-medium">Direct Kitchen Storefront</span>
                 </div>
               </div>
             </div>

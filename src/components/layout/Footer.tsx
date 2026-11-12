@@ -5,7 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl } from '@/lib/links';
 
 export function Footer() {
   return (
@@ -32,14 +32,12 @@ export function Footer() {
               </p>
               <div className="pt-2">
                 <Button
-                  variant="foodpanda"
+                  variant="primary"
                   size="sm"
-                  href={getFoodpandaUrl()}
-                  external
-                  icon={<ExternalLink className="w-3.5 h-3.5" />}
-                  iconPosition="right"
+                  href="/menu"
+                  className="text-xs font-bold"
                 >
-                  Order on Foodpanda
+                  Explore Menu
                 </Button>
               </div>
             </div>

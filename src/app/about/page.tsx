@@ -7,7 +7,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { MENU_CATEGORIES } from '@/data/menu';
-import { getFoodpandaUrl, getMapsDirectionsUrl } from '@/lib/links';
+import { getMapsDirectionsUrl } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'About De Pizzano — Restaurant Concept & Story',
@@ -157,21 +157,14 @@ export default function AboutPage() {
             Ready To Experience De Pizzano?
           </h3>
           <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-6">
-            Browse our complete 26-item menu or order directly through the official Foodpanda delivery channel.
+            Browse our complete 26-item menu with fast home delivery and takeaway in Soldier Bazar, Karachi.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Button variant="primary" size="lg" href="/menu">
               Explore The Menu
             </Button>
-            <Button
-              variant="foodpanda"
-              size="lg"
-              href={getFoodpandaUrl()}
-              external
-              icon={<ExternalLink className="w-4 h-4" />}
-              iconPosition="right"
-            >
-              Order on Foodpanda
+            <Button variant="outline" size="lg" href="/deals">
+              View Exclusive Deals
             </Button>
           </div>
         </div>

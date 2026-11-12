@@ -23,13 +23,6 @@ describe('LeftNavDock Component (Aurora Floating Glass Dock)', () => {
     expect(screen.queryByRole('link', { name: 'Customer Account' })).not.toBeInTheDocument();
   });
 
-  test('contains external Foodpanda link', () => {
-    render(<LeftNavDock />);
-    const fpLink = screen.getByRole('link', { name: /order on foodpanda/i });
-    expect(fpLink).toBeInTheDocument();
-    expect(fpLink).toHaveAttribute('href', expect.stringContaining('foodpanda.pk'));
-  });
-
   test('RightNavRail backward-compatibility alias renders LeftNavDock properly', () => {
     render(<RightNavRail />);
     expect(screen.getByRole('complementary', { name: /site navigation/i })).toBeInTheDocument();

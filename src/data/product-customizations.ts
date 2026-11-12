@@ -1,7 +1,7 @@
 import { ProductVariant, ProductOption } from '@/types/storefront';
 
 /**
- * Standard size variants for pizzas based on verified Foodpanda & restaurant benchmarks.
+ * Standard size variants for pizzas based on verified restaurant benchmarks.
  * Small: base price (e.g. Rs. 750 / 800)
  * Regular (11"): +Rs. 350
  * Large (13"): +Rs. 700

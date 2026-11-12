@@ -1,17 +1,17 @@
 import type { Metadata } from 'next';
 import React from 'react';
-import { Phone, MapPin, Clock, ExternalLink, Mail, AlertCircle } from 'lucide-react';
+import { Phone, MapPin, Clock, ExternalLink, Mail, AlertCircle, ShoppingBag } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl } from '@/lib/links';
 import { ACTIVE_SOCIAL_LINKS } from '@/data/social-links';
 
 export const metadata: Metadata = {
-  title: 'Contact & Orders — Call, Location & Foodpanda',
+  title: 'Contact & Location — De Pizzano Karachi',
   description:
-    'Contact De Pizzano in Soldier Bazar No. 3, Karachi. Call directly, get Google Maps directions, or order online through Foodpanda.',
+    'Contact De Pizzano in Soldier Bazar No. 3, Karachi. Find restaurant address, get Google Maps directions, or order online.',
 };
 
 export default function ContactPage() {
@@ -78,32 +78,30 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Foodpanda Order Card */}
-            <div className="bg-surface border border-surface-border rounded-2xl p-6 sm:p-7 hover:border-[#D70F64]/50 transition-all shadow-md">
+            {/* Direct Online Ordering Card */}
+            <div className="bg-surface border border-surface-border rounded-2xl p-6 sm:p-7 hover:border-primary/50 transition-all shadow-md">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#D70F64]/20 border border-[#D70F64]/30 flex items-center justify-center shrink-0">
-                  <ExternalLink className="w-6 h-6 text-[#D70F64]" />
+                <div className="w-12 h-12 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
+                  <ShoppingBag className="w-6 h-6 text-primary" />
                 </div>
                 <div className="flex-1">
                   <span className="text-xs font-semibold text-secondary uppercase tracking-wider">
-                    Online Delivery Partner
+                    Direct Kitchen Delivery
                   </span>
                   <h3 className="text-lg font-bold text-foreground mt-1">
-                    Foodpanda Restaurant Page
+                    Direct Online Storefront
                   </h3>
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    Order hot pizza, creamy pasta and appetizers delivered to your home via Foodpanda.
+                    Order hot pizza, creamy pasta and appetizers delivered to your home across Karachi with Cash on Delivery.
                   </p>
                   <div className="mt-4">
                     <Button
-                      variant="foodpanda"
+                      variant="primary"
                       size="sm"
-                      href={getFoodpandaUrl()}
-                      external
-                      icon={<ExternalLink className="w-3.5 h-3.5" />}
-                      iconPosition="right"
+                      href="/menu"
+                      icon={<ShoppingBag className="w-3.5 h-3.5" />}
                     >
-                      Go to Foodpanda Listing
+                      Browse Full Menu
                     </Button>
                   </div>
                 </div>

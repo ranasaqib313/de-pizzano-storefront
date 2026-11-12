@@ -14,10 +14,3 @@ export function getMapsDirectionsUrl(): string {
   return BUSINESS_CONFIG.externalLinks.mapsDirections;
 }
 
-/**
- * Returns official Foodpanda restaurant page URL
- */
-export function getFoodpandaUrl(): string {
-  return BUSINESS_CONFIG.externalLinks.foodpanda;
-}
-

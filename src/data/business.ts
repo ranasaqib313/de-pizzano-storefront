@@ -40,7 +40,6 @@ export const BUSINESS_CONFIG: BusinessConfig = {
       'https://www.google.com/maps/search/?api=1&query=Shop+No+9+Murtaza+Terrace+Soldier+Bazar+No+3+Karachi',
   },
   externalLinks: {
-    foodpanda: 'https://www.foodpanda.pk/restaurant/s5nk/de-pizzano-soldier-bazar',
     mapsDirections:
       'https://www.google.com/maps/search/?api=1&query=Shop+No+9+Murtaza+Terrace+Soldier+Bazar+No+3+Karachi',
   },

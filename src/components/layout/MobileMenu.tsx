@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Phone, MapPin, ExternalLink, Flame, ShoppingBag, User, LogOut, Bike, Store, ChevronRight } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl } from '@/lib/links';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
@@ -21,7 +21,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
-  const { itemCount, orderType, selectedZone } = useCart();
+  const { itemCount, orderType, selectedZone, setModalOpen } = useCart();
   const { user, profile, isAuthenticated, signOut } = useAuth();
   const [orderModalOpen, setOrderModalOpen] = useState(false);
 
@@ -34,17 +34,20 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
     };
 
     if (isOpen) {
+      setModalOpen(true);
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
+      setModalOpen(false);
       document.body.style.overflow = '';
     }
 
     return () => {
+      setModalOpen(false);
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, setModalOpen]);
 
   return (
     <AnimatePresence>
@@ -226,18 +229,6 @@ export function MobileMenu({ isOpen, onClose, currentPath }: MobileMenuProps) {
                 icon={<ShoppingBag className="w-4 h-4" />}
               >
                 Order Online Now (COD)
-              </Button>
-
-              <Button
-                variant="foodpanda"
-                size="sm"
-                href={getFoodpandaUrl()}
-                external
-                className="w-full justify-center text-xs"
-                icon={<ExternalLink className="w-3.5 h-3.5" />}
-                iconPosition="right"
-              >
-                Order on Foodpanda
               </Button>
 
               {/* Verification Warning Notice */}

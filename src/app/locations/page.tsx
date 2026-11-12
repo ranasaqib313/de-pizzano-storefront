@@ -5,7 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'Location & Directions — Soldier Bazar, Karachi',
@@ -38,20 +38,6 @@ export default function LocationsPage() {
               <h3 className="text-2xl font-bold text-foreground font-display uppercase mt-1">
                 {loc.name}
               </h3>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Button
-                variant="foodpanda"
-                size="sm"
-                href={getFoodpandaUrl()}
-                external
-                icon={<ExternalLink className="w-3.5 h-3.5" />}
-                iconPosition="right"
-                className="text-xs"
-              >
-                Foodpanda Listing
-              </Button>
             </div>
           </div>
 

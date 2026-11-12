@@ -6,9 +6,8 @@ import { MenuGrid } from '@/components/menu/MenuGrid';
 import { MENU_ITEMS } from '@/data/menu';
 import { getMenuProducts, getMenuCategories } from '@/lib/supabase/services/menu-service';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { AlertCircle, ExternalLink } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { getFoodpandaUrl } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'Full Menu — 24 Pizza Flavours, Pastas, Sandwiches & Sides',
@@ -49,20 +48,6 @@ export default async function MenuPage() {
                   Order online with fast home delivery across Karachi or visit our takeaway counter at Soldier Bazar No. 3. All orders include server-verified pricing and fresh preparation.
                 </p>
               </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full sm:w-auto">
-              <Button
-                variant="foodpanda"
-                size="sm"
-                href={getFoodpandaUrl()}
-                external
-                icon={<ExternalLink className="w-3.5 h-3.5" />}
-                iconPosition="right"
-                className="w-full sm:w-auto text-xs"
-              >
-                Order on Foodpanda
-              </Button>
             </div>
           </div>
         </div>

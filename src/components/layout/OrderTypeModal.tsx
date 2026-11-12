@@ -21,7 +21,7 @@ interface OrderTypeModalProps {
  * High contrast in both light and dark mode with full WCAG AA compliance.
  */
 export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
-  const { orderType, setOrderType, selectedZone, setSelectedZone } = useCart();
+  const { orderType, setOrderType, selectedZone, setSelectedZone, setModalOpen } = useCart();
   const [activeType, setActiveType] = useState<OrderType>(orderType);
   const [activeZoneId, setActiveZoneId] = useState<string>(
     selectedZone?.id || KARACHI_DELIVERY_ZONES[0].id
@@ -29,10 +29,16 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
 
   useEffect(() => {
     if (isOpen) {
+      setModalOpen(true);
       setActiveType(orderType);
       setActiveZoneId(selectedZone?.id || KARACHI_DELIVERY_ZONES[0].id);
+    } else {
+      setModalOpen(false);
     }
-  }, [isOpen, orderType, selectedZone]);
+    return () => {
+      setModalOpen(false);
+    };
+  }, [isOpen, orderType, selectedZone, setModalOpen]);
 
   const handleConfirm = () => {
     setOrderType(activeType);
