@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Phone, MapPin, ExternalLink, Flame, ShoppingBag, User, LogOut, Bike, Store, ChevronRight } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from '@/data/navigation';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink, getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
+import { getMapsDirectionsUrl, getFoodpandaUrl } from '@/lib/links';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';

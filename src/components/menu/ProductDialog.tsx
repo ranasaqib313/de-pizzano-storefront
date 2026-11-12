@@ -171,7 +171,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="product-dialog-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6"
     >
       {/* Backdrop */}
       <div
@@ -181,7 +181,7 @@ export function ProductDialog({ item, onClose }: ProductDialogProps) {
       />
 
       {/* Modal Dialog Content */}
-      <div className="relative w-[95%] sm:w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh]">
+      <div className="relative w-[95%] sm:w-full max-w-xl bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh] pb-6 sm:pb-0">
         {/* Close Button */}
         <button
           type="button"

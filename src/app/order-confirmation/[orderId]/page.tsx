@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/Button';
 import { createAdminClient } from '@/lib/supabase/server';
 import { formatPkr } from '@/lib/cart-calculations';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { getPhoneLink } from '@/lib/links';
 import {
   CheckCircle2,
   Clock,

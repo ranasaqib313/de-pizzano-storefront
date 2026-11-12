@@ -41,7 +41,7 @@ export function DockAwareLayout({ children }: DockAwareLayoutProps) {
             : 'pl-0 md:pl-32 lg:pl-36'
         )}
       >
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pb-20 md:pb-0">{children}</main>
         <Footer />
       </div>
     </>

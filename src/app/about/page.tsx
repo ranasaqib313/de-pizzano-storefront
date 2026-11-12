@@ -7,7 +7,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { BUSINESS_CONFIG } from '@/data/business';
 import { MENU_CATEGORIES } from '@/data/menu';
-import { getPhoneLink, getFoodpandaUrl, getMapsDirectionsUrl } from '@/lib/links';
+import { getFoodpandaUrl, getMapsDirectionsUrl } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'About De Pizzano — Restaurant Concept & Story',

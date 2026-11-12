@@ -6,9 +6,9 @@ import { MenuGrid } from '@/components/menu/MenuGrid';
 import { MENU_ITEMS } from '@/data/menu';
 import { getMenuProducts, getMenuCategories } from '@/lib/supabase/services/menu-service';
 import { BUSINESS_CONFIG } from '@/data/business';
-import { AlertCircle, ExternalLink, Phone } from 'lucide-react';
+import { AlertCircle, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { getFoodpandaUrl, getPhoneLink } from '@/lib/links';
+import { getFoodpandaUrl } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'Full Menu — 24 Pizza Flavours, Pastas, Sandwiches & Sides',
@@ -62,15 +62,6 @@ export default async function MenuPage() {
                 className="w-full sm:w-auto text-xs"
               >
                 Order on Foodpanda
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                href={getPhoneLink()}
-                icon={<Phone className="w-3.5 h-3.5 text-secondary" />}
-                className="w-full sm:w-auto text-xs"
-              >
-                Call: {BUSINESS_CONFIG.contact.formattedPhone}
               </Button>
             </div>
           </div>

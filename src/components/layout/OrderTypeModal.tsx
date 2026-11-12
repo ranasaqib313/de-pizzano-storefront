@@ -48,7 +48,7 @@ export function OrderTypeModal({ isOpen, onClose }: OrderTypeModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto">
           {/* Backdrop with Blur */}
           <motion.div
             initial={{ opacity: 0 }}
